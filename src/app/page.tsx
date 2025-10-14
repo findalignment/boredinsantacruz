@@ -128,7 +128,15 @@ export default function Home() {
             Or explore activities by category
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <SectionCard
+              title="Sunny Day Activities"
+              description="Beaches, hiking, water sports, and outdoor adventures for beautiful weather."
+              emoji="☀️"
+              href="/sunny"
+              gradient="bg-gradient-to-br from-yellow-400 to-orange-500"
+            />
+            
             <SectionCard
               title="Rainy Day Adventures"
               description="Cozy cafes, museums, indoor activities, and more to enjoy when the weather turns wet."
