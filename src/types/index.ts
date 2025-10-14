@@ -28,6 +28,23 @@ export interface RainyActivity {
   website?: string | null;
   instagram?: string | null;
   imageUrl?: string | null;
+  
+  // Weather-aware fields (Sprint 2)
+  weatherSuitability?: string[]; // Which weather categories suit this activity
+  idealTempMin?: number; // Minimum comfortable temp (°F)
+  idealTempMax?: number; // Maximum comfortable temp (°F)
+  indoorOutdoor?: 'Indoor' | 'Outdoor' | 'Mixed' | 'Covered';
+  rainOk?: boolean; // Can do in light rain
+  windSensitive?: boolean; // Avoid in high winds
+  requiresGoodVisibility?: boolean; // Needs good visibility (avoid fog)
+  weatherBoost?: number; // Score multiplier (0.5-2.0, default 1.0)
+}
+
+// Activity with weather score
+export interface ScoredActivity extends RainyActivity {
+  weatherScore: number; // 0-100, how well it matches current weather
+  matchReason?: string; // Why this activity is recommended
+  weatherWarning?: string; // Any weather-related concerns
 }
 
 // Helper type for filtering

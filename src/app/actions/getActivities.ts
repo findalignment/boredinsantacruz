@@ -20,6 +20,16 @@ function transformActivity(record: any): RainyActivity {
     instagram: fields.Instagram || null,
     imageUrl: fields.Image?.[0]?.url || null,
     venue: {} as Venue, // We'll populate this if needed
+    
+    // Weather fields (Sprint 2)
+    weatherSuitability: fields.WeatherSuitability || undefined,
+    idealTempMin: fields.IdealTemp_Min ?? undefined,
+    idealTempMax: fields.IdealTemp_Max ?? undefined,
+    indoorOutdoor: fields.IndoorOutdoor || undefined,
+    rainOk: fields.RainOk ?? undefined,
+    windSensitive: fields.WindSensitive ?? undefined,
+    requiresGoodVisibility: fields.RequiresGoodVisibility ?? undefined,
+    weatherBoost: fields.WeatherBoost ?? undefined,
   };
 }
 
