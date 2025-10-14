@@ -1,4 +1,6 @@
 import { SectionCard } from '@/components/ui/section-card';
+import { TodayRecommendations } from '@/components/today-recommendations';
+import { Suspense } from 'react';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -11,6 +13,24 @@ export const metadata: Metadata = {
     type: 'website',
   },
 };
+
+function LoadingRecommendations() {
+  return (
+    <section className="bg-white py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="animate-pulse space-y-6">
+          <div className="h-12 bg-gray-200 rounded w-1/3 mx-auto"></div>
+          <div className="h-48 bg-gray-200 rounded-xl max-w-2xl mx-auto"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-96 bg-gray-200 rounded-xl"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
   return (
@@ -53,14 +73,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Today's Recommendations - Weather-Aware */}
+      <Suspense fallback={<LoadingRecommendations />}>
+        <TodayRecommendations />
+      </Suspense>
+
       {/* Activities Section Cards */}
-      <section className="bg-white py-20">
+      <section className="bg-gray-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-gray-900 text-center mb-4">
-            What are you in the mood for?
+            Browse by Weather
           </h2>
           <p className="text-gray-600 text-center mb-12 text-lg">
-            Browse activities by weather and vibe
+            Or explore activities by category
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -73,11 +98,11 @@ export default function Home() {
             />
             
             <SectionCard
-              title="Sunny Day Vibes"
-              description="Beach days, hiking trails, outdoor dining, and all the best sunshine activities."
-              emoji="☀️"
-              href="/sunny"
-              gradient="bg-gradient-to-br from-yellow-400 to-orange-500"
+              title="All Activities"
+              description="See everything Santa Cruz has to offer, sorted by weather."
+              emoji="🗺️"
+              href="/activities"
+              gradient="bg-gradient-to-br from-purple-400 to-pink-600"
             />
           </div>
         </div>
