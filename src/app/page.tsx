@@ -1,6 +1,7 @@
 import { SectionCard } from '@/components/ui/section-card';
 import { TodayRecommendations } from '@/components/today-recommendations';
 import { WeeklyForecast } from '@/components/weekly-forecast';
+import { BestDayBanner } from '@/components/best-day-banner';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { getWeeklyForecast } from '@/app/actions/getForecast';
@@ -62,6 +63,11 @@ async function ForecastWidget() {
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      {/* Best Day Banner */}
+      <Suspense fallback={null}>
+        <BestDayBanner />
+      </Suspense>
+
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
