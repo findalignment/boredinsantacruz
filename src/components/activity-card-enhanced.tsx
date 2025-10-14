@@ -2,6 +2,7 @@
 'use client';
 
 import { ScoredActivity } from '@/types';
+import Link from 'next/link';
 import Image from 'next/image';
 
 interface ActivityCardEnhancedProps {
@@ -27,8 +28,16 @@ export function ActivityCardEnhanced({
     return '🤔';
   };
 
+  const address = activity.address || activity.venue?.address;
+  const googleMapsUrl = address 
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address + ', Santa Cruz, CA')}`
+    : null;
+
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <Link 
+      href={`/activity/${activity.id}`}
+      className="block bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
+    >
       {/* Image */}
       {activity.imageUrl && (
         <div className="relative h-48 bg-gray-200">
@@ -55,10 +64,29 @@ export function ActivityCardEnhanced({
           {activity.title}
         </h3>
 
-        {/* Venue */}
-        <p className="text-gray-600 text-sm mb-3">
-          📍 {activity.venueName}
-        </p>
+        {/* Venue & Address */}
+        <div className="mb-3">
+          <p className="text-gray-900 font-medium text-sm mb-1">
+            {activity.venueName || activity.venue?.name}
+          </p>
+          {googleMapsUrl ? (
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="text-blue-600 hover:text-blue-700 text-sm flex items-center gap-1 hover:underline"
+            >
+              📍 {address}
+            </a>
+          ) : (
+            address && (
+              <p className="text-gray-600 text-sm flex items-center gap-1">
+                📍 {address}
+              </p>
+            )
+          )}
+        </div>
 
         {/* Match Reason */}
         {showScore && activity.matchReason && (
@@ -118,31 +146,14 @@ export function ActivityCardEnhanced({
           </p>
         )}
 
-        {/* Links */}
-        <div className="flex gap-2">
-          {activity.website && (
-            <a
-              href={activity.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 px-4 py-2 bg-blue-600 text-white text-center text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Visit Website
-            </a>
-          )}
-          {activity.instagram && (
-            <a
-              href={activity.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-pink-600 text-white text-sm font-semibold rounded-lg hover:bg-pink-700 transition-colors"
-            >
-              📸
-            </a>
-          )}
+        {/* View Details Button */}
+        <div className="mt-auto pt-4">
+          <div className="px-4 py-2 bg-blue-600 text-white text-center text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+            View Details →
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

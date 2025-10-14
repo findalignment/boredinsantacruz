@@ -1,19 +1,19 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { format, addDays, startOfDay, isSameDay, isToday } from 'date-fns';
 
 interface DatePickerProps {
   selectedDate: Date;
-  onDateChange: (date: Date) => void;
   maxDays?: number; // Maximum days in the future (default 7 for forecast limit)
 }
 
 export function DatePicker({ 
-  selectedDate, 
-  onDateChange,
+  selectedDate,
   maxDays = 7 
 }: DatePickerProps) {
+  const router = useRouter();
   const today = startOfDay(new Date());
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,7 +23,8 @@ export function DatePicker({
   );
 
   const handleDateSelect = (date: Date) => {
-    onDateChange(date);
+    const dateString = format(date, 'yyyy-MM-dd');
+    router.push(`/activities/${dateString}`);
     setIsOpen(false);
   };
 

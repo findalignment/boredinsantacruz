@@ -1,7 +1,11 @@
 // src/app/activities/page.tsx
+import { Suspense } from 'react';
 import { getRecommendationsByTier } from '@/app/actions/getRecommendations';
+import { getTodaysTides } from '@/app/actions/getTides';
 import { WeatherDisplay } from '@/components/weather/weather-display';
 import { WeatherInsights } from '@/components/weather/weather-insights';
+import { TideDisplay } from '@/components/tides/tide-display';
+import { TidePoolAlert } from '@/components/tides/tide-pool-alert';
 import { ActivityCardEnhanced } from '@/components/activity-card-enhanced';
 import { Metadata } from 'next';
 
@@ -9,6 +13,32 @@ export const metadata: Metadata = {
   title: 'Activities - Weather-Aware Recommendations',
   description: 'Discover the best activities in Santa Cruz based on today\'s weather. Smart recommendations that adapt to current conditions.',
 };
+
+async function TideInfo() {
+  try {
+    const tideResult = await getTodaysTides();
+    
+    if (!tideResult.success || !tideResult.data) {
+      return null;
+    }
+
+    const { tideData, conditions, isGoodForTidePools } = tideResult.data;
+
+    return (
+      <div className="space-y-6">
+        <TideDisplay tideData={tideData} />
+        <TidePoolAlert 
+          tideData={tideData}
+          conditions={conditions}
+          isGoodForTidePools={isGoodForTidePools}
+        />
+      </div>
+    );
+  } catch (error) {
+    console.error('Error loading tides:', error);
+    return null;
+  }
+}
 
 export default async function ActivitiesPage() {
   const result = await getRecommendationsByTier();
@@ -54,10 +84,17 @@ export default async function ActivitiesPage() {
 
         {/* Insights */}
         {insights && insights.length > 0 && (
-          <div className="max-w-3xl mx-auto mb-12">
+          <div className="max-w-3xl mx-auto mb-8">
             <WeatherInsights insights={insights} />
           </div>
         )}
+
+        {/* Tide Information */}
+        <div className="max-w-3xl mx-auto mb-12">
+          <Suspense fallback={<div className="h-48 bg-gray-200 animate-pulse rounded-lg"></div>}>
+            <TideInfo />
+          </Suspense>
+        </div>
 
         {/* Perfect Activities */}
         {perfect.length > 0 && (

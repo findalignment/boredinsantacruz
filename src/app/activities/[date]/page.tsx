@@ -209,13 +209,7 @@ export default async function DatePage({ params }: PageProps) {
             </div>
             
             {/* Date Picker */}
-            <DatePicker 
-              selectedDate={date}
-              onDateChange={(newDate) => {
-                const newDateString = format(newDate, 'yyyy-MM-dd');
-                window.location.href = `/activities/${newDateString}`;
-              }}
-            />
+            <DatePicker selectedDate={date} />
           </div>
         </div>
 
