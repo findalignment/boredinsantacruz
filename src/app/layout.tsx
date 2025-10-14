@@ -5,6 +5,7 @@ import { Footer } from '@/components/layout/footer';
 import { ChatInterface } from '@/components/chatbot/chat-interface';
 import { SessionProvider } from '@/components/auth/session-provider';
 import { WebsiteStructuredData, OrganizationStructuredData } from '@/components/seo/structured-data';
+import { CookieConsent } from '@/components/cookie-consent';
 
 export const metadata: Metadata = {
   title: {
@@ -55,6 +56,7 @@ export default function RootLayout({
           <main className="flex-grow">{children}</main>
           <Footer />
           <ChatInterface />
+          <CookieConsent />
         </SessionProvider>
       </body>
     </html>

@@ -56,8 +56,38 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-          <p>
+        <div className="border-t border-gray-800 mt-8 pt-8">
+          {/* Affiliate Disclosure */}
+          <div className="mb-6 text-xs text-gray-400 max-w-4xl mx-auto">
+            <p className="mb-2">
+              <strong className="text-gray-300">Affiliate Disclosure:</strong> This website contains affiliate links. 
+              We may earn a commission when you book through our partners (Viator, Booking.com, GetYourGuide, etc.) 
+              at no additional cost to you. This helps us keep the site free and up-to-date. Our recommendations 
+              are based on quality and relevance, not solely on commission potential.
+            </p>
+            <p>
+              Featured businesses marked with partnership badges have paid promotional arrangements. 
+              Paid placements do not influence our recommendation algorithms or user review ratings.
+            </p>
+          </div>
+
+          {/* Links */}
+          <div className="flex flex-wrap justify-center gap-4 text-sm mb-4">
+            <a href="/privacy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </a>
+            <span className="text-gray-600">|</span>
+            <a href="/terms" className="hover:text-white transition-colors">
+              Terms of Service
+            </a>
+            <span className="text-gray-600">|</span>
+            <a href="/advertise" className="hover:text-white transition-colors">
+              Advertise With Us
+            </a>
+          </div>
+
+          {/* Copyright */}
+          <p className="text-center text-sm">
             Made with ❤️ for Santa Cruz locals and visitors © {new Date().getFullYear()}
           </p>
         </div>
