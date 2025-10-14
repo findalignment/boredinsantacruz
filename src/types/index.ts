@@ -75,3 +75,54 @@ export interface ActivityFilters {
   duration: string[];
   indoorOnly: boolean;
 }
+
+// Restaurant types
+export interface Restaurant {
+  id: string;
+  name: string;
+  cuisine: string[]; // Mexican, Italian, American, etc.
+  priceLevel: number; // 1-4 ($, $$, $$$, $$$$)
+  neighborhood: string; // Downtown, Westside, Eastside, etc.
+  
+  // Contact & Location
+  address: string;
+  phone?: string;
+  website?: string;
+  instagram?: string;
+  
+  // Details
+  description: string;
+  hours?: string;
+  parking?: string;
+  
+  // Features
+  dineIn: boolean;
+  takeout: boolean;
+  delivery: boolean;
+  outdoor: boolean;
+  reservations: boolean;
+  
+  // Insider Knowledge
+  bestDish?: string;
+  bestTime?: string; // "Weekday lunch", "Sunday brunch", etc.
+  tips?: string;
+  
+  // Dietary
+  vegetarianFriendly?: boolean;
+  veganOptions?: boolean;
+  glutenFree?: boolean;
+  
+  // Images
+  image?: {
+    url: string;
+    filename: string;
+  }[];
+}
+
+export interface RestaurantFilters {
+  cuisine: string[];
+  priceLevel: number[];
+  neighborhood: string[];
+  dietary: ('vegetarian' | 'vegan' | 'gluten-free')[];
+  features: ('takeout' | 'delivery' | 'outdoor' | 'reservations')[];
+}

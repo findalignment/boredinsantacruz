@@ -54,6 +54,13 @@ export function Header() {
             >
               Activities
             </Link>
+            
+            <Link
+              href="/restaurants"
+              className="hidden xl:block text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base"
+            >
+              🍴 Restaurants
+            </Link>
           </div>
         </div>
       </nav>
