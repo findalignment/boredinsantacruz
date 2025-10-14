@@ -33,6 +33,11 @@ export function Footer() {
                   Sunny Day Activities
                 </a>
               </li>
+              <li>
+                <a href="/advertise" className="hover:text-white transition-colors font-semibold text-blue-400">
+                  Advertise With Us
+                </a>
+              </li>
             </ul>
           </div>
 
