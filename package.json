@@ -9,7 +9,9 @@
     "lint": "next lint",
     "import-restaurants-csv": "npx tsx scripts/import-restaurants-google.ts csv",
     "import-restaurants-airtable": "npx tsx scripts/import-restaurants-google.ts airtable",
-    "sync-restaurants": "npx tsx scripts/import-restaurants-google.ts sync"
+    "sync-restaurants": "npx tsx scripts/import-restaurants-google.ts sync",
+    "import-activities-csv": "npx tsx scripts/import-activities-google.ts csv",
+    "import-activities-airtable": "npx tsx scripts/import-activities-google.ts airtable"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.52",

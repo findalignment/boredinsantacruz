@@ -1,7 +1,10 @@
 import { Metadata } from 'next';
 import { auth } from '@/lib/auth/config';
 import { redirect } from 'next/navigation';
-import { signOut } from '@/lib/auth/config';
+import { getFavorites, getFavoriteCount } from '@/app/actions/favorites';
+import { getActivities } from '@/app/actions/getActivities';
+import { ActivityCardWithFavorite } from '@/components/activity-card-with-favorite';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'My Profile',
@@ -14,6 +17,20 @@ export default async function ProfilePage() {
   if (!session) {
     redirect('/login');
   }
+
+  // Fetch user data
+  const favoritesResult = await getFavorites();
+  const favoriteCount = await getFavoriteCount();
+  const favorites = favoritesResult.success ? favoritesResult.data : [];
+
+  // Fetch activities to display favorited ones
+  const activitiesResult = await getActivities();
+  const allActivities = activitiesResult.success ? activitiesResult.data : [];
+
+  // Filter to only show favorited activities
+  const favoritedActivities = allActivities.filter((activity) =>
+    favorites.some((fav) => fav.itemType === 'Activity' && fav.itemId === activity.id)
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4">
@@ -46,51 +63,75 @@ export default async function ProfilePage() {
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <div className="bg-white rounded-xl shadow-md p-6 text-center">
+          <Link href="#favorites" className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow">
             <div className="text-4xl mb-2">⭐</div>
-            <div className="text-3xl font-bold text-gray-900">0</div>
+            <div className="text-3xl font-bold text-gray-900">{favoriteCount}</div>
             <div className="text-gray-600">Favorites</div>
-          </div>
+          </Link>
           <div className="bg-white rounded-xl shadow-md p-6 text-center">
             <div className="text-4xl mb-2">💬</div>
             <div className="text-3xl font-bold text-gray-900">0</div>
             <div className="text-gray-600">Reviews</div>
+            <div className="text-xs text-gray-400 mt-1">Coming Soon</div>
           </div>
           <div className="bg-white rounded-xl shadow-md p-6 text-center">
             <div className="text-4xl mb-2">📝</div>
             <div className="text-3xl font-bold text-gray-900">0</div>
             <div className="text-gray-600">Private Notes</div>
+            <div className="text-xs text-gray-400 mt-1">Coming Soon</div>
           </div>
         </div>
 
-        {/* Sections */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Favorites */}
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <span>⭐</span> Favorites
+        {/* Favorites Section */}
+        <div id="favorites" className="bg-white rounded-xl shadow-md p-6 mb-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+              <span>⭐</span> My Favorites
             </h2>
-            <div className="text-center py-12 text-gray-500">
-              <div className="text-6xl mb-4">📌</div>
-              <p>No favorites yet</p>
-              <p className="text-sm mt-2">
-                Bookmark activities and restaurants to save them here
-              </p>
-            </div>
+            {favoriteCount > 0 && (
+              <span className="text-sm text-gray-500">{favoriteCount} saved</span>
+            )}
           </div>
 
-          {/* Recent Reviews */}
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <span>💬</span> My Reviews
-            </h2>
+          {favoritedActivities.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
-              <div className="text-6xl mb-4">✍️</div>
-              <p>No reviews yet</p>
-              <p className="text-sm mt-2">
-                Share your experiences with the community
+              <div className="text-6xl mb-4">📌</div>
+              <p className="text-lg font-medium">No favorites yet</p>
+              <p className="text-sm mt-2 mb-4">
+                Click the heart button on activities and restaurants to save them here
               </p>
+              <Link
+                href="/activities"
+                className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-colors"
+              >
+                Explore Activities
+              </Link>
             </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {favoritedActivities.map((activity) => (
+                <ActivityCardWithFavorite
+                  key={activity.id}
+                  activity={activity}
+                  isFavorited={true}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Recent Reviews - Coming Soon */}
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span>💬</span> My Reviews
+            <span className="text-sm font-normal text-gray-400">(Coming Soon)</span>
+          </h2>
+          <div className="text-center py-12 text-gray-500">
+            <div className="text-6xl mb-4">✍️</div>
+            <p>Reviews feature coming soon!</p>
+            <p className="text-sm mt-2">
+              Soon you'll be able to share your experiences with the community
+            </p>
           </div>
         </div>
 

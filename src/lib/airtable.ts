@@ -12,4 +12,6 @@ export const tables = {
   sunnyActivities: process.env.AIRTABLE_SUNNY_TABLE
     ? base(process.env.AIRTABLE_SUNNY_TABLE)
     : null,
+  favorites: base(process.env.AIRTABLE_FAVORITES_TABLE || 'Favorites'),
+  reviews: base(process.env.AIRTABLE_REVIEWS_TABLE || 'Reviews'),
 } as const;
