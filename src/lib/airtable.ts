@@ -6,4 +6,10 @@ const base = new Airtable({ apiKey: process.env.AIRTABLE_TOKEN })
 export const tables = {
   venues: base('Venues'),
   rainyActivities: base(process.env.AIRTABLE_RAINY_TABLE || 'RainyActivities'),
-};
+  restaurants: process.env.AIRTABLE_RESTAURANTS_TABLE 
+    ? base(process.env.AIRTABLE_RESTAURANTS_TABLE) 
+    : null,
+  sunnyActivities: process.env.AIRTABLE_SUNNY_TABLE
+    ? base(process.env.AIRTABLE_SUNNY_TABLE)
+    : null,
+} as const;
