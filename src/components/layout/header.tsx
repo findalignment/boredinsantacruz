@@ -1,4 +1,17 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
+import { getActivitiesForSearch } from '@/app/actions/searchActivities';
+import { SearchDialog } from '@/components/search/search-dialog';
+
+async function SearchButton() {
+  const result = await getActivitiesForSearch();
+  
+  if (!result.success || !result.data) {
+    return null;
+  }
+
+  return <SearchDialog activities={result.data} />;
+}
 
 export function Header() {
   return (
@@ -14,26 +27,32 @@ export function Header() {
           </Link>
 
           {/* Navigation */}
-          <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-8">
+          <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-6">
+            {/* Search */}
+            <Suspense fallback={<div className="w-24 h-10"></div>}>
+              <SearchButton />
+            </Suspense>
+            
             <Link
-              href="/"
-              className="hidden sm:block text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base"
-            >
-              Home
-            </Link>
-            <Link
-              href="/rainy"
+              href="/map"
               className="text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base whitespace-nowrap"
             >
-              <span className="sm:hidden">🌧️</span>
-              <span className="hidden sm:inline">🌧️ Rainy</span>
+              <span className="sm:hidden">🗺️</span>
+              <span className="hidden sm:inline">🗺️ Map</span>
             </Link>
+            
             <Link
-              href="/sunny"
-              className="text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base whitespace-nowrap"
+              href="/tonight"
+              className="hidden md:block text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base whitespace-nowrap"
             >
-              <span className="sm:hidden">☀️</span>
-              <span className="hidden sm:inline">☀️ Sunny</span>
+              🎉 Tonight
+            </Link>
+            
+            <Link
+              href="/activities"
+              className="hidden lg:block text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base"
+            >
+              Activities
             </Link>
           </div>
         </div>
@@ -41,4 +60,3 @@ export function Header() {
     </header>
   );
 }
-
