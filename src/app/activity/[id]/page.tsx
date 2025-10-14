@@ -12,6 +12,7 @@ import { getReviews, getAverageRating } from '@/app/actions/reviews';
 import { ReviewsSummary } from '@/components/reviews/reviews-summary';
 import { ReviewsList } from '@/components/reviews/reviews-list';
 import { FavoriteButton } from '@/components/favorites/favorite-button';
+import { ActivityStructuredData } from '@/components/seo/structured-data';
 import type { Metadata } from 'next';
 
 interface PageProps {
@@ -132,8 +133,15 @@ export default async function ActivityDetailPage({ params }: PageProps) {
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address + ', Santa Cruz, CA')}`
     : null;
 
+  // Fetch rating for structured data
+  const ratingInfo = await getAverageRating('Activity', id);
+
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <>
+      {/* Structured Data for SEO */}
+      <ActivityStructuredData activity={activity} rating={ratingInfo} />
+      
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       <div className="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Back Button */}
         <Link 
@@ -348,6 +356,7 @@ export default async function ActivityDetailPage({ params }: PageProps) {
         </div>
       </div>
     </main>
+    </>
   );
 }
 

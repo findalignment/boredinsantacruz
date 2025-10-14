@@ -4,6 +4,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { ChatInterface } from '@/components/chatbot/chat-interface';
 import { SessionProvider } from '@/components/auth/session-provider';
+import { WebsiteStructuredData, OrganizationStructuredData } from '@/components/seo/structured-data';
 
 export const metadata: Metadata = {
   title: {
@@ -47,6 +48,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col">
+        <WebsiteStructuredData />
+        <OrganizationStructuredData />
         <SessionProvider>
           <Header />
           <main className="flex-grow">{children}</main>
