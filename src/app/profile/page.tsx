@@ -1,0 +1,122 @@
+import { Metadata } from 'next';
+import { auth } from '@/lib/auth/config';
+import { redirect } from 'next/navigation';
+import { signOut } from '@/lib/auth/config';
+
+export const metadata: Metadata = {
+  title: 'My Profile',
+  description: 'Manage your account, favorites, and reviews.',
+};
+
+export default async function ProfilePage() {
+  const session = await auth();
+
+  if (!session) {
+    redirect('/login');
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Profile Header */}
+        <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
+          <div className="flex items-center gap-6">
+            {session.user?.image ? (
+              <img
+                src={session.user.image}
+                alt={session.user.name || 'User'}
+                className="w-24 h-24 rounded-full border-4 border-blue-500"
+              />
+            ) : (
+              <div className="w-24 h-24 rounded-full bg-blue-600 flex items-center justify-center text-white text-4xl font-bold">
+                {session.user?.name?.charAt(0).toUpperCase() || '?'}
+              </div>
+            )}
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-1">
+                {session.user?.name || 'User'}
+              </h1>
+              <p className="text-gray-600">{session.user?.email}</p>
+              <p className="text-sm text-gray-500 mt-2">
+                Member since {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div className="bg-white rounded-xl shadow-md p-6 text-center">
+            <div className="text-4xl mb-2">⭐</div>
+            <div className="text-3xl font-bold text-gray-900">0</div>
+            <div className="text-gray-600">Favorites</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-md p-6 text-center">
+            <div className="text-4xl mb-2">💬</div>
+            <div className="text-3xl font-bold text-gray-900">0</div>
+            <div className="text-gray-600">Reviews</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-md p-6 text-center">
+            <div className="text-4xl mb-2">📝</div>
+            <div className="text-3xl font-bold text-gray-900">0</div>
+            <div className="text-gray-600">Private Notes</div>
+          </div>
+        </div>
+
+        {/* Sections */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Favorites */}
+          <div className="bg-white rounded-xl shadow-md p-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <span>⭐</span> Favorites
+            </h2>
+            <div className="text-center py-12 text-gray-500">
+              <div className="text-6xl mb-4">📌</div>
+              <p>No favorites yet</p>
+              <p className="text-sm mt-2">
+                Bookmark activities and restaurants to save them here
+              </p>
+            </div>
+          </div>
+
+          {/* Recent Reviews */}
+          <div className="bg-white rounded-xl shadow-md p-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <span>💬</span> My Reviews
+            </h2>
+            <div className="text-center py-12 text-gray-500">
+              <div className="text-6xl mb-4">✍️</div>
+              <p>No reviews yet</p>
+              <p className="text-sm mt-2">
+                Share your experiences with the community
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Coming Soon */}
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-xl p-8 mt-6 text-white text-center">
+          <h2 className="text-2xl font-bold mb-2">🚧 Coming Soon</h2>
+          <p className="text-blue-100 mb-4">
+            We're building awesome features for your profile:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
+            <div className="bg-white/10 rounded-lg p-4">
+              <div className="text-3xl mb-2">🗺️</div>
+              <div className="font-semibold">Trip Planning</div>
+            </div>
+            <div className="bg-white/10 rounded-lg p-4">
+              <div className="text-3xl mb-2">🎯</div>
+              <div className="font-semibold">Recommendations</div>
+            </div>
+            <div className="bg-white/10 rounded-lg p-4">
+              <div className="text-3xl mb-2">🏆</div>
+              <div className="font-semibold">Achievements</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+

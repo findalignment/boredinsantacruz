@@ -21,6 +21,21 @@ function transformActivity(record: any): RainyActivity {
     imageUrl: fields.Image?.[0]?.url || null,
     venue: {} as Venue, // We'll populate this if needed
     
+    // Practical info
+    address: fields.Address || undefined,
+    hours: fields.Hours || undefined,
+    parking: fields.Parking || undefined,
+    tips: fields.Tips || undefined,
+    phone: fields.Phone || undefined,
+    
+    // Tide fields
+    tidePreference: fields.TidePreference || undefined,
+    tideCritical: fields.TideCritical ?? undefined,
+    optimalTideHeight: fields.OptimalTideHeight ? {
+      min: fields.OptimalTideHeight_Min,
+      max: fields.OptimalTideHeight_Max,
+    } : undefined,
+    
     // Weather fields (Sprint 2)
     weatherSuitability: fields.WeatherSuitability || undefined,
     idealTempMin: fields.IdealTemp_Min ?? undefined,

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import type { RainyActivity } from '@/types';
+import { findCoordinatesForActivity, SANTA_CRUZ_CENTER } from '@/lib/map/known-locations';
 
 // Mapbox access token - should be in environment variables
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || '';
@@ -13,9 +14,6 @@ interface InteractiveMapProps {
   center?: [number, number]; // [lng, lat]
   zoom?: number;
 }
-
-// Santa Cruz coordinates
-const SANTA_CRUZ_CENTER: [number, number] = [-122.0308, 36.9741];
 
 // Activity type to color mapping
 const ACTIVITY_COLORS: Record<string, string> = {
@@ -38,18 +36,7 @@ function getActivityColor(activity: RainyActivity): string {
   return ACTIVITY_COLORS.default;
 }
 
-// Parse address to get coordinates (placeholder - needs geocoding)
-function getCoordinatesFromAddress(address?: string): [number, number] | null {
-  if (!address) return null;
-  
-  // Placeholder coordinates - in production, use Mapbox Geocoding API
-  // For now, return Santa Cruz center with slight random offset
-  const randomOffset = () => (Math.random() - 0.5) * 0.02;
-  return [
-    SANTA_CRUZ_CENTER[0] + randomOffset(),
-    SANTA_CRUZ_CENTER[1] + randomOffset()
-  ];
-}
+// This function is now replaced by findCoordinatesForActivity from known-locations.ts
 
 export function InteractiveMap({
   activities,
@@ -113,8 +100,15 @@ export function InteractiveMap({
 
     // Add markers for each activity
     activities.forEach((activity) => {
-      const coords = getCoordinatesFromAddress(activity.address);
-      if (!coords) return;
+      const coords = findCoordinatesForActivity({
+        title: activity.title,
+        venueName: activity.venueName,
+        address: activity.address,
+      });
+      if (!coords) {
+        console.log('No coordinates found for:', activity.title);
+        return;
+      }
 
       const color = getActivityColor(activity);
 

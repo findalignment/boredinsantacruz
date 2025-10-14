@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { getActivitiesForSearch } from '@/app/actions/searchActivities';
 import { SearchDialog } from '@/components/search/search-dialog';
+import { UserButton } from '@/components/auth/user-button';
 
 async function SearchButton() {
   const result = await getActivitiesForSearch();
@@ -49,6 +50,13 @@ export function Header() {
             </Link>
             
             <Link
+              href="/best-time"
+              className="hidden lg:block text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base whitespace-nowrap"
+            >
+              🗓️ Best Time
+            </Link>
+            
+            <Link
               href="/activities"
               className="hidden lg:block text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base"
             >
@@ -61,6 +69,9 @@ export function Header() {
             >
               🍴 Restaurants
             </Link>
+            
+            {/* User Button */}
+            <UserButton />
           </div>
         </div>
       </nav>
