@@ -8,6 +8,10 @@ import { getCurrentWeatherAction } from '@/app/actions/getWeather';
 import { scoreActivityWithContext } from '@/lib/recommendations/scorer';
 import { scoreTideConditions, getTideRecommendation } from '@/lib/recommendations/tide-scorer';
 import { TideDisplay } from '@/components/tides/tide-display';
+import { getReviews, getAverageRating } from '@/app/actions/reviews';
+import { ReviewsSummary } from '@/components/reviews/reviews-summary';
+import { ReviewsList } from '@/components/reviews/reviews-list';
+import { FavoriteButton } from '@/components/favorites/favorite-button';
 import type { Metadata } from 'next';
 
 interface PageProps {
@@ -157,9 +161,16 @@ export default async function ActivityDetailPage({ params }: PageProps) {
 
             {/* Title & Basic Info */}
             <div className="bg-white rounded-xl p-6 shadow-lg">
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                {activity.title}
-              </h1>
+              <div className="flex items-start justify-between gap-4 mb-4">
+                <h1 className="text-4xl font-bold text-gray-900 flex-1">
+                  {activity.title}
+                </h1>
+                <FavoriteButton
+                  itemType="Activity"
+                  itemId={activity.id}
+                  size="lg"
+                />
+              </div>
 
               <div className="flex flex-wrap items-center gap-4 mb-4">
                 {activity.cost !== undefined && (
@@ -309,6 +320,13 @@ export default async function ActivityDetailPage({ params }: PageProps) {
                 )}
               </div>
             </div>
+
+            {/* Reviews Section */}
+            <Suspense fallback={
+              <div className="h-64 bg-gray-200 animate-pulse rounded-xl"></div>
+            }>
+              <ReviewsSection activityId={id} />
+            </Suspense>
           </div>
 
           {/* Sidebar */}
@@ -344,6 +362,46 @@ async function TidesSidebar() {
       <div>
         <h3 className="text-lg font-bold text-gray-900 mb-3">🌊 Today's Tides</h3>
         <TideDisplay tideData={result.data.tideData} compact={true} />
+      </div>
+    );
+  } catch {
+    return null;
+  }
+}
+
+async function ReviewsSection({ activityId }: { activityId: string }) {
+  try {
+    const [reviewsResult, ratingInfo] = await Promise.all([
+      getReviews('Activity', activityId),
+      getAverageRating('Activity', activityId),
+    ]);
+
+    if (!reviewsResult.success) {
+      return null;
+    }
+
+    const reviews = reviewsResult.data;
+
+    return (
+      <div className="space-y-6">
+        {/* Reviews Summary */}
+        <ReviewsSummary
+          itemType="Activity"
+          itemId={activityId}
+          averageRating={ratingInfo.average}
+          reviewCount={ratingInfo.count}
+          showWriteButton={true}
+        />
+
+        {/* Reviews List */}
+        {reviews.length > 0 && (
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              💬 Reviews ({reviews.length})
+            </h2>
+            <ReviewsList reviews={reviews} />
+          </div>
+        )}
       </div>
     );
   } catch {
