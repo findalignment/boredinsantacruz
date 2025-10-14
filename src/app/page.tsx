@@ -1,7 +1,9 @@
 import { SectionCard } from '@/components/ui/section-card';
 import { TodayRecommendations } from '@/components/today-recommendations';
+import { WeeklyForecast } from '@/components/weekly-forecast';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
+import { getWeeklyForecast } from '@/app/actions/getForecast';
 
 export const metadata: Metadata = {
   title: 'Bored in Santa Cruz - Your Ultimate Guide to Local Activities',
@@ -29,6 +31,31 @@ function LoadingRecommendations() {
         </div>
       </div>
     </section>
+  );
+}
+
+function LoadingForecast() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="animate-pulse">
+        <div className="h-8 bg-gray-200 rounded w-48 mb-6"></div>
+        <div className="h-64 bg-gray-200 rounded-xl"></div>
+      </div>
+    </div>
+  );
+}
+
+async function ForecastWidget() {
+  const result = await getWeeklyForecast();
+  
+  if (!result.success || result.data.length === 0) {
+    return null; // Gracefully hide if forecast fails
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <WeeklyForecast forecast={result.data} />
+    </div>
   );
 }
 
@@ -77,6 +104,13 @@ export default function Home() {
       <Suspense fallback={<LoadingRecommendations />}>
         <TodayRecommendations />
       </Suspense>
+
+      {/* Weekly Forecast */}
+      <section className="bg-gradient-to-b from-white to-gray-50 py-12">
+        <Suspense fallback={<LoadingForecast />}>
+          <ForecastWidget />
+        </Suspense>
+      </section>
 
       {/* Activities Section Cards */}
       <section className="bg-gray-50 py-20">
