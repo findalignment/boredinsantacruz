@@ -4,7 +4,8 @@
   "env": {
     "AIRTABLE_TOKEN": "@airtable_token",
     "AIRTABLE_BASE_ID": "@airtable_base_id",
-    "AIRTABLE_RAINY_TABLE": "@airtable_rainy_table"
+    "AIRTABLE_RAINY_TABLE": "@airtable_rainy_table",
+    "OPENWEATHER_API_KEY": "@openweather_api_key"
   }
 }
 
