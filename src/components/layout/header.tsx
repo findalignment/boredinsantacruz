@@ -37,34 +37,64 @@ export function Header() {
               </Suspense>
             </div>
             
-            {/* Desktop Links - Hidden on mobile */}
-            <div className="hidden lg:flex items-center space-x-3">
-              <Link
-                href="/restaurants"
-                className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap hover:scale-105"
-              >
-                🍽️ Restaurants
-              </Link>
+            {/* Desktop Links - Simplified Navigation */}
+            <div className="hidden lg:flex items-center space-x-2">
+              {/* Things to Do Dropdown */}
+              <div className="relative group">
+                <button className="px-3 py-2 text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap inline-flex items-center gap-1">
+                  Things to Do
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div className="absolute left-0 mt-1 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-100">
+                  <div className="py-2">
+                    <Link href="/activities" className="block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-50 hover:text-cyan-600">
+                      🎯 All Activities
+                    </Link>
+                    <Link href="/restaurants" className="block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-50 hover:text-cyan-600">
+                      🍽️ Restaurants
+                    </Link>
+                    <Link href="/wellness" className="block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-50 hover:text-cyan-600">
+                      🧘 Wellness
+                    </Link>
+                    <div className="border-t border-gray-100 my-1"></div>
+                    <Link href="/sunny" className="block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-50 hover:text-cyan-600">
+                      ☀️ Sunny Days
+                    </Link>
+                    <Link href="/rainy" className="block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-50 hover:text-cyan-600">
+                      🌧️ Rainy Days
+                    </Link>
+                  </div>
+                </div>
+              </div>
               
               <Link
                 href="/events"
-                className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap hover:scale-105"
+                className="px-3 py-2 text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap"
               >
-                🎉 Events
+                Tonight
               </Link>
               
               <Link
                 href="/deals"
-                className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap hover:scale-105"
+                className="px-3 py-2 text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap"
               >
-                🍻 Deals
+                Deals
               </Link>
               
               <Link
-                href="/wellness"
-                className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap hover:scale-105"
+                href="/map"
+                className="px-3 py-2 text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap"
               >
-                🧘 Wellness
+                Map
+              </Link>
+
+              <Link
+                href="/best-time"
+                className="px-3 py-2 text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap"
+              >
+                Best Time
               </Link>
             </div>
             

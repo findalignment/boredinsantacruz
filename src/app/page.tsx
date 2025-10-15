@@ -4,18 +4,19 @@ import { BestDayBanner } from '@/components/best-day-banner';
 import { HomepageChat } from '@/components/chatbot/homepage-chat';
 import { TopThreeToday } from '@/components/top-three-today';
 import { FeaturedLocalSpotlight } from '@/components/featured-local-spotlight';
+import { FirstVisitTooltip } from '@/components/onboarding/first-visit-tooltip';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { getWeeklyForecast } from '@/app/actions/getForecast';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Bored in Santa Cruz - Your Local Guide',
-  description: 'Find the best things to do in Santa Cruz today. Get personalized recommendations for activities, restaurants, beaches, and hidden gems.',
-  keywords: ['Santa Cruz guide', 'things to do Santa Cruz', 'Santa Cruz activities', 'Santa Cruz restaurants', 'visit Santa Cruz'],
+  title: 'Santa Cruz Guide - Things to Do Right Now | Bored in Santa Cruz',
+  description: 'Your personalized guide to Santa Cruz. Get weather-aware recommendations for activities, restaurants, beaches & hidden gems - updated in real-time.',
+  keywords: ['Santa Cruz guide', 'things to do Santa Cruz', 'Santa Cruz activities', 'Santa Cruz restaurants', 'visit Santa Cruz', 'Santa Cruz today'],
   openGraph: {
-    title: 'Bored in Santa Cruz - Your Local Guide',
-    description: 'Find the best things to do in Santa Cruz today.',
+    title: 'Your Personalized Santa Cruz Guide',
+    description: 'Things to do in Santa Cruz right now. Weather-aware recommendations for beaches, food, activities & more.',
     type: 'website',
   },
 };
@@ -65,15 +66,61 @@ async function ForecastWidget() {
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
+      {/* First-time visitor onboarding */}
+      <FirstVisitTooltip />
+      
       {/* Best Day Banner */}
       <Suspense fallback={null}>
         <BestDayBanner />
       </Suspense>
 
-      {/* Hero Section */}
-      <section className="py-12 md:py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
+      {/* Hero Section with Clear Value Proposition */}
+      <section className="py-8 md:py-16 px-4 bg-gradient-to-b from-blue-50 via-cyan-50 to-white">
         <div className="max-w-7xl mx-auto">
+          {/* Value Proposition Header */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-blue-500 text-white px-4 py-2 rounded-full mb-4 shadow-lg">
+              <span className="text-lg">🌊</span>
+              <span className="text-sm font-semibold">Your Personalized Santa Cruz Guide</span>
+            </div>
+            
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 leading-tight">
+              Things to Do in Santa Cruz,
+              <br />
+              <span className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
+                Right Now
+              </span>
+            </h1>
+            
+            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-2">
+              Weather-aware recommendations for beaches, restaurants, activities & hidden gems
+            </p>
+            <p className="text-sm md:text-base text-teal-600 font-semibold">
+              ↓ Just tell us what you're looking for ↓
+            </p>
+          </div>
+
+          {/* Chatbot */}
           <HomepageChat />
+
+          {/* Quick Search Prompts */}
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-500 mb-3">Try asking:</p>
+            <div className="flex flex-wrap justify-center gap-2">
+              <button className="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-teal-500 hover:bg-teal-50 transition-all">
+                🏖️ Best beach today
+              </button>
+              <button className="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-teal-500 hover:bg-teal-50 transition-all">
+                🍕 Pizza for dinner
+              </button>
+              <button className="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-teal-500 hover:bg-teal-50 transition-all">
+                ☀️ Outdoor activities
+              </button>
+              <button className="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-teal-500 hover:bg-teal-50 transition-all">
+                🌧️ Rainy day ideas
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
