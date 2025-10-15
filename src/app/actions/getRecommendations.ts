@@ -1,7 +1,8 @@
 // src/app/actions/getRecommendations.ts
 'use server';
 
-import { getActivities } from './getActivities';
+import { getMasterActivities } from './getMasterActivities';
+import { getActivities } from './getActivities'; // Fallback
 import { getCurrentWeather, getWeatherForDate } from '@/lib/weather';
 import { getRecommendations, generateInsights, RecommendationResult } from '@/lib/recommendations/engine';
 
@@ -10,8 +11,15 @@ import { getRecommendations, generateInsights, RecommendationResult } from '@/li
  */
 export async function getTodaysRecommendations() {
   try {
-    // Fetch activities
-    const activitiesResult = await getActivities();
+    // Try master activities first, fallback to legacy
+    let activitiesResult = await getMasterActivities();
+    
+    // If master table not configured or empty, fallback to legacy
+    if (!activitiesResult.success || activitiesResult.data.length === 0) {
+      console.log('[Recommendations] Falling back to legacy activities table');
+      activitiesResult = await getActivities();
+    }
+    
     if (!activitiesResult.success) {
       return {
         success: false,
@@ -20,11 +28,50 @@ export async function getTodaysRecommendations() {
       };
     }
 
+    // Convert master activities to RainyActivity format for compatibility
+    const activities = activitiesResult.data.map((activity: any) => {
+      // If it's already a RainyActivity, return as-is
+      if ('title' in activity && 'venue' in activity) {
+        return activity;
+      }
+      
+      // Convert Activity to RainyActivity format
+      return {
+        id: activity.id,
+        title: activity.name,
+        venue: {} as any,
+        venueName: activity.neighborhood || 'Santa Cruz',
+        tags: activity.tags,
+        cost: activity.cost,
+        duration: activity.duration,
+        notes: activity.description,
+        writeUp: activity.writeUp,
+        website: activity.website || null,
+        instagram: activity.instagram || null,
+        imageUrl: activity.photoUrl || activity.imageUrl || null,
+        address: activity.address,
+        hours: activity.hours,
+        parking: activity.parkingInfo,
+        tips: activity.tips,
+        phone: activity.phone,
+        weatherSuitability: activity.weatherPreferences?.split(','),
+        idealTempMin: activity.idealTempMin,
+        idealTempMax: activity.idealTempMax,
+        indoorOutdoor: activity.indoorOutdoor,
+        rainOk: activity.rainOk,
+        windSensitive: activity.windSensitive,
+        requiresGoodVisibility: activity.requiresGoodVisibility,
+        weatherBoost: activity.weatherBoost,
+        tidePreference: activity.tidePreference,
+        tideCritical: activity.tideCritical,
+      };
+    });
+
     // Fetch current weather
     const weather = await getCurrentWeather();
 
     // Get recommendations
-    const recommendations = getRecommendations(activitiesResult.data, weather, {
+    const recommendations = getRecommendations(activities, weather, {
       minScore: 40, // Only show activities scoring 40+
     });
 
@@ -53,8 +100,15 @@ export async function getTodaysRecommendations() {
  */
 export async function getRecommendationsForDate(date: string) {
   try {
-    // Fetch activities
-    const activitiesResult = await getActivities();
+    // Try master activities first, fallback to legacy
+    let activitiesResult = await getMasterActivities();
+    
+    // If master table not configured or empty, fallback to legacy
+    if (!activitiesResult.success || activitiesResult.data.length === 0) {
+      console.log('[Recommendations] Falling back to legacy activities table');
+      activitiesResult = await getActivities();
+    }
+    
     if (!activitiesResult.success) {
       return {
         success: false,
@@ -63,11 +117,50 @@ export async function getRecommendationsForDate(date: string) {
       };
     }
 
+    // Convert master activities to RainyActivity format for compatibility
+    const activities = activitiesResult.data.map((activity: any) => {
+      // If it's already a RainyActivity, return as-is
+      if ('title' in activity && 'venue' in activity) {
+        return activity;
+      }
+      
+      // Convert Activity to RainyActivity format
+      return {
+        id: activity.id,
+        title: activity.name,
+        venue: {} as any,
+        venueName: activity.neighborhood || 'Santa Cruz',
+        tags: activity.tags,
+        cost: activity.cost,
+        duration: activity.duration,
+        notes: activity.description,
+        writeUp: activity.writeUp,
+        website: activity.website || null,
+        instagram: activity.instagram || null,
+        imageUrl: activity.photoUrl || activity.imageUrl || null,
+        address: activity.address,
+        hours: activity.hours,
+        parking: activity.parkingInfo,
+        tips: activity.tips,
+        phone: activity.phone,
+        weatherSuitability: activity.weatherPreferences?.split(','),
+        idealTempMin: activity.idealTempMin,
+        idealTempMax: activity.idealTempMax,
+        indoorOutdoor: activity.indoorOutdoor,
+        rainOk: activity.rainOk,
+        windSensitive: activity.windSensitive,
+        requiresGoodVisibility: activity.requiresGoodVisibility,
+        weatherBoost: activity.weatherBoost,
+        tidePreference: activity.tidePreference,
+        tideCritical: activity.tideCritical,
+      };
+    });
+
     // Fetch weather for date
     const weather = await getWeatherForDate(date);
 
     // Get recommendations
-    const recommendations = getRecommendations(activitiesResult.data, weather, {
+    const recommendations = getRecommendations(activities, weather, {
       minScore: 40,
     });
 
