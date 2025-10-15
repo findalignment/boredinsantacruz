@@ -133,11 +133,20 @@ export function EventSubmissionForm() {
         throw new Error('Please provide your contact information');
       }
 
-      // TODO: Submit to API/Airtable
-      console.log('Submitting event:', formData);
+      // Submit to API
+      const response = await fetch('/api/events/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to submit event');
+      }
 
       // Redirect to success page
       router.push('/events/submit/success');
