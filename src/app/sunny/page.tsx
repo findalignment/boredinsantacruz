@@ -118,7 +118,7 @@ async function ActivitiesSection() {
               phone: activity.phone,
               indoorOutdoor: activity.indoorOutdoor,
               rainOk: activity.rainOk,
-              tidePrefence: activity.tidePreference,
+              tidePreference: activity.tidePreference,
             }}
             showRecommendationReason={false}
           />
