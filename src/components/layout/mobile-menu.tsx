@@ -12,12 +12,12 @@ export function MobileMenu() {
     { label: 'Home', href: '/', emoji: '🏠' },
     { label: 'Activities', href: '/sunny', emoji: '🌊' },
     { label: 'Restaurants', href: '/restaurants', emoji: '🍽️' },
+    { label: 'Restaurant Week', href: '/restaurant-week', emoji: '🍽️' },
     { label: 'Events', href: '/events', emoji: '🎉' },
     { label: 'Deals', href: '/deals', emoji: '🍻' },
     { label: 'Wellness', href: '/wellness', emoji: '🧘' },
     { label: 'Rainy Day', href: '/rainy', emoji: '🌧️' },
     { label: 'Trip Planner', href: '/trips', emoji: '🗺️' },
-    { label: 'Best Time to Visit', href: '/best-time', emoji: '📅' },
   ];
 
   const isActive = (href: string) => pathname === href;
@@ -51,7 +51,7 @@ export function MobileMenu() {
 
       {/* Mobile Menu Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-80 bg-gradient-to-b from-blue-50 via-white to-cyan-50 shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

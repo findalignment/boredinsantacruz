@@ -47,7 +47,7 @@ export function Header() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
-                <div className="absolute left-0 mt-1 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-100">
+                <div className="absolute left-0 mt-1 w-56 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-100">
                   <div className="py-2">
                     <Link href="/activities" className="block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-50 hover:text-cyan-600">
                       🎯 All Activities
@@ -59,6 +59,9 @@ export function Header() {
                       🧘 Wellness
                     </Link>
                     <div className="border-t border-gray-100 my-1"></div>
+                    <Link href="/restaurant-week" className="block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-50 hover:text-cyan-600">
+                      🍽️ Restaurant Week
+                    </Link>
                     <Link href="/sunny" className="block px-4 py-2 text-sm text-gray-700 hover:bg-cyan-50 hover:text-cyan-600">
                       ☀️ Sunny Days
                     </Link>
@@ -84,24 +87,10 @@ export function Header() {
               </Link>
               
               <Link
-                href="/restaurant-week"
-                className="px-3 py-2 text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap"
-              >
-                🍽️ Restaurant Week
-              </Link>
-              
-              <Link
                 href="/map"
                 className="px-3 py-2 text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap"
               >
                 Map
-              </Link>
-
-              <Link
-                href="/best-time"
-                className="px-3 py-2 text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap"
-              >
-                Best Time
               </Link>
             </div>
             

@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { getRestaurants } from '@/app/actions/getRestaurants';
+import { RestaurantWeekClient } from './page-client';
 
 export const metadata: Metadata = {
   title: 'Santa Cruz Restaurant Week 2025 | October 22-29',
@@ -8,113 +9,53 @@ export const metadata: Metadata = {
   keywords: ['Santa Cruz Restaurant Week', 'dining event', 'special menus', 'Santa Cruz restaurants', 'October 2025'],
   openGraph: {
     title: 'Santa Cruz Restaurant Week 2025',
-    description: '8-day celebration of culinary excellence | October 22-29, 2025',
+    description: '8 days of special menus celebrating Santa Cruz County\'s finest restaurants',
     type: 'website',
   },
-};
-
-// Participating restaurants list from santacruzrestaurantweek.com
-const PARTICIPATING_RESTAURANTS = {
-  capitola: [
-    'Margaritaville Capitola',
-    "Pete's Capitola",
-    'Mobo Sushi',
-    'Avanti Restaurant',
-    'Gabriella Cafe',
-  ],
-  santaCruz: [
-    "Zelda's on the Beach",
-    'Venus Spirits',
-    'Sugo Italian Restaurant',
-    'La Posta Italian Cuisine',
-    "Jack O'Neill Restaurant",
-    'Hook+Line',
-    'Chocolate Santa Cruz',
-    // Additional Santa Cruz restaurants (19 total listed)
-    'Chaminade Resort & Spa',
-    'Crow\'s Nest',
-    'Oswald',
-    'Soif Wine Bar',
-    'Penny Ice Creamery',
-    'Aquarius',
-    'Bantam',
-    'Sanderlings',
-    'Alderwood',
-    'The Picnic Basket',
-    'Vinocruz',
-    'Laili Restaurant',
-  ],
-  aptos: [
-    'Bittersweet Bistro',
-  ],
-  scottsValley: [
-    'Scopazzi\'s',
-    'Hilltop Bistro',
-  ],
-  soquel: [
-    'Manuel\'s Mexican Restaurant',
-    'Clouds Downtown',
-  ],
 };
 
 export default async function RestaurantWeekPage() {
   const result = await getRestaurants();
   const allRestaurants = result.success ? result.data : [];
 
-  // Match participating restaurants with our database
-  const matchRestaurant = (name: string) => {
-    return allRestaurants.find(r => {
-      const nameLower = r.name.toLowerCase();
-      const searchLower = name.toLowerCase();
-      return nameLower.includes(searchLower.split(' ')[0]) || 
-             searchLower.includes(nameLower.split(' ')[0]);
-    });
-  };
-
   return (
     <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 text-white py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
-              <span className="text-2xl">🍽️</span>
-              <span className="text-sm font-semibold">17th Annual Event</span>
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              Santa Cruz Restaurant Week
-            </h1>
-            
-            <p className="text-xl md:text-2xl mb-2 text-orange-100">
-              October 22-29, 2025
-            </p>
-            
-            <p className="text-lg md:text-xl max-w-3xl mx-auto mb-8 text-white/90">
-              8 days celebrating culinary excellence across Santa Cruz County
-            </p>
-
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="#participating"
-                className="px-8 py-4 bg-white text-orange-600 font-bold rounded-lg hover:bg-orange-50 transition-all shadow-lg"
-              >
-                View Participating Restaurants
-              </Link>
-              <a
-                href="https://santacruzrestaurantweek.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-4 bg-orange-800 text-white font-bold rounded-lg hover:bg-orange-900 transition-all shadow-lg"
-              >
-                Official Website →
-              </a>
-            </div>
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
+            <span className="text-2xl">🍽️</span>
+            <span className="font-semibold">October 22-29, 2025</span>
+          </div>
+          
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+            Santa Cruz Restaurant Week
+          </h1>
+          
+          <p className="text-xl md:text-2xl mb-8 text-orange-100">
+            8 days of special menus celebrating culinary excellence
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="#participating"
+              className="inline-block px-8 py-4 bg-white text-orange-600 font-bold rounded-lg hover:bg-orange-50 transition-all shadow-lg hover:scale-105"
+            >
+              View Participating Restaurants →
+            </a>
+            <a
+              href="https://santacruzrestaurantweek.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-8 py-4 bg-orange-800 text-white font-bold rounded-lg hover:bg-orange-900 transition-all"
+            >
+              Official Website ↗
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Event Details */}
+      {/* Event Info Cards */}
       <section className="py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6 mb-12">
@@ -176,358 +117,36 @@ export default async function RestaurantWeekPage() {
             </p>
           </div>
 
-          {/* Capitola */}
-          <div className="mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-              <span className="text-3xl">🌊</span>
-              Capitola ({PARTICIPATING_RESTAURANTS.capitola.length} restaurants)
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {PARTICIPATING_RESTAURANTS.capitola.map((name) => {
-                const restaurant = matchRestaurant(name);
-                return (
-                  <div
-                    key={name}
-                    className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-orange-200 overflow-hidden"
-                  >
-                    {/* Restaurant Logo/Image placeholder */}
-                    <div className="h-32 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
-                      <span className="text-5xl">🍽️</span>
-                    </div>
-                    
-                    <div className="p-6">
-                      <h4 className="text-xl font-bold text-gray-900 mb-2">{name}</h4>
-                      {restaurant ? (
-                        <>
-                          {restaurant.cuisine && (
-                            <p className="text-sm text-orange-600 mb-3">
-                              {restaurant.cuisine.join(', ')}
-                            </p>
-                          )}
-                          {restaurant.address && (
-                            <p className="text-sm text-gray-600 mb-4">
-                              📍 {restaurant.neighborhood || 'Capitola'}
-                            </p>
-                          )}
-                          <Link
-                            href={`/restaurant/${restaurant.id}`}
-                            className="block w-full py-2 bg-orange-600 text-white text-center font-semibold rounded-lg hover:bg-orange-700 transition-colors"
-                          >
-                            View Details →
-                          </Link>
-                        </>
-                      ) : (
-                        <div className="space-y-2">
-                          <p className="text-sm text-gray-600">Capitola, CA</p>
-                          <a
-                            href="https://santacruzrestaurantweek.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block w-full py-2 bg-gray-600 text-white text-center font-semibold rounded-lg hover:bg-gray-700 transition-colors"
-                          >
-                            Learn More →
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Santa Cruz */}
-          <div className="mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-              <span className="text-3xl">🌊</span>
-              Santa Cruz ({PARTICIPATING_RESTAURANTS.santaCruz.length} restaurants)
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {PARTICIPATING_RESTAURANTS.santaCruz.map((name) => {
-                const restaurant = matchRestaurant(name);
-                return (
-                  <div
-                    key={name}
-                    className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-orange-200 overflow-hidden"
-                  >
-                    <div className="h-32 bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center">
-                      <span className="text-5xl">🍽️</span>
-                    </div>
-                    
-                    <div className="p-6">
-                      <h4 className="text-xl font-bold text-gray-900 mb-2">{name}</h4>
-                      {restaurant ? (
-                        <>
-                          {restaurant.cuisine && (
-                            <p className="text-sm text-orange-600 mb-3">
-                              {restaurant.cuisine.join(', ')}
-                            </p>
-                          )}
-                          {restaurant.address && (
-                            <p className="text-sm text-gray-600 mb-4">
-                              📍 {restaurant.neighborhood || 'Santa Cruz'}
-                            </p>
-                          )}
-                          <Link
-                            href={`/restaurant/${restaurant.id}`}
-                            className="block w-full py-2 bg-orange-600 text-white text-center font-semibold rounded-lg hover:bg-orange-700 transition-colors"
-                          >
-                            View Details →
-                          </Link>
-                        </>
-                      ) : (
-                        <div className="space-y-2">
-                          <p className="text-sm text-gray-600">Santa Cruz, CA</p>
-                          <a
-                            href="https://santacruzrestaurantweek.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block w-full py-2 bg-gray-600 text-white text-center font-semibold rounded-lg hover:bg-gray-700 transition-colors"
-                          >
-                            Learn More →
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Aptos */}
-          <div className="mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-              <span className="text-3xl">🌳</span>
-              Aptos ({PARTICIPATING_RESTAURANTS.aptos.length} restaurant)
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {PARTICIPATING_RESTAURANTS.aptos.map((name) => {
-                const restaurant = matchRestaurant(name);
-                return (
-                  <div
-                    key={name}
-                    className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-orange-200 overflow-hidden"
-                  >
-                    <div className="h-32 bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center">
-                      <span className="text-5xl">🍽️</span>
-                    </div>
-                    
-                    <div className="p-6">
-                      <h4 className="text-xl font-bold text-gray-900 mb-2">{name}</h4>
-                      {restaurant ? (
-                        <>
-                          {restaurant.cuisine && (
-                            <p className="text-sm text-orange-600 mb-3">
-                              {restaurant.cuisine.join(', ')}
-                            </p>
-                          )}
-                          <Link
-                            href={`/restaurant/${restaurant.id}`}
-                            className="block w-full py-2 bg-orange-600 text-white text-center font-semibold rounded-lg hover:bg-orange-700 transition-colors"
-                          >
-                            View Details →
-                          </Link>
-                        </>
-                      ) : (
-                        <div className="space-y-2">
-                          <p className="text-sm text-gray-600">Aptos, CA</p>
-                          <a
-                            href="https://santacruzrestaurantweek.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block w-full py-2 bg-gray-600 text-white text-center font-semibold rounded-lg hover:bg-gray-700 transition-colors"
-                          >
-                            Learn More →
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Scotts Valley & Soquel */}
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Scotts Valley */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <span className="text-3xl">🏔️</span>
-                Scotts Valley ({PARTICIPATING_RESTAURANTS.scottsValley.length} restaurants)
-              </h3>
-              <div className="space-y-4">
-                {PARTICIPATING_RESTAURANTS.scottsValley.map((name) => {
-                  const restaurant = matchRestaurant(name);
-                  return (
-                    <div
-                      key={name}
-                      className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-orange-200 p-6"
-                    >
-                      <h4 className="text-lg font-bold text-gray-900 mb-2">{name}</h4>
-                      {restaurant ? (
-                        <Link
-                          href={`/restaurant/${restaurant.id}`}
-                          className="text-orange-600 hover:text-orange-700 font-semibold"
-                        >
-                          View Details →
-                        </Link>
-                      ) : (
-                        <a
-                          href="https://santacruzrestaurantweek.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-gray-600 hover:text-gray-700 font-semibold"
-                        >
-                          Learn More →
-                        </a>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Soquel */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <span className="text-3xl">🌲</span>
-                Soquel ({PARTICIPATING_RESTAURANTS.soquel.length} restaurants)
-              </h3>
-              <div className="space-y-4">
-                {PARTICIPATING_RESTAURANTS.soquel.map((name) => {
-                  const restaurant = matchRestaurant(name);
-                  return (
-                    <div
-                      key={name}
-                      className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-orange-200 p-6"
-                    >
-                      <h4 className="text-lg font-bold text-gray-900 mb-2">{name}</h4>
-                      {restaurant ? (
-                        <Link
-                          href={`/restaurant/${restaurant.id}`}
-                          className="text-orange-600 hover:text-orange-700 font-semibold"
-                        >
-                          View Details →
-                        </Link>
-                      ) : (
-                        <a
-                          href="https://santacruzrestaurantweek.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-gray-600 hover:text-gray-700 font-semibold"
-                        >
-                          Learn More →
-                        </a>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+          {/* Client-side filtering component */}
+          <RestaurantWeekClient initialRestaurants={allRestaurants} />
         </div>
       </section>
 
-      {/* Other Events */}
-      <section className="py-12 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            Other Upcoming Food Events
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-8 border-2 border-blue-200">
-              <div className="text-5xl mb-4">🍔</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                Santa Cruz Burger Week
-              </h3>
-              <p className="text-lg text-gray-700 mb-4">
-                February 26 – March 9, 2026
-              </p>
-              <p className="text-gray-600 mb-4">
-                Celebrate the county's creative chefs with special burger creations at restaurants across Santa Cruz County.
-              </p>
-              <a
-                href="https://santacruzrestaurantweek.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-700 font-semibold"
-              >
-                Learn More →
-              </a>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-8 border-2 border-purple-200">
-              <div className="text-5xl mb-4">🍕</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                Santa Cruz Pizza Week
-              </h3>
-              <p className="text-lg text-gray-700 mb-4">
-                Coming Soon
-              </p>
-              <p className="text-gray-600 mb-4">
-                A celebration of Santa Cruz County's best pizzerias and their creative pies.
-              </p>
-              <a
-                href="https://santacruzrestaurantweek.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-purple-600 hover:text-purple-700 font-semibold"
-              >
-                Learn More →
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-12 px-4 bg-gradient-to-r from-orange-600 to-red-600 text-white">
+      {/* Footer CTA */}
+      <section className="py-16 px-4 bg-gradient-to-r from-orange-600 to-red-600 text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">
             Ready to Experience Restaurant Week?
           </h2>
           <p className="text-xl mb-8 text-orange-100">
-            Make your reservations now for October 22-29, 2025
+            Make your reservations now and prepare for an unforgettable culinary journey
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/restaurants"
-              className="px-8 py-4 bg-white text-orange-600 font-bold rounded-lg hover:bg-orange-50 transition-all shadow-lg"
+              className="inline-block px-8 py-4 bg-white text-orange-600 font-bold rounded-lg hover:bg-orange-50 transition-all shadow-lg hover:scale-105"
             >
               Browse All Restaurants
             </Link>
-            <a
-              href="https://santacruzrestaurantweek.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-4 bg-orange-800 text-white font-bold rounded-lg hover:bg-orange-900 transition-all shadow-lg"
+            <Link
+              href="/deals"
+              className="inline-block px-8 py-4 bg-orange-800 text-white font-bold rounded-lg hover:bg-orange-900 transition-all border-2 border-white"
             >
-              Official Event Site →
-            </a>
+              View More Deals
+            </Link>
           </div>
-        </div>
-      </section>
-
-      {/* Source Attribution */}
-      <section className="py-8 px-4 bg-gray-100">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-sm text-gray-600">
-            Event information from{' '}
-            <a
-              href="https://santacruzrestaurantweek.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-orange-600 hover:text-orange-700 font-semibold"
-            >
-              santacruzrestaurantweek.com
-            </a>
-            {' '}• Powered by Restoweeks
-          </p>
         </div>
       </section>
     </main>
   );
 }
-
