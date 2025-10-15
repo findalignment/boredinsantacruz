@@ -293,19 +293,14 @@ async function importToAirtable(activities: Activity[]) {
     try {
       await tables.rainyActivities.create({
         Title: activity.name,
-        VenueName: activity.name,
         Tags: activity.tags,
         Notes: activity.description || `${activity.category} in Santa Cruz`,
         Cost: 0, // Unknown, will need manual update
         Duration: '1-2 hours', // Default
-        Website: activity.website,
-        Address: activity.address,
-        Hours: activity.hours,
-        Phone: activity.phone,
-        // Weather fields - set reasonable defaults
-        IndoorOutdoor: activity.category.includes('Park') ? 'Outdoor' : 'Indoor',
-        RainOk: activity.category.includes('Park') ? false : true,
       } as any); // Type assertion needed for dynamic Airtable fields
+      
+      // Note: Website, Address, Hours, Phone, IndoorOutdoor fields need to be added manually
+      // or create these fields in Airtable first
 
       console.log(`   ✅ Imported: ${activity.name}`);
       imported++;

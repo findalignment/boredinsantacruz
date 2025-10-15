@@ -63,7 +63,7 @@ async function ForecastWidget() {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/40 to-cyan-50/40">
       {/* Best Day Banner */}
       <Suspense fallback={null}>
         <BestDayBanner />
@@ -75,30 +75,30 @@ export default function Home() {
       </section>
 
       {/* Quick Links Below Chat */}
-      <section className="pb-12">
+      <section className="pb-16">
         <div className="max-w-4xl mx-auto px-4">
           <div className="flex flex-wrap gap-3 justify-center">
             <a
               href="/rainy"
-              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-2xl hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
             >
               🌧️ Rainy Day Activities
             </a>
             <a
               href="/sunny"
-              className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="px-6 py-3 bg-gradient-to-r from-orange-400 to-orange-500 text-white font-semibold rounded-2xl hover:from-orange-500 hover:to-orange-600 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
             >
               ☀️ Sunny Day Fun
             </a>
             <a
               href="/tonight"
-              className="px-6 py-3 bg-purple-600 text-white font-semibold rounded-full hover:bg-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold rounded-2xl hover:from-purple-600 hover:to-purple-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
             >
               🎵 Events Tonight
             </a>
             <a
               href="/map"
-              className="px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded-2xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
             >
               🗺️ Interactive Map
             </a>
@@ -119,9 +119,9 @@ export default function Home() {
       </section>
 
       {/* Browse More Section Cards */}
-      <section className="bg-white py-16">
+      <section className="bg-white/50 backdrop-blur-sm py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-3">
+          <h2 className="text-3xl font-bold text-center mb-3 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
             Explore More
           </h2>
           <p className="text-gray-600 text-center mb-8">

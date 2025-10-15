@@ -93,7 +93,7 @@ export function HomepageChat() {
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "Sorry, I encountered an error. Make sure OPENAI_API_KEY is configured!",
+        content: "Sorry, I encountered an error. Please try again!",
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
@@ -101,44 +101,51 @@ export function HomepageChat() {
     }
   };
 
-  const handleExampleClick = (question: string) => {
+  const handleExampleClick = async (question: string) => {
     setInput(question);
+    // Trigger submit after setting input
+    setTimeout(() => {
+      const form = document.querySelector('form');
+      if (form) form.requestSubmit();
+    }, 100);
   };
 
   return (
     <div className="w-full max-w-4xl mx-auto">
       {/* Hero Section */}
       <div className="text-center mb-8">
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-4">
-          <span className="text-6xl">🤖</span>
-          Ask Cruz Bot
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-400 via-cyan-400 to-teal-400 rounded-2xl mb-4 shadow-lg">
+          <span className="text-3xl">🌊</span>
+        </div>
+        <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
+          What to do in Santa Cruz
         </h1>
-        <p className="text-xl text-gray-600 mb-6">
-          Your AI-powered Santa Cruz activity guide. Ask me anything!
+        <p className="text-lg text-gray-600">
+          Get personalized recommendations for activities, restaurants, beaches, and more
         </p>
       </div>
 
       {/* Chat Container */}
-      <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-gray-200">
+      <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-gray-200/50">
         {/* Messages */}
-        <div className="h-[500px] overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-gray-50 to-white">
+        <div className="h-[500px] overflow-y-auto p-6 space-y-4">
           {messages.length === 0 ? (
             <div className="text-center py-12">
-              <div className="text-6xl mb-4">👋</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                Hi! I'm Cruz Bot
+              <div className="text-5xl mb-4">👋</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                Hi! Ask me anything about Santa Cruz
               </h3>
               <p className="text-gray-600 mb-8">
-                Your personal Santa Cruz activity assistant. Try asking:
+                Try one of these popular questions:
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
                 {EXAMPLE_QUESTIONS.map((q, i) => (
                   <button
                     key={i}
                     onClick={() => handleExampleClick(q)}
-                    className="text-left p-3 bg-blue-50 hover:bg-blue-100 rounded-lg text-sm text-gray-800 transition-colors border border-blue-200"
+                    className="text-left p-4 bg-gradient-to-br from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 rounded-xl text-sm text-gray-800 transition-all border border-blue-200/50 shadow-sm hover:shadow-md"
                   >
-                    💭 {q}
+                    <span className="font-medium">{q}</span>
                   </button>
                 ))}
               </div>
@@ -151,23 +158,23 @@ export function HomepageChat() {
                   className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] rounded-2xl p-4 ${
+                    className={`max-w-[85%] rounded-2xl p-4 shadow-sm ${
                       message.role === 'user'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-900 border border-gray-200'
+                        ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white'
+                        : 'bg-white text-gray-900 border border-gray-200'
                     }`}
                   >
-                    <p className="text-sm whitespace-pre-line">{message.content}</p>
+                    <p className="text-sm leading-relaxed whitespace-pre-line">{message.content}</p>
                   </div>
                 </div>
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-gray-100 border border-gray-200 rounded-2xl p-4">
+                  <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
                     <div className="flex gap-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                     </div>
                   </div>
                 </div>
@@ -178,30 +185,26 @@ export function HomepageChat() {
         </div>
 
         {/* Input Form */}
-        <form onSubmit={handleSubmit} className="border-t-2 border-gray-200 p-4 bg-white">
+        <form onSubmit={handleSubmit} className="border-t border-gray-200/50 p-4 bg-gradient-to-br from-gray-50 to-white">
           <div className="flex gap-3">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask me anything about Santa Cruz..."
-              className="flex-1 px-6 py-4 border-2 border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+              className="flex-1 px-5 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-base bg-white shadow-sm"
               disabled={isLoading}
             />
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed font-semibold text-base shadow-lg hover:shadow-xl"
+              className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-7 py-3 rounded-2xl hover:from-blue-600 hover:to-cyan-600 transition-all disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed font-semibold text-base shadow-md hover:shadow-lg"
             >
               Send
             </button>
           </div>
-          <p className="text-xs text-gray-500 mt-3 text-center">
-            Powered by AI • Weather-aware • Santa Cruz focused 🌊
-          </p>
         </form>
       </div>
     </div>
   );
 }
-

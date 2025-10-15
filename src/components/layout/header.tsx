@@ -16,13 +16,13 @@ async function SearchButton() {
 
 export function Header() {
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-200/50">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 flex-shrink-0">
-            <span className="text-2xl">🌊</span>
-            <span className="text-lg sm:text-xl font-bold text-gray-900">
+          <Link href="/" className="flex items-center space-x-2 flex-shrink-0 group">
+            <span className="text-2xl group-hover:scale-110 transition-transform duration-300">🌊</span>
+            <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
               Bored in Santa Cruz
             </span>
           </Link>
@@ -36,7 +36,7 @@ export function Header() {
             
             <Link
               href="/map"
-              className="text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base whitespace-nowrap"
+              className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base whitespace-nowrap hover:scale-105"
             >
               <span className="sm:hidden">🗺️</span>
               <span className="hidden sm:inline">🗺️ Map</span>
@@ -44,28 +44,28 @@ export function Header() {
             
             <Link
               href="/tonight"
-              className="hidden md:block text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base whitespace-nowrap"
+              className="hidden md:block text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base whitespace-nowrap hover:scale-105"
             >
               🎉 Tonight
             </Link>
             
             <Link
               href="/best-time"
-              className="hidden lg:block text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base whitespace-nowrap"
+              className="hidden lg:block text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base whitespace-nowrap hover:scale-105"
             >
               🗓️ Best Time
             </Link>
             
             <Link
               href="/activities"
-              className="hidden lg:block text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base"
+              className="hidden lg:block text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base hover:scale-105"
             >
               Activities
             </Link>
             
             <Link
               href="/restaurants"
-              className="hidden xl:block text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm lg:text-base"
+              className="hidden xl:block text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base hover:scale-105"
             >
               🍴 Restaurants
             </Link>
