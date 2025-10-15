@@ -1,216 +1,198 @@
 # 🌊 Bored in Santa Cruz
 
-Your ultimate guide to discovering activities, venues, and experiences in Santa Cruz, California — rain or shine!
+Your ultimate guide to Santa Cruz activities, powered by AI and real-time weather data.
 
-## Features
+## 🎯 What It Does
 
-- 🌤️ **Weather-Aware Recommendations** - Smart activity suggestions based on real-time weather
-- 🌧️ **Rainy Day Activities** - Indoor activities, cozy cafes, museums, and more
-- ☀️ **Sunny Day Activities** - Beach days, hiking trails, outdoor dining (coming soon)
-- 🔍 **Advanced Filtering** - Filter by tags, cost, duration, and indoor/outdoor
-- 📱 **Fully Responsive** - Optimized for mobile, tablet, and desktop
-- ⚡ **Fast & Modern** - Built with Next.js 15 and React Server Components
-- 🎨 **Beautiful UI** - Tailwind CSS with smooth animations
-- 🗓️ **7-Day Forecast** - Plan your Santa Cruz activities based on upcoming weather
+**Bored in Santa Cruz** helps you discover the perfect things to do in Santa Cruz County based on:
+- Current weather conditions
+- Your preferences and interests
+- Time of day and season
+- Real-time tide predictions
+- Restaurant hours and availability
 
-## Tech Stack
+## ✨ Features
 
-- **Framework:** Next.js 15 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS
-- **Database:** Airtable
-- **Weather API:** OpenWeather
-- **Cache:** Vercel KV (Redis)
-- **Deployment:** Vercel
+### Core Features
+- 🤖 **AI-Powered Recommendations** - Ask "What should I do today?" and get personalized suggestions
+- 🌦️ **Weather-Aware** - Activities ranked by current conditions
+- 📅 **Date-Based Planning** - See what's best for any future date
+- 🌊 **Tide Integration** - Perfect timing for tide pooling
+- 🗺️ **Interactive Maps** - Explore activities on a map
+- 📍 **Save Favorites** - Bookmark your favorite spots
+- ⭐ **Reviews** - Rate and review activities
 
-## Getting Started
+### Trip Planning
+- 📌 **Create Trips** - Plan your Santa Cruz visit
+- 🔀 **Drag-and-Drop** - Organize your itinerary by day
+- 🤝 **Collaborative** - Share trips with friends/family
+- 🔗 **Share Links** - Send read-only trip views
+- 💾 **Save from Anywhere** - Add activities/restaurants to trips in 1 click
+
+### Discovery
+- 🍴 **Restaurant Directory** - 100+ restaurants with hours, menus, and reviews
+- 🏖️ **Beach Guide** - All beaches with parking info
+- 🎭 **Events** - What's happening tonight
+- 🗺️ **Secret Map** - Hidden local gems
+- 🌤️ **Weather Pages** - Activities filtered by condition (sunny, rainy, foggy)
+
+## 🚀 Tech Stack
+
+- **Frontend**: Next.js 15 (App Router, React Server Components)
+- **Styling**: Tailwind CSS
+- **Database**: Airtable
+- **Auth**: NextAuth.js v5 (Google OAuth + Magic Link)
+- **AI**: OpenAI GPT-4 Turbo
+- **Weather**: OpenWeather API
+- **Tides**: NOAA Tides & Currents API
+- **Maps**: Mapbox GL JS
+- **Search**: Fuse.js
+- **Deployment**: Vercel
+
+## 📦 Getting Started
 
 ### Prerequisites
+- Node.js 18+
+- npm or yarn
+- Airtable account
+- OpenWeather API key
+- OpenAI API key (for chatbot)
 
-- Node.js 18+ installed
-- An Airtable account with API access
-- An OpenWeather API key (free tier available)
+### Environment Variables
+
+Create `.env.local`:
+
+```bash
+# Airtable
+AIRTABLE_TOKEN=your_token
+AIRTABLE_BASE_ID=your_base_id
+AIRTABLE_RAINY_TABLE=RainyActivities
+AIRTABLE_RESTAURANTS_TABLE=Restaurants
+AIRTABLE_SUNNY_TABLE=SunnyActivities
+AIRTABLE_FAVORITES_TABLE=Favorites
+AIRTABLE_REVIEWS_TABLE=Reviews
+AIRTABLE_TRIPS_TABLE=Trips
+AIRTABLE_TRIP_ITEMS_TABLE=TripItems
+
+# Weather
+OPENWEATHER_API_KEY=your_key
+
+# AI Chatbot
+OPENAI_API_KEY=your_key
+
+# Maps
+NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=your_token
+MAPBOX_ACCESS_TOKEN=your_token
+
+# Auth
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_secret
+GOOGLE_CLIENT_ID=your_id
+GOOGLE_CLIENT_SECRET=your_secret
+
+# Email (Magic Link)
+RESEND_API_KEY=your_key
+EMAIL_FROM=noreply@yourdomain.com
+
+# Optional: Vercel KV (caching)
+KV_REST_API_URL=your_url
+KV_REST_API_TOKEN=your_token
+
+# Optional: Google Places (data import)
+GOOGLE_PLACES_API_KEY=your_key
+```
 
 ### Installation
 
-1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/boredinsantacruz.git
-cd boredinsantacruz
-```
-
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
 
-3. Create a `.env.local` file in the root directory:
-```env
-# Airtable
-AIRTABLE_TOKEN=your_airtable_personal_access_token
-AIRTABLE_BASE_ID=your_base_id
-AIRTABLE_RAINY_TABLE=RainyActivities
-
-# OpenWeather (get free key at openweathermap.org)
-OPENWEATHER_API_KEY=your_openweather_api_key
-```
-
-See `ENV_SETUP.md` for detailed setup instructions.
-
-4. Run the development server:
-```bash
+# Run development server
 npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+Visit `http://localhost:3000`
 
-6. (Optional) Test weather integration: [http://localhost:3000/api/weather/test](http://localhost:3000/api/weather/test)
+## 📊 Airtable Setup
 
-For detailed setup instructions, see `QUICK_START.md`.
+See `AIRTABLE_IMPORT_GUIDE.md` for detailed setup instructions.
 
-## Airtable Setup
+**Quick Start:**
+1. Create an Airtable base
+2. Import CSVs:
+   - `santacruz-activities-google.csv` → RainyActivities table
+   - `santacruz-restaurants-google.csv` → Restaurants table
+   - `santacruz-sunny-activities.csv` → SunnyActivities table
+3. Create additional tables: Favorites, Reviews, Trips, TripItems (see schemas in docs)
+4. Add table IDs to `.env.local`
 
-Your Airtable base should have a table called `RainyActivities` with the following fields:
+## 🎨 Key Pages
 
-- **Title** (Single line text) - Required
-- **VenueName** (Single line text)
-- **Tags** (Multiple select)
-- **Cost** (Number)
-- **Duration** (Single select or text)
-- **Notes** (Long text)
-- **Website** (URL)
-- **Instagram** (URL)
-- **Image** (Attachment)
+- `/` - Homepage with AI chatbot
+- `/activities` - All activities with filters
+- `/activities/[date]` - Date-specific recommendations
+- `/restaurants` - Restaurant directory
+- `/restaurants/map` - Restaurant map view
+- `/map` - Interactive activity map
+- `/tonight` - Events happening tonight
+- `/secret-map` - Hidden local spots
+- `/sunny` - Sunny day activities
+- `/rainy` - Rainy day activities
+- `/weather/[type]` - Weather-specific pages
+- `/trips` - Trip planner
+- `/best-time` - Best time to visit Santa Cruz
+- `/profile` - User profile with favorites
+- `/login` - Authentication
 
-### Getting Your Airtable Token
+## 📈 Project Status
 
-1. Go to https://airtable.com/create/tokens
-2. Click "Create new token"
-3. Give it a name (e.g., "Santa Cruz App")
-4. Add scopes: `data.records:read`
-5. Add access to your base
-6. Click "Create token"
-7. Copy the full token and add it to your `.env.local` file
+**Current Sprint**: Sprint 10 - Trip Planner
+**Status**: 🟢 Active Development
 
-## Deployment to Vercel
+### Completed
+- ✅ Weather integration with 12 categories
+- ✅ Activity scoring algorithm
+- ✅ Recommendation engine
+- ✅ Search functionality
+- ✅ Map integration
+- ✅ Events pages
+- ✅ Restaurant directory
+- ✅ AI chatbot
+- ✅ Authentication (Google OAuth + Magic Link)
+- ✅ Favorites system
+- ✅ Reviews & ratings
+- ✅ Trip planner with drag-and-drop
+- ✅ Share trips
+- ✅ Tide integration
 
-### Quick Deploy
+### In Progress
+- 🔄 AI trip generator
+- 🔄 PDF export
+- 🔄 Trip templates
+- 🔄 Social features (like/comment)
 
-1. Push your code to GitHub
+## 🤝 Contributing
 
-2. Go to [Vercel](https://vercel.com) and sign in
+This is a personal project, but suggestions are welcome! Open an issue or reach out.
 
-3. Click "Add New Project" and import your repository
+## 📄 License
 
-4. Add environment variables:
-   - `AIRTABLE_TOKEN` - Your Airtable personal access token
-   - `AIRTABLE_BASE_ID` - Your Airtable base ID
-   - `AIRTABLE_RAINY_TABLE` - `RainyActivities`
-   - `OPENWEATHER_API_KEY` - Your OpenWeather API key
-   
-5. (Optional) Set up Vercel KV for weather caching:
-   - Go to Storage tab → Create Database → KV
-   - Name it `weather-cache`
-   - Vercel automatically adds the required env vars
+MIT License - See LICENSE file for details
 
-6. Click "Deploy"
+## 🙏 Acknowledgments
 
-### Manual Deploy
-
-```bash
-npm install -g vercel
-vercel
-```
-
-Follow the prompts and add your environment variables when asked.
-
-## Weather Integration
-
-This site now features intelligent weather-aware recommendations! See these docs for details:
-
-- 📘 **`WEATHER_INTEGRATION_PLAN.md`** - Complete strategy and roadmap
-- ✅ **`SPRINT_1_COMPLETE.md`** - What's been implemented
-- 🚀 **`QUICK_START.md`** - Get started with weather features
-- ⚙️ **`ENV_SETUP.md`** - Environment setup guide
-
-### Quick Test
-
-After setup, visit `/api/weather/test` to verify the weather system is working.
-
-## Project Structure
-
-```
-boredinsantacruz/
-├── src/
-│   ├── app/
-│   │   ├── actions/          # Server actions
-│   │   │   ├── getActivities.ts
-│   │   │   └── getWeather.ts    # NEW: Weather actions
-│   │   ├── api/
-│   │   │   └── weather/         # NEW: Weather API routes
-│   │   ├── rainy/           # Rainy day activities page
-│   │   ├── layout.tsx       # Root layout with header/footer
-│   │   └── page.tsx         # Homepage
-│   ├── components/
-│   │   ├── layout/          # Header and Footer
-│   │   ├── ui/              # Reusable UI components
-│   │   ├── activity-card.tsx
-│   │   ├── activity-filters.tsx
-│   │   └── filtered-activities.tsx
-│   ├── lib/
-│   │   ├── airtable.ts      # Airtable connection
-│   │   ├── logger.ts        # NEW: Logging utility
-│   │   └── weather/         # NEW: Weather module
-│   │       ├── api.ts       # OpenWeather API client
-│   │       ├── cache.ts     # Vercel KV caching
-│   │       ├── categorizer.ts  # Weather intelligence
-│   │       ├── service.ts   # Main weather service
-│   │       ├── types.ts     # Weather types
-│   │       └── index.ts     # Barrel exports
-│   └── types/
-│       └── index.ts         # TypeScript types
-├── public/                  # Static files
-└── tailwind.config.ts       # Tailwind configuration
-```
-
-## Features Roadmap
-
-### Phase 1: Foundation ✅
-- [x] Rainy day activities with filtering
-- [x] SEO optimization
-- [x] Mobile responsive design
-- [x] Weather API integration
-- [x] Intelligent weather categorization
-- [x] 7-day forecast support
-- [x] Weather caching system
-
-### Phase 2: In Progress 🚧
-- [ ] Weather-based activity scoring
-- [ ] Smart recommendations engine
-- [ ] Date picker for planning
-- [ ] Sunny day activities
-
-### Phase 3: Coming Soon 🔮
-- [ ] Santa Cruz Tonight (live events)
-- [ ] The Secret Map (hidden gems)
-- [ ] AI Concierge chatbot
-- [ ] User submissions
-- [ ] Newsletter integration
-- [ ] Historical weather analysis
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is open source and available under the MIT License.
-
-## Contact
-
-Have suggestions or want to add your venue? Email: hello@boredinsantacruz.com
+- Weather data from OpenWeather
+- Tide data from NOAA
+- Restaurant/activity data from Google Places API
+- Icons and design inspiration from various sources
 
 ---
 
-Made with ❤️ for Santa Cruz locals and visitors
-
+Built with ❤️ for Santa Cruz, CA 🌊
