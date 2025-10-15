@@ -603,17 +603,4 @@ StaffPick           | Checkbox          | Optional
 
 ---
 
-## 💡 Pro Tips
-
-1. **Start simple** - Add minimum fields first, expand later
-2. **Use consistent formats** - Especially for dates, times, currency
-3. **Fill what you know** - Leave optional fields blank if unknown
-4. **Test with one record** - Verify it displays correctly before adding more
-5. **Copy from CSV** - Use the included CSV as a template
-6. **Batch import** - Add many at once, refine details later
-7. **Keep updated** - Review and update hours, prices quarterly
-
----
-
-**This is your complete field specification!** Pick the fields that matter most to you and start building. You can always add more fields later. 🚀
 

@@ -84,6 +84,13 @@ export function Header() {
               </Link>
               
               <Link
+                href="/restaurant-week"
+                className="px-3 py-2 text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap"
+              >
+                🍽️ Restaurant Week
+              </Link>
+              
+              <Link
                 href="/map"
                 className="px-3 py-2 text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap"
               >
