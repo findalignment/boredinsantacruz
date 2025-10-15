@@ -28,7 +28,7 @@ export function HomepageChat() {
   useEffect(() => {
     // Scroll to bottom when messages change
     if (messages.length > 0 && messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
     }
   }, [messages]);
 
@@ -117,6 +117,13 @@ export function HomepageChat() {
           newMessages[newMessages.length - 1] = { ...assistantMessage };
           return newMessages;
         });
+
+        // Scroll to bottom during streaming so user can see the response
+        setTimeout(() => {
+          if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          }
+        }, 0);
       }
 
       console.log('✨ Message complete, length:', assistantMessage.content.length);
