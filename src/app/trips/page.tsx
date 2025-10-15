@@ -1,5 +1,4 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth/config';
+import { auth } from '@/lib/auth/config';
 import { redirect } from 'next/navigation';
 import { getTrips } from '@/app/actions/trips';
 import Link from 'next/link';
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function TripsPage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   
   if (!session?.user) {
     redirect('/login?callbackUrl=/trips');

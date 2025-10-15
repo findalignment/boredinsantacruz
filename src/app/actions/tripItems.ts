@@ -1,8 +1,7 @@
 'use server';
 
 import { tables } from '@/lib/airtable';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth/config';
+import { auth } from '@/lib/auth/config';
 import type { TripItem, AddItemToTripInput } from '@/types/trips';
 import { getTripById } from './trips';
 
@@ -11,7 +10,7 @@ import { getTripById } from './trips';
  */
 export async function addItemToTrip(input: AddItemToTripInput) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session?.user?.email) {
       return { success: false, error: 'You must be logged in' };
     }
@@ -69,7 +68,7 @@ export async function addItemToTrip(input: AddItemToTripInput) {
  */
 export async function removeItemFromTrip(itemId: string) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session?.user?.email) {
       return { success: false, error: 'You must be logged in' };
     }
@@ -105,7 +104,7 @@ export async function removeItemFromTrip(itemId: string) {
  */
 export async function updateTripItem(itemId: string, updates: { notes?: string; day?: number }) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session?.user?.email) {
       return { success: false, error: 'You must be logged in' };
     }
@@ -145,7 +144,7 @@ export async function updateTripItem(itemId: string, updates: { notes?: string; 
  */
 export async function reorderTripItems(tripId: string, items: { id: string; day: number; order: number }[]) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session?.user?.email) {
       return { success: false, error: 'You must be logged in' };
     }

@@ -1,8 +1,7 @@
 'use server';
 
 import { tables } from '@/lib/airtable';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth/config';
+import { auth } from '@/lib/auth/config';
 import { v4 as uuidv4 } from 'uuid';
 import type { Trip, TripWithItems, CreateTripInput } from '@/types/trips';
 
@@ -11,7 +10,7 @@ import type { Trip, TripWithItems, CreateTripInput } from '@/types/trips';
  */
 export async function createTrip(input: CreateTripInput) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session?.user?.email) {
       return { success: false, error: 'You must be logged in to create a trip' };
     }
@@ -54,7 +53,7 @@ export async function createTrip(input: CreateTripInput) {
  */
 export async function getTrips() {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session?.user?.email) {
       return { success: false, error: 'You must be logged in to view trips' };
     }
@@ -91,7 +90,7 @@ export async function getTrips() {
  */
 export async function getTripById(tripId: string): Promise<{ success: boolean; data?: TripWithItems; error?: string }> {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     
     // Get trip
     const tripRecord = await tables.trips.find(tripId);
@@ -174,7 +173,7 @@ export async function getTripByToken(token: string): Promise<{ success: boolean;
  */
 export async function updateTrip(tripId: string, updates: Partial<CreateTripInput>) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session?.user?.email) {
       return { success: false, error: 'You must be logged in' };
     }
@@ -213,7 +212,7 @@ export async function updateTrip(tripId: string, updates: Partial<CreateTripInpu
  */
 export async function deleteTrip(tripId: string) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session?.user?.email) {
       return { success: false, error: 'You must be logged in' };
     }
@@ -249,7 +248,7 @@ export async function deleteTrip(tripId: string) {
  */
 export async function generateShareToken(tripId: string) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session?.user?.email) {
       return { success: false, error: 'You must be logged in' };
     }
