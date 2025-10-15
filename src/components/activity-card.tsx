@@ -1,9 +1,9 @@
-import { RainyActivity, ScoredActivity } from '@/types';
+import { RainyActivity, ScoredActivity, Activity } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
 
 interface ActivityCardProps {
-  activity: RainyActivity | ScoredActivity;
+  activity: RainyActivity | ScoredActivity | Activity;
   showRecommendationReason?: boolean;
   rating?: { average: number; count: number };
   isFeatured?: boolean;
@@ -17,6 +17,13 @@ export function ActivityCard({
   isFeatured = false,
   isSponsored = false,
 }: ActivityCardProps) {
+  // Handle both Activity (name) and RainyActivity/ScoredActivity (title) types
+  const title = 'title' in activity ? activity.title : 'name' in activity ? (activity as Activity).name : 'Unnamed Activity';
+  const description = 'notes' in activity ? activity.notes : 'description' in activity ? (activity as Activity).description : undefined;
+  const imageUrl = activity.imageUrl || ('photoUrl' in activity ? (activity as Activity).photoUrl : null);
+  const venueName = 'venueName' in activity ? activity.venueName : 'neighborhood' in activity ? (activity as Activity).neighborhood : undefined;
+  const address = 'address' in activity ? activity.address : undefined;
+  
   const costDisplay = activity.cost === 0 ? 'Free' : 
                       activity.cost <= 10 ? '$' :
                       activity.cost <= 30 ? '$$' :
@@ -40,11 +47,11 @@ export function ActivityCard({
       )}
 
       {/* Image */}
-      {activity.imageUrl ? (
+      {imageUrl ? (
         <div className="relative h-48 w-full bg-gray-200">
           <Image
-            src={activity.imageUrl}
-            alt={activity.title}
+            src={imageUrl}
+            alt={title}
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -62,12 +69,12 @@ export function ActivityCard({
       {/* Content */}
       <div className="p-5">
         <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition-colors">
-          {activity.title}
+          {title}
         </h3>
         
-        {activity.venueName && (
+        {venueName && (
           <p className="text-sm text-blue-600 mb-3 flex items-center gap-1">
-            📍 {activity.venueName}
+            📍 {venueName}
           </p>
         )}
 
@@ -128,9 +135,9 @@ export function ActivityCard({
         </div>
 
         {/* Notes */}
-        {activity.notes && (
+        {description && (
           <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-            {activity.notes}
+            {description}
           </p>
         )}
 

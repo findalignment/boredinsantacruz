@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { StarRating } from './star-rating';
 
 interface ReviewsSummaryProps {
-  itemType: 'Activity' | 'Restaurant';
+  itemType: 'Activity' | 'Restaurant' | 'Wellness';
   itemId: string;
   averageRating: number;
   reviewCount: number;

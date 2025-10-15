@@ -7,7 +7,7 @@ import { revalidatePath } from 'next/cache';
 export interface Favorite {
   id: string;
   userId: string;
-  itemType: 'Activity' | 'Restaurant';
+  itemType: 'Activity' | 'Restaurant' | 'Wellness';
   itemId: string;
   notes?: string;
   createdAt: string;
@@ -16,7 +16,7 @@ export interface Favorite {
 /**
  * Add an item to user's favorites
  */
-export async function addFavorite(itemType: 'Activity' | 'Restaurant', itemId: string, notes?: string) {
+export async function addFavorite(itemType: 'Activity' | 'Restaurant' | 'Wellness', itemId: string, notes?: string) {
   const session = await auth();
   
   if (!session?.user?.id) {
@@ -78,7 +78,7 @@ export async function addFavorite(itemType: 'Activity' | 'Restaurant', itemId: s
 /**
  * Remove an item from user's favorites
  */
-export async function removeFavorite(itemType: 'Activity' | 'Restaurant', itemId: string) {
+export async function removeFavorite(itemType: 'Activity' | 'Restaurant' | 'Wellness', itemId: string) {
   const session = await auth();
   
   if (!session?.user?.id) {

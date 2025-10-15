@@ -12,12 +12,12 @@ import { getRecommendations, generateInsights, RecommendationResult } from '@/li
 export async function getTodaysRecommendations() {
   try {
     // Try master activities first, fallback to legacy
-    let activitiesResult = await getMasterActivities();
+    let activitiesResult: { success: boolean; data: any[]; error?: string } = await getMasterActivities();
     
     // If master table not configured or empty, fallback to legacy
     if (!activitiesResult.success || activitiesResult.data.length === 0) {
       console.log('[Recommendations] Falling back to legacy activities table');
-      activitiesResult = await getActivities();
+      activitiesResult = await getActivities() as { success: boolean; data: any[]; error?: string };
     }
     
     if (!activitiesResult.success) {
@@ -101,12 +101,12 @@ export async function getTodaysRecommendations() {
 export async function getRecommendationsForDate(date: string) {
   try {
     // Try master activities first, fallback to legacy
-    let activitiesResult = await getMasterActivities();
+    let activitiesResult: { success: boolean; data: any[]; error?: string } = await getMasterActivities();
     
     // If master table not configured or empty, fallback to legacy
     if (!activitiesResult.success || activitiesResult.data.length === 0) {
       console.log('[Recommendations] Falling back to legacy activities table');
-      activitiesResult = await getActivities();
+      activitiesResult = await getActivities() as { success: boolean; data: any[]; error?: string };
     }
     
     if (!activitiesResult.success) {

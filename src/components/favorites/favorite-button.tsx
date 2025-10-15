@@ -6,7 +6,7 @@ import { addFavorite, removeFavorite } from '@/app/actions/favorites';
 import { useRouter } from 'next/navigation';
 
 interface FavoriteButtonProps {
-  itemType: 'Activity' | 'Restaurant';
+  itemType: 'Activity' | 'Restaurant' | 'Wellness';
   itemId: string;
   initialIsFavorited?: boolean;
   size?: 'sm' | 'md' | 'lg';

@@ -9,7 +9,7 @@ export interface Review {
   userId: string;
   userName: string;
   userEmail?: string;
-  itemType: 'Activity' | 'Restaurant';
+  itemType: 'Activity' | 'Restaurant' | 'Wellness';
   itemId: string;
   rating: number; // 1-5
   title: string;
@@ -29,10 +29,16 @@ export interface Review {
   activityValueRating?: number;
   accessibilityRating?: number;
   weatherRating?: number;
+  
+  // Wellness-specific ratings
+  cleanlinessRating?: number;
+  instructorRating?: number;
+  equipmentRating?: number;
+  wellnessValueRating?: number;
 }
 
 export interface CreateReviewData {
-  itemType: 'Activity' | 'Restaurant';
+  itemType: 'Activity' | 'Restaurant' | 'Wellness';
   itemId: string;
   rating: number;
   title: string;
@@ -48,6 +54,10 @@ export interface CreateReviewData {
   activityValueRating?: number;
   accessibilityRating?: number;
   weatherRating?: number;
+  cleanlinessRating?: number;
+  instructorRating?: number;
+  equipmentRating?: number;
+  wellnessValueRating?: number;
 }
 
 /**
@@ -246,7 +256,7 @@ export async function deleteReview(reviewId: string) {
 /**
  * Get all reviews for an item (public only, or all if user is viewing their own)
  */
-export async function getReviews(itemType: 'Activity' | 'Restaurant', itemId: string) {
+export async function getReviews(itemType: 'Activity' | 'Restaurant' | 'Wellness', itemId: string) {
   const session = await auth();
   
   try {
@@ -368,7 +378,7 @@ export async function getUserReviews() {
 /**
  * Get average rating for an item
  */
-export async function getAverageRating(itemType: 'Activity' | 'Restaurant', itemId: string) {
+export async function getAverageRating(itemType: 'Activity' | 'Restaurant' | 'Wellness', itemId: string) {
   try {
     const records = await tables.reviews
       .select({
