@@ -3,6 +3,8 @@ import { TodayRecommendations } from '@/components/today-recommendations';
 import { WeeklyForecast } from '@/components/weekly-forecast';
 import { BestDayBanner } from '@/components/best-day-banner';
 import { HomepageChat } from '@/components/chatbot/homepage-chat';
+import { TopThreeToday } from '@/components/top-three-today';
+import { FeaturedLocalSpotlight } from '@/components/featured-local-spotlight';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { getWeeklyForecast } from '@/app/actions/getForecast';
@@ -77,34 +79,51 @@ export default function Home() {
       {/* Quick Links Below Chat */}
       <section className="pb-16">
         <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-center text-lg font-semibold text-gray-700 mb-4">
+            Or browse by category
+          </h2>
           <div className="flex flex-wrap gap-3 justify-center">
             <a
               href="/rainy"
               className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-2xl hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
             >
-              🌧️ Rainy Day Activities
+              🌧️ Things to Do
             </a>
             <a
               href="/sunny"
               className="px-6 py-3 bg-gradient-to-r from-orange-400 to-orange-500 text-white font-semibold rounded-2xl hover:from-orange-500 hover:to-orange-600 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
             >
-              ☀️ Sunny Day Fun
+              ☀️ Outdoors
+            </a>
+            <a
+              href="/restaurants"
+              className="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-600 text-white font-semibold rounded-2xl hover:from-red-600 hover:to-pink-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
+            >
+              🍴 Eat & Drink
+            </a>
+            <a
+              href="/secret-map"
+              className="px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold rounded-2xl hover:from-purple-600 hover:to-purple-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
+            >
+              🗺️ Hidden Gems
             </a>
             <a
               href="/tonight"
-              className="px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold rounded-2xl hover:from-purple-600 hover:to-purple-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
+              className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold rounded-2xl hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
             >
-              🎵 Events Tonight
-            </a>
-            <a
-              href="/map"
-              className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded-2xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
-            >
-              🗺️ Interactive Map
+              🎵 Tonight
             </a>
           </div>
         </div>
       </section>
+
+      {/* Top 3 for Today */}
+      <Suspense fallback={<LoadingRecommendations />}>
+        <TopThreeToday />
+      </Suspense>
+
+      {/* Featured Local Spotlight (Monetization) */}
+      <FeaturedLocalSpotlight />
 
       {/* Today's Recommendations - Weather-Aware */}
       <Suspense fallback={<LoadingRecommendations />}>
@@ -116,52 +135,6 @@ export default function Home() {
         <Suspense fallback={<LoadingForecast />}>
           <ForecastWidget />
         </Suspense>
-      </section>
-
-      {/* Browse More Section Cards */}
-      <section className="bg-white/50 backdrop-blur-sm py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-3 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-            Explore More
-          </h2>
-          <p className="text-gray-600 text-center mb-8">
-            Browse activities by weather, category, and more
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <SectionCard
-              title="Sunny Day Activities"
-              description="Beaches, hiking, water sports"
-              emoji="☀️"
-              href="/sunny"
-              gradient="bg-gradient-to-br from-yellow-400 to-orange-500"
-            />
-            
-            <SectionCard
-              title="Rainy Day Adventures"
-              description="Cozy cafes, museums, indoor fun"
-              emoji="🌧️"
-              href="/rainy"
-              gradient="bg-gradient-to-br from-blue-400 to-blue-600"
-            />
-            
-            <SectionCard
-              title="Secret Map"
-              description="Hidden gems & local favorites"
-              emoji="🗺️"
-              href="/secret-map"
-              gradient="bg-gradient-to-br from-purple-600 to-pink-600"
-            />
-            
-            <SectionCard
-              title="Restaurants"
-              description="Best dining in Santa Cruz"
-              emoji="🍽️"
-              href="/restaurants"
-              gradient="bg-gradient-to-br from-red-400 to-pink-500"
-            />
-          </div>
-        </div>
       </section>
 
       {/* Newsletter Section */}
@@ -195,7 +168,6 @@ export default function Home() {
           </p>
         </div>
       </section>
-
     </div>
   );
 }
