@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { WellnessActivity } from '@/app/actions/getWellness';
 
 interface WellnessFiltersProps {
@@ -76,9 +77,10 @@ export function WellnessFilters({ activities }: WellnessFiltersProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredActivities.length > 0 ? (
             filteredActivities.map((activity) => (
-              <div
+              <Link
                 key={activity.id}
-                className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-all hover:scale-[1.02]"
+                href={`/wellness/${activity.id}`}
+                className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-all hover:scale-[1.02] block"
               >
                 <div className="h-48 bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center">
                   {activity.photoUrl ? (
@@ -126,17 +128,12 @@ export function WellnessFilters({ activities }: WellnessFiltersProps) {
                     </p>
                   )}
                   {activity.website && (
-                    <a
-                      href={activity.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-green-600 hover:text-green-700 font-medium"
-                    >
+                    <span className="text-sm text-green-600 hover:text-green-700 font-medium">
                       Visit Website →
-                    </a>
+                    </span>
                   )}
                 </div>
-              </div>
+              </Link>
             ))
           ) : (
             <div className="col-span-full bg-white rounded-xl shadow-sm border-2 border-gray-200 p-8 text-center">

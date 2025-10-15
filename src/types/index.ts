@@ -31,6 +31,7 @@ export interface RainyActivity {
   cost: number;
   duration: string;
   notes: string;
+  writeUp?: string; // Long-form editorial content (separate from notes/description)
   website?: string | null;
   instagram?: string | null;
   imageUrl?: string | null;
@@ -92,6 +93,7 @@ export interface Restaurant {
   
   // Details
   description: string;
+  writeUp?: string; // Long-form editorial content (separate from description)
   hours?: string;
   parking?: string;
   

@@ -229,6 +229,20 @@ export default async function ActivityDetailPage({ params }: PageProps) {
               )}
             </div>
 
+            {/* WriteUp Section - Editorial Long-Form Content */}
+            {activity.writeUp && (
+              <div className="bg-white rounded-xl p-6 shadow-lg">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  ✍️ Our Take
+                </h2>
+                <div className="prose prose-lg max-w-none text-gray-800">
+                  <p className="whitespace-pre-line leading-relaxed">
+                    {activity.writeUp}
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Practical Information */}
             <div className="bg-white rounded-xl p-6 shadow-lg space-y-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">

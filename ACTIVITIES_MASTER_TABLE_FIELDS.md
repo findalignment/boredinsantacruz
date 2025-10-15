@@ -23,12 +23,20 @@ This is the **definitive field list** for your unified Activities table in Airta
 
 ### 3. **Description**
 - **Type:** Long text
-- **Purpose:** Full activity description (150-500 words)
+- **Purpose:** Short activity description (50-150 words for cards)
 - **Example:** "Iconic beach featuring a natural rock bridge..."
-- **Shows on:** Detail pages, list previews, search results, SEO
+- **Shows on:** Cards, list previews, search results, SEO
 - **Required:** YES ✅
 
-### 4. **Category**
+### 4. **WriteUp**
+- **Type:** Long text
+- **Purpose:** Editorial long-form content (300-800 words)
+- **Example:** "We've been visiting Natural Bridges for years, and it never gets old. The tide pools are incredible at low tide - you'll see sea stars, anemones, and hermit crabs. The butterfly grove in winter is magical..."
+- **Shows on:** Detail pages only, in a special "Our Take" section
+- **Required:** HIGHLY RECOMMENDED ⭐
+- **Note:** This is separate from Description - use Description for basic info, WriteUp for storytelling and insider knowledge
+
+### 5. **Category**
 - **Type:** Single select (or Multiple select)
 - **Purpose:** Primary activity type
 - **Options:** Beach, Hiking, Museum, Restaurant, Attraction, Water Activity, Indoor Activity, Outdoor Activity, Family Activity, Date Activity, Wellness, Shopping, Entertainment, Sports, Nature
@@ -39,7 +47,7 @@ This is the **definitive field list** for your unified Activities table in Airta
 
 ## 📍 Location Fields (Essential)
 
-### 5. **Address**
+### 6. **Address**
 - **Type:** Single line text
 - **Purpose:** Full street address
 - **Example:** "2531 West Cliff Drive, Santa Cruz, CA 95060"
@@ -514,21 +522,22 @@ For a **fully functional** activity entry, you need:
 7. ✅ Address
 8. ✅ PhotoURL
 
-### Highly Recommended (12 more):
-9. ⭐ Latitude & Longitude (mapping)
-10. ⭐ Duration
-11. ⭐ Tags
-12. ⭐ WeatherPreferences
-13. ⭐ ParkingInfo
-14. ⭐ KidFriendly
-15. ⭐ Hours
-16. ⭐ Website
-17. ⭐ Phone
-18. ⭐ Tips/Notes
-19. ⭐ BestTimeToVisit
-20. ⭐ StaffPick
+### Highly Recommended (13 more):
+9. ⭐ WriteUp (editorial content)
+10. ⭐ Latitude & Longitude (mapping)
+11. ⭐ Duration
+12. ⭐ Tags
+13. ⭐ WeatherPreferences
+14. ⭐ ParkingInfo
+15. ⭐ KidFriendly
+16. ⭐ Hours
+17. ⭐ Website
+18. ⭐ Phone
+19. ⭐ Tips/Notes
+20. ⭐ BestTimeToVisit
+21. ⭐ StaffPick
 
-### **Total Recommended: 20 fields** for complete functionality
+### **Total Recommended: 21 fields** for complete functionality
 
 ---
 

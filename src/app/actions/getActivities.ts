@@ -16,6 +16,7 @@ function transformActivity(record: any): RainyActivity {
     cost: fields.Cost || 0,
     duration: fields.Duration || '1hr',
     notes: fields.Notes || '',
+    writeUp: fields.WriteUp || undefined,
     website: fields.Website || null,
     instagram: fields.Instagram || null,
     imageUrl: fields.Image?.[0]?.url || null,

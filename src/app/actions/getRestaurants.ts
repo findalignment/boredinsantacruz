@@ -86,6 +86,7 @@ export async function getRestaurantById(id: string) {
       instagram: fields.Instagram || undefined,
       
       description: fields.Description || '',
+      writeUp: fields.WriteUp || undefined,
       hours: fields.Hours || undefined,
       parking: fields.Parking || undefined,
       

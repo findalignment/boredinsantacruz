@@ -119,6 +119,20 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
               </p>
             </div>
 
+            {/* WriteUp Section - Editorial Long-Form Content */}
+            {restaurant.writeUp && (
+              <div className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border-2 border-blue-200">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  ✍️ Our Take
+                </h2>
+                <div className="prose prose-lg max-w-none text-gray-800">
+                  <p className="whitespace-pre-line leading-relaxed">
+                    {restaurant.writeUp}
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Best Dish */}
             {restaurant.bestDish && (
               <div className="mb-6 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 border-2 border-orange-200">
