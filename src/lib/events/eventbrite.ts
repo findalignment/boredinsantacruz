@@ -90,6 +90,7 @@ class EventbriteService {
       const response = await fetch(`${this.baseUrl}/events/search/?${params.toString()}`, {
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.apiKey}`, // Preferred authentication method
         },
         next: {
           revalidate: 21600, // Cache for 6 hours

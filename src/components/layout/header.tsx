@@ -85,13 +85,6 @@ export function Header() {
               >
                 Deals
               </Link>
-              
-              <Link
-                href="/map"
-                className="px-3 py-2 text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap"
-              >
-                Map
-              </Link>
             </div>
             
             {/* User Button */}
