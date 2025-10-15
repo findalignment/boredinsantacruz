@@ -17,40 +17,100 @@ export default async function RestaurantsPage() {
   const result = await getRestaurants();
   const restaurants = result.success ? result.data : [];
 
+  console.log('Restaurants loaded:', restaurants.length, result.success ? 'success' : 'failed');
+
   // Staff picks - can be flagged in Airtable or manually curated
   const staffPicks = restaurants.filter(r => 
     STAFF_PICK_IDS.includes(r.id) || r.bestDish || r.tips
   ).slice(0, 6);
 
+  // If no restaurants, show import guide
+  if (restaurants.length === 0) {
+    return (
+      <main className="min-h-screen bg-white">
+        <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+          <Link
+            href="/"
+            className="text-gray-600 hover:text-gray-900 font-medium mb-8 inline-flex items-center gap-2"
+          >
+            ← Back to Home
+          </Link>
+
+          <div className="mt-8 text-center">
+            <div className="text-6xl mb-6">🍽️</div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">
+              Import Restaurants to Get Started
+            </h1>
+            <p className="text-lg text-gray-600 mb-8">
+              You have a CSV with 108 restaurants ready to import!
+            </p>
+
+            <div className="bg-gray-50 rounded-lg p-8 text-left max-w-2xl mx-auto border border-gray-200">
+              <h2 className="font-bold text-gray-900 mb-4">Quick Import Steps:</h2>
+              <ol className="space-y-3 text-gray-700">
+                <li className="flex gap-3">
+                  <span className="font-bold">1.</span>
+                  <span>Open your Airtable "Restaurants" table</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-bold">2.</span>
+                  <span>Click "Create" → "CSV file"</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-bold">3.</span>
+                  <span>Upload <code className="bg-gray-200 px-2 py-1 rounded">santacruz-restaurants-google.csv</code></span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-bold">4.</span>
+                  <span>Map the fields and import</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-bold">5.</span>
+                  <span>Refresh this page</span>
+                </li>
+              </ol>
+
+              <div className="mt-6 pt-6 border-t border-gray-300">
+                <p className="text-sm text-gray-600">
+                  📄 See <code className="bg-gray-200 px-2 py-1 rounded text-xs">AIRTABLE_IMPORT_GUIDE.md</code> for detailed instructions
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-orange-50/30 to-red-50/30">
+    <main className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <Link
             href="/"
-            className="text-orange-600 hover:text-orange-700 font-medium mb-4 inline-flex items-center gap-2 transition-colors"
+            className="text-gray-600 hover:text-gray-900 font-medium mb-4 inline-flex items-center gap-2"
           >
-            ← Back to Home
+            ← Back
           </Link>
           
           <div className="mt-4">
             <div className="flex items-start justify-between mb-3">
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-                🍴 Santa Cruz Restaurants
-              </h1>
+              <div>
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
+                  Santa Cruz Restaurants
+                </h1>
+                <p className="text-lg text-gray-600">
+                  {restaurants.length} local favorites
+                </p>
+              </div>
               <Link
                 href="/restaurants/map"
-                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-cyan-600 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+                className="px-6 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-2"
               >
-                🗺️ Map View
+                🗺️ Map
               </Link>
             </div>
-            <p className="text-lg text-gray-600">
-              {restaurants.length > 0 
-                ? `Discover ${restaurants.length}+ local favorites, hidden gems, and insider dining tips`
-                : 'Local favorites, hidden gems, and insider dining tips'}
-            </p>
           </div>
         </div>
 
