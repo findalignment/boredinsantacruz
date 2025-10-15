@@ -76,6 +76,7 @@ class EventbriteService {
         'expand': 'venue,ticket_availability,category',
         'sort_by': 'date',
         'page_size': '100', // Max per page
+        'token': this.apiKey, // Eventbrite uses token in query string
       });
 
       // Add date filters if provided
@@ -88,7 +89,6 @@ class EventbriteService {
 
       const response = await fetch(`${this.baseUrl}/events/search/?${params.toString()}`, {
         headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
           'Content-Type': 'application/json',
         },
         next: {

@@ -3,11 +3,39 @@ import { openai } from '@ai-sdk/openai';
 import { SYSTEM_PROMPT, buildContextPrompt, validateQuery } from '@/lib/chatbot/system-prompt';
 import { getActivities } from '@/app/actions/getActivities';
 import { getCurrentWeather } from '@/lib/weather/service';
+import { chatLimiter, getIdentifier, checkRateLimit } from '@/lib/security/ratelimit';
+import { sanitizeText } from '@/lib/security/sanitize';
 
 // Edge runtime for faster responses
 export const runtime = 'edge';
 
 export async function POST(req: Request) {
+  // 🔒 CRITICAL: Rate limiting to prevent abuse
+  if (chatLimiter) {
+    const identifier = getIdentifier(req);
+    const { success, limit, reset, remaining } = await chatLimiter.limit(identifier);
+    
+    if (!success) {
+      return new Response(
+        JSON.stringify({
+          error: 'Too many requests. Please try again later.',
+          limit,
+          reset: new Date(reset).toISOString(),
+          remaining,
+        }),
+        {
+          status: 429,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-RateLimit-Limit': limit.toString(),
+            'X-RateLimit-Remaining': remaining.toString(),
+            'X-RateLimit-Reset': new Date(reset).toISOString(),
+          },
+        }
+      );
+    }
+  }
+
   try {
     // Check if OpenAI API key is configured
     if (!process.env.OPENAI_API_KEY) {
@@ -23,7 +51,8 @@ export async function POST(req: Request) {
 
     // Get the latest user message
     const latestMessage = messages[messages.length - 1];
-    const userQuery = latestMessage.content;
+    // 🔒 CRITICAL: Sanitize user input to prevent XSS
+    const userQuery = sanitizeText(latestMessage.content);
 
     // Validate query (NSFW filter, etc.)
     const validation = validateQuery(userQuery);
