@@ -228,8 +228,14 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
 
                 {restaurant.hours && (
                   <div>
-                    <p className="text-sm font-semibold text-gray-700 mb-1">Hours</p>
-                    <p className="text-gray-800">{restaurant.hours}</p>
+                    <p className="text-sm font-semibold text-gray-700 mb-2">Hours</p>
+                    <div className="text-gray-800 space-y-1">
+                      {restaurant.hours.split(';').map((day, index) => (
+                        <div key={index} className="text-sm">
+                          {day.trim()}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
 

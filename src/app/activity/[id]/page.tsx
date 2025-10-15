@@ -288,7 +288,13 @@ export default async function ActivityDetailPage({ params }: PageProps) {
                   <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
                     🕐 Hours
                   </h3>
-                  <p className="text-gray-700 whitespace-pre-line">{hours}</p>
+                  <div className="text-gray-700 space-y-1">
+                    {hours.split(';').map((day, index) => (
+                      <div key={index} className="text-sm">
+                        {day.trim()}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 

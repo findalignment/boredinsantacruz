@@ -266,8 +266,14 @@ export default async function WellnessDetailPage({ params }: WellnessPageProps) 
 
                 {wellness.hours && (
                   <div>
-                    <p className="text-sm font-semibold text-gray-700 mb-1">Hours</p>
-                    <p className="text-gray-800 whitespace-pre-line">{wellness.hours}</p>
+                    <p className="text-sm font-semibold text-gray-700 mb-2">Hours</p>
+                    <div className="text-gray-800 space-y-1">
+                      {wellness.hours.split(';').map((day, index) => (
+                        <div key={index} className="text-sm">
+                          {day.trim()}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
 
