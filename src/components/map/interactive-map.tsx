@@ -95,7 +95,10 @@ export function InteractiveMap({
       }
 
       // Kid-Friendly
-      if (filters.kidFriendly && !activity.kidFriendly) return false;
+      if (filters.kidFriendly) {
+        const isKidFriendly = 'kidFriendly' in activity ? activity.kidFriendly : false;
+        if (!isKidFriendly) return false;
+      }
 
       return true;
     });
@@ -224,10 +227,19 @@ export function InteractiveMap({
         .setPopup(popup)
         .addTo(map.current!);
     });
-  }, [activities, mapLoaded]);
+  }, [filteredActivities, mapLoaded]);
 
   return (
     <div className="relative w-full h-full">
+      {/* Filters */}
+      <div className="absolute top-4 left-4 right-4 z-10 max-w-2xl">
+        <MapFiltersComponent
+          onFiltersChange={setFilters}
+          activityCount={activities.length}
+          filteredCount={filteredActivities.length}
+        />
+      </div>
+      
       <div ref={mapContainer} className="w-full h-full rounded-xl" />
       
       {!mapboxgl.accessToken && (
