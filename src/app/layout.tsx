@@ -6,6 +6,7 @@ import { ChatInterface } from '@/components/chatbot/chat-interface';
 import { SessionProvider } from '@/components/auth/session-provider';
 import { WebsiteStructuredData, OrganizationStructuredData } from '@/components/seo/structured-data';
 import { CookieConsent } from '@/components/cookie-consent';
+import { ToastProvider } from '@/components/providers/toast-provider';
 
 export const metadata: Metadata = {
   title: {
@@ -52,6 +53,7 @@ export default function RootLayout({
         <WebsiteStructuredData />
         <OrganizationStructuredData />
         <SessionProvider>
+          <ToastProvider />
           <Header />
           <main className="flex-grow">{children}</main>
           <Footer />
