@@ -7,6 +7,7 @@ import { SessionProvider } from '@/components/auth/session-provider';
 import { WebsiteStructuredData, OrganizationStructuredData } from '@/components/seo/structured-data';
 import { CookieConsent } from '@/components/cookie-consent';
 import { ToastProvider } from '@/components/providers/toast-provider';
+import { AdSenseScript } from '@/components/ads/adsense-script';
 
 export const metadata: Metadata = {
   title: {
@@ -52,6 +53,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col">
         <WebsiteStructuredData />
         <OrganizationStructuredData />
+        <AdSenseScript />
         <SessionProvider>
           <ToastProvider />
           <Header />
