@@ -21,19 +21,34 @@ export function HomepageChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    // Only scroll when assistant is responding, not when user is typing
-    if (messages.length > 0 && messages[messages.length - 1].role === 'assistant') {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Scroll to bottom when messages change
+    if (messages.length > 0 && messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
 
   const handleSubmit = async (e: React.FormEvent, question?: string) => {
     e.preventDefault();
     const messageText = question || input;
-    if (!messageText.trim() || isLoading) return;
+    
+    console.log('🎯 handleSubmit called with:', { messageText, question, input, isLoading });
+    
+    if (!messageText.trim()) {
+      console.log('⚠️ Empty message, aborting');
+      return;
+    }
+    
+    if (isLoading) {
+      console.log('⚠️ Already loading, aborting');
+      return;
+    }
+
+    setError(null);
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
@@ -41,11 +56,14 @@ export function HomepageChat() {
       content: messageText,
     };
 
+    console.log('📤 Adding user message:', userMessage);
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
 
     try {
+      console.log('🚀 Sending chat request...');
+      
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,12 +75,19 @@ export function HomepageChat() {
         }),
       });
 
-      if (!response.ok) throw new Error('Failed to get response');
+      console.log('📡 Response status:', response.status);
 
-      const reader = response.body?.getReader();
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
+
+      if (!response.body) {
+        throw new Error('No response body');
+      }
+
+      const reader = response.body.getReader();
       const decoder = new TextDecoder();
-
-      if (!reader) throw new Error('No reader available');
 
       let assistantMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
@@ -72,57 +97,93 @@ export function HomepageChat() {
 
       setMessages((prev) => [...prev, assistantMessage]);
 
-      let buffer = '';
-      
+      console.log('📥 Starting to read stream...');
+
+      // Simple streaming: read chunks and append
       while (true) {
         const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        
-        // Keep the last incomplete line in the buffer
-        buffer = lines.pop() || '';
-
-        for (const line of lines) {
-          if (line.trim()) {
-            // Parse the streaming text response format from Vercel AI SDK
-            if (line.startsWith('0:')) {
-              // Text chunk: 0:"text content"
-              try {
-                const text = JSON.parse(line.slice(2));
-                assistantMessage.content += text;
-                setMessages((prev) => {
-                  const newMessages = [...prev];
-                  newMessages[newMessages.length - 1] = { ...assistantMessage };
-                  return newMessages;
-                });
-              } catch (e) {
-                console.error('Failed to parse text chunk:', line, e);
-              }
-            }
-          }
+        if (done) {
+          console.log('✅ Stream complete');
+          break;
         }
+
+        const chunk = decoder.decode(value, { stream: true });
+        console.log('📦 Chunk received:', chunk.substring(0, 50) + '...');
+        
+        assistantMessage.content += chunk;
+        
+        setMessages((prev) => {
+          const newMessages = [...prev];
+          newMessages[newMessages.length - 1] = { ...assistantMessage };
+          return newMessages;
+        });
       }
+
+      console.log('✨ Message complete, length:', assistantMessage.content.length);
+
     } catch (error) {
-      console.error('Chat error:', error);
-      const errorMessage: ChatMessage = {
+      console.error('❌ Chat error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to get response';
+      setError(errorMessage);
+      
+      const errorResponse: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "Sorry, I couldn't help with that. Please try again!",
+        content: `Sorry, I encountered an error: ${errorMessage}. Please try again.`,
       };
-      setMessages((prev) => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, errorResponse]);
     } finally {
       setIsLoading(false);
+      // Focus back on input
+      inputRef.current?.focus();
     }
   };
 
   const handleExampleClick = (question: string) => {
-    setInput(question);
-    setTimeout(() => {
-      const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
-      handleSubmit(fakeEvent, question);
-    }, 100);
+    console.log('🔵 Example clicked:', question);
+    const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
+    handleSubmit(fakeEvent, question);
+  };
+
+  // Parse markdown: links [text](url) -> <a>, bold **text** -> <strong>
+  const renderMessageContent = (content: string) => {
+    // First, split by markdown links to preserve them
+    const linkParts = content.split(/(\[[^\]]+\]\([^)]+\))/);
+    
+    return linkParts.map((part, i) => {
+      // Handle markdown links
+      const linkMatch = part.match(/\[([^\]]+)\]\(([^)]+)\)/);
+      if (linkMatch) {
+        return (
+          <a
+            key={i}
+            href={linkMatch[2]}
+            className="text-blue-600 hover:text-blue-700 underline font-medium"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {linkMatch[1]}
+          </a>
+        );
+      }
+      
+      // Handle bold text **text** -> <strong>
+      const boldParts = part.split(/(\*\*[^*]+\*\*)/);
+      return boldParts.map((boldPart, j) => {
+        const boldMatch = boldPart.match(/\*\*([^*]+)\*\*/);
+        if (boldMatch) {
+          return <strong key={`${i}-${j}-bold`} className="font-bold">{boldMatch[1]}</strong>;
+        }
+        
+        // Handle line breaks
+        return boldPart.split('\n').map((line, k) => (
+          <span key={`${i}-${j}-${k}`}>
+            {line}
+            {k < boldPart.split('\n').length - 1 && <br />}
+          </span>
+        ));
+      });
+    });
   };
 
   return (
@@ -137,10 +198,18 @@ export function HomepageChat() {
         </p>
       </div>
 
+      {/* Error Display */}
+      {error && (
+        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+          <p className="font-semibold">Error:</p>
+          <p className="text-sm">{error}</p>
+        </div>
+      )}
+
       {/* Chat Container - Clean Design */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
         {/* Messages */}
-        <div className="h-[400px] md:h-[500px] overflow-y-auto p-6 space-y-4">
+        <div className="h-[400px] md:h-[500px] overflow-y-auto p-6 space-y-4" style={{ scrollBehavior: 'smooth' }}>
           {messages.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-gray-600 mb-8 text-lg">
@@ -172,26 +241,9 @@ export function HomepageChat() {
                         : 'bg-gray-100 text-gray-900'
                     }`}
                   >
-                    <div className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">
+                    <div className="text-sm md:text-base leading-relaxed">
                       {message.role === 'assistant' ? (
-                        // Parse markdown links for assistant messages
-                        <div>
-                          {message.content.split(/(\[[^\]]+\]\([^)]+\))/).map((part, i) => {
-                            const linkMatch = part.match(/\[([^\]]+)\]\(([^)]+)\)/);
-                            if (linkMatch) {
-                              return (
-                                <a
-                                  key={i}
-                                  href={linkMatch[2]}
-                                  className="text-blue-600 hover:text-blue-700 underline font-medium"
-                                >
-                                  {linkMatch[1]}
-                                </a>
-                              );
-                            }
-                            return <span key={i}>{part}</span>;
-                          })}
-                        </div>
+                        renderMessageContent(message.content)
                       ) : (
                         message.content
                       )}
@@ -219,23 +271,34 @@ export function HomepageChat() {
         <form onSubmit={(e) => handleSubmit(e)} className="border-t border-gray-200 p-4">
           <div className="flex gap-3">
             <input
+              ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask me anything..."
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent text-base bg-white"
+              placeholder="Ask about activities, food, beaches..."
+              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
               disabled={isLoading}
             />
             <button
               type="submit"
-              disabled={isLoading || !input.trim()}
-              className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed font-medium text-base"
+              disabled={isLoading}
+              className="px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+              onClick={(e) => {
+                console.log('🔴 Button clicked!', { input, isLoading });
+              }}
             >
-              {isLoading ? '...' : 'Ask'}
+              {isLoading ? 'Thinking...' : 'Ask'}
             </button>
           </div>
         </form>
       </div>
+
+      {/* Debug Info (only in development) */}
+      {process.env.NODE_ENV === 'development' && messages.length > 0 && (
+        <div className="mt-4 p-3 bg-gray-100 rounded text-xs text-gray-600">
+          <strong>Debug:</strong> {messages.length} messages, Last: {messages[messages.length - 1]?.content.length || 0} chars
+        </div>
+      )}
     </div>
   );
 }

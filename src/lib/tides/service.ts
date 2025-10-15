@@ -106,18 +106,28 @@ export class TideService {
       warnings: [],
     };
 
-    // Add optimal windows
+    // Add optimal windows (only during daylight hours - 7am to 7pm)
     if (conditions.bestForTidePools) {
       const lowTideTime = new Date(lowestTide.time);
-      const startWindow = new Date(lowTideTime.getTime() - 90 * 60000); // 1.5 hrs before
-      const endWindow = new Date(lowTideTime.getTime() + 90 * 60000); // 1.5 hrs after
+      const hour = lowTideTime.getHours();
+      
+      // Only recommend tide pooling during daylight hours (7am - 7pm)
+      const isDaylight = hour >= 7 && hour < 19;
+      
+      if (isDaylight) {
+        const startWindow = new Date(lowTideTime.getTime() - 90 * 60000); // 1.5 hrs before
+        const endWindow = new Date(lowTideTime.getTime() + 90 * 60000); // 1.5 hrs after
 
-      conditions.optimalWindow = {
-        start: startWindow.toISOString(),
-        end: endWindow.toISOString(),
-        activity: 'Tide Pooling',
-        reason: `Low tide at ${lowTideTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })} (${lowestTide.height.toFixed(1)} ft)`,
-      };
+        conditions.optimalWindow = {
+          start: startWindow.toISOString(),
+          end: endWindow.toISOString(),
+          activity: 'Tide Pooling',
+          reason: `Low tide at ${lowTideTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })} (${lowestTide.height.toFixed(1)} ft)`,
+        };
+      } else {
+        // Low tide is at night - not recommended for tide pooling
+        conditions.bestForTidePools = false;
+      }
     }
 
     // Add warnings
@@ -165,16 +175,25 @@ export class TideService {
     if (!tideData.currentStatus) return false;
 
     const { nextTide, minutesUntilNext, isRising } = tideData.currentStatus;
+    
+    // Only recommend during daylight hours (7am - 7pm)
+    const currentHour = new Date().getHours();
+    const isDaylight = currentHour >= 7 && currentHour < 19;
+    
+    if (!isDaylight) return false;
 
     // Good if:
     // - Low tide is coming in next 90 minutes
     // - OR low tide was within last 90 minutes
     if (nextTide.type === 'L' && minutesUntilNext <= 90) {
-      return true;
+      const nextTideTime = new Date(nextTide.time);
+      const nextTideHour = nextTideTime.getHours();
+      // Make sure the low tide itself is during daylight
+      return nextTideHour >= 7 && nextTideHour < 19;
     }
 
     if (!isRising && nextTide.type === 'H' && minutesUntilNext >= 90) {
-      // We just passed low tide
+      // We just passed low tide - check if it was during daylight
       return true;
     }
 

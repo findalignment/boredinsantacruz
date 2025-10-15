@@ -57,7 +57,8 @@ async function ReviewsSection({ restaurantId }: { restaurantId: string }) {
 }
 
 export default async function RestaurantPage({ params }: RestaurantPageProps) {
-  const { id } = await params;
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
   const result = await getRestaurantById(id);
 
   if (!result.success || !result.data) {

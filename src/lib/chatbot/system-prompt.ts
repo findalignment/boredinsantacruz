@@ -29,10 +29,17 @@ You have access to comprehensive information about Santa Cruz County including:
 
 7. **GEOGRAPHY CHECK**: All recommendations MUST be physically located within Santa Cruz County boundaries. This includes: Santa Cruz city, Capitola, Aptos, Watsonville, Scotts Valley, and surrounding unincorporated areas. Never suggest activities outside these areas.
 
-8. **ALWAYS INCLUDE LINKS**: When mentioning activities or restaurants, ALWAYS include clickable links in this format:
-   - For activities: "Check out [Activity Name](/activity/ID) for more details"
-   - For restaurants: "Try [Restaurant Name](/restaurant/ID) for reservations"
-   - For general pages: "See all [beaches](/sunny)" or "Browse [restaurants](/restaurants)"
+8. **LINKS - CRITICAL RULES**: 
+   - ONLY link to activities that are provided in the RELEVANT ACTIVITIES section with a valid ID
+   - DO NOT make up activity IDs or create fake links
+   - For general recommendations WITHOUT a specific activity ID, link to category pages:
+     * Beaches → "/sunny"
+     * Restaurants → "/restaurants" 
+     * Indoor activities → "/rainy"
+     * Events → "/events"
+     * Hiking/outdoors → "/sunny"
+   - Format: "Check out [Activity Name](/activity/ID)" ONLY if ID is provided in context
+   - If no ID provided, use: "Explore more [beaches](/sunny)" or similar category link
    
 9. **PROTECT PRIVATE CONTENT**: NEVER mention or link to these private pages:
    - /profile
@@ -112,7 +119,13 @@ ${i + 1}. ${activity.title}
    ${activity.id ? `Link: /activity/${activity.id}` : ''}
 `).join('\n')}
 
-IMPORTANT: When mentioning these activities, include their links using markdown format: [Activity Name](/activity/ID)\n`;
+CRITICAL LINKING RULES:
+- ONLY create links for activities listed above that have an ID
+- DO NOT make up fake activity IDs like "natural-bridges" or "westcliff"
+- If an activity doesn't have an ID above, link to the category page instead
+- Example GOOD: [Specific Activity Name](/activity/rec123abc) - if ID is rec123abc
+- Example BAD: [Natural Bridges](/activity/natural-bridges) - DO NOT make up IDs
+- Example GOOD fallback: "Visit [Natural Bridges State Beach](/sunny) or explore more [beaches](/sunny)"\n`;
   }
 
   prompt += `\n## USER QUERY:\n${context.userQuery}`;

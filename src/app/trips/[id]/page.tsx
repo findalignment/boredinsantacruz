@@ -25,7 +25,8 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function TripDetailPage({ params }: PageProps) {
-  const { id } = await params;
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
   const result = await getTripById(id);
   
   if (!result.success || !result.data) {

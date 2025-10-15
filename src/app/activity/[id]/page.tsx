@@ -109,7 +109,8 @@ async function ActivityWeatherInfo({ activityId }: { activityId: string }) {
 }
 
 export default async function ActivityDetailPage({ params }: PageProps) {
-  const { id } = await params;
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
 
   const result = await getActivities();
 

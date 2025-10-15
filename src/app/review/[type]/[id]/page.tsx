@@ -18,23 +18,23 @@ interface PageProps {
   }>;
 }
 
-export default async function WriteReviewPage(props: PageProps) {
-  const params = await props.params;
+export default async function WriteReviewPage({ params }: PageProps) {
+  const resolvedParams = await params;
   const session = await auth();
 
   if (!session) {
-    redirect(`/login?callbackUrl=/review/${params.type}/${params.id}`);
+    redirect(`/login?callbackUrl=/review/${resolvedParams.type}/${resolvedParams.id}`);
   }
 
   // Validate type
-  if (params.type !== 'activity' && params.type !== 'restaurant') {
+  if (resolvedParams.type !== 'activity' && resolvedParams.type !== 'restaurant') {
     redirect('/');
   }
 
-  const itemType = params.type === 'activity' ? 'Activity' : 'Restaurant';
+  const itemType = resolvedParams.type === 'activity' ? 'Activity' : 'Restaurant';
 
   // Check if user has already reviewed
-  const alreadyReviewed = await hasUserReviewed(itemType, params.id);
+  const alreadyReviewed = await hasUserReviewed(itemType, resolvedParams.id);
 
   if (alreadyReviewed) {
     return (
@@ -46,7 +46,7 @@ export default async function WriteReviewPage(props: PageProps) {
               You've Already Reviewed This
             </h1>
             <p className="text-gray-600 mb-6">
-              You can only write one review per {params.type}. You can edit your existing review from your profile.
+              You can only write one review per {resolvedParams.type}. You can edit your existing review from your profile.
             </p>
             <div className="flex gap-4 justify-center">
               <Link
@@ -56,10 +56,10 @@ export default async function WriteReviewPage(props: PageProps) {
                 Go to Profile
               </Link>
               <Link
-                href={`/${params.type}/${params.id}`}
+                href={`/${resolvedParams.type}/${resolvedParams.id}`}
                 className="px-6 py-3 bg-white text-blue-600 border-2 border-blue-600 font-semibold rounded-full hover:bg-blue-50 transition-colors"
               >
-                Back to {params.type === 'activity' ? 'Activity' : 'Restaurant'}
+                Back to {resolvedParams.type === 'activity' ? 'Activity' : 'Restaurant'}
               </Link>
             </div>
           </div>
@@ -71,10 +71,10 @@ export default async function WriteReviewPage(props: PageProps) {
   // Fetch item details
   let itemName = 'this item';
   
-  if (params.type === 'activity') {
+  if (resolvedParams.type === 'activity') {
     const activitiesResult = await getActivities();
     if (activitiesResult.success) {
-      const activity = activitiesResult.data.find((a) => a.id === params.id);
+      const activity = activitiesResult.data.find((a) => a.id === resolvedParams.id);
       if (activity) {
         itemName = activity.title;
       }
@@ -85,7 +85,7 @@ export default async function WriteReviewPage(props: PageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4">
       <div className="max-w-3xl mx-auto">
-        <ReviewForm itemType={itemType} itemId={params.id} itemName={itemName} />
+        <ReviewForm itemType={itemType} itemId={resolvedParams.id} itemName={itemName} />
       </div>
     </div>
   );

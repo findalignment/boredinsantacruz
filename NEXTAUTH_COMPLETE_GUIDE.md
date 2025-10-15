@@ -55,44 +55,6 @@ Copy the output and add to `.env.local`:
 NEXTAUTH_SECRET=paste-the-generated-secret-here
 ```
 
----
-
-### **Step 2: Set Up Google OAuth**
-
-#### **A. Create Google Cloud Project**
-
-1. Go to: https://console.cloud.google.com/
-2. Create a new project (or select existing)
-3. Enable **Google+ API**
-
-#### **B. Create OAuth 2.0 Credentials**
-
-1. Go to: **APIs & Services** > **Credentials**
-2. Click **Create Credentials** > **OAuth 2.0 Client ID**
-3. Choose **Web application**
-4. Add **Authorized JavaScript origins**:
-   ```
-   http://localhost:3000
-   https://yourdomain.vercel.app
-   https://boredinsantacruz.com (your custom domain)
-   ```
-5. Add **Authorized redirect URIs**:
-   ```
-   http://localhost:3000/api/auth/callback/google
-   https://yourdomain.vercel.app/api/auth/callback/google
-   https://boredinsantacruz.com/api/auth/callback/google
-   ```
-6. Click **Create**
-7. Copy **Client ID** and **Client Secret**
-
-#### **C. Add to `.env.local`**
-
-```bash
-GOOGLE_CLIENT_ID=123456789-abc.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=GOCSPX-abc123xyz
-```
-
----
 
 ### **Step 3: Set Up Resend (Magic Link Email)**
 

@@ -55,10 +55,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     async redirect({ url, baseUrl }) {
-      // Redirect to profile after login
+      // Handle callback URLs properly - redirect where user wanted to go
       if (url.startsWith('/')) return `${baseUrl}${url}`;
       else if (new URL(url).origin === baseUrl) return url;
-      return `${baseUrl}/profile`;
+      
+      // Default: redirect to home page (not profile) after login
+      return baseUrl;
     },
   },
 

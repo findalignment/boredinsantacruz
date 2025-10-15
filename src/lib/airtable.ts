@@ -12,6 +12,12 @@ export const tables = {
   sunnyActivities: process.env.AIRTABLE_SUNNY_TABLE
     ? base(process.env.AIRTABLE_SUNNY_TABLE)
     : null,
+  wellness: process.env.AIRTABLE_WELLNESS_TABLE
+    ? base(process.env.AIRTABLE_WELLNESS_TABLE)
+    : null,
+  deals: process.env.AIRTABLE_DEALS_TABLE
+    ? base(process.env.AIRTABLE_DEALS_TABLE)
+    : null,
   favorites: base(process.env.AIRTABLE_FAVORITES_TABLE || 'Favorites'),
   reviews: base(process.env.AIRTABLE_REVIEWS_TABLE || 'Reviews'),
   trips: base(process.env.AIRTABLE_TRIPS_TABLE || 'Trips'),

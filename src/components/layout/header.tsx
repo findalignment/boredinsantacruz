@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { getActivitiesForSearch } from '@/app/actions/searchActivities';
 import { SearchDialog } from '@/components/search/search-dialog';
 import { UserButton } from '@/components/auth/user-button';
+import { MobileMenu } from './mobile-menu';
 
 async function SearchButton() {
   const result = await getActivitiesForSearch();
@@ -27,31 +28,51 @@ export function Header() {
             </span>
           </Link>
 
-          {/* Navigation - Simplified */}
-          <div className="flex items-center space-x-3 sm:space-x-4">
+          {/* Navigation */}
+          <div className="flex items-center space-x-2 sm:space-x-3">
             {/* Search */}
-            <Suspense fallback={<div className="w-24 h-10"></div>}>
-              <SearchButton />
-            </Suspense>
+            <div className="hidden sm:block">
+              <Suspense fallback={<div className="w-24 h-10"></div>}>
+                <SearchButton />
+              </Suspense>
+            </div>
             
-            <Link
-              href="/events"
-              className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base whitespace-nowrap hover:scale-105"
-            >
-              <span className="sm:hidden">🎉</span>
-              <span className="hidden sm:inline">🎉 Events</span>
-            </Link>
-            
-            <Link
-              href="/trips"
-              className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base whitespace-nowrap hover:scale-105"
-            >
-              <span className="sm:hidden">📍</span>
-              <span className="hidden sm:inline">📍 Trips</span>
-            </Link>
+            {/* Desktop Links - Hidden on mobile */}
+            <div className="hidden lg:flex items-center space-x-3">
+              <Link
+                href="/restaurants"
+                className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap hover:scale-105"
+              >
+                🍽️ Restaurants
+              </Link>
+              
+              <Link
+                href="/events"
+                className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap hover:scale-105"
+              >
+                🎉 Events
+              </Link>
+              
+              <Link
+                href="/deals"
+                className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap hover:scale-105"
+              >
+                🍻 Deals
+              </Link>
+              
+              <Link
+                href="/wellness"
+                className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap hover:scale-105"
+              >
+                🧘 Wellness
+              </Link>
+            </div>
             
             {/* User Button */}
             <UserButton />
+            
+            {/* Hamburger Menu */}
+            <MobileMenu />
           </div>
         </div>
       </nav>

@@ -178,7 +178,8 @@ function LoadingActivities() {
 }
 
 export default async function DatePage({ params }: PageProps) {
-  const { date: dateString } = await params;
+  const resolvedParams = await params;
+  const { date: dateString } = resolvedParams;
   const date = validateDate(dateString);
 
   if (!date) {

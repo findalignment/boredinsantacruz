@@ -4,6 +4,12 @@ import { kv } from '@vercel/kv';
 import { WeatherData, WeatherCacheEntry, WeatherCacheError } from './types';
 import { cacheLogger } from '../logger';
 
+// Check if KV is configured
+const isKVConfigured = Boolean(
+  process.env.KV_REST_API_URL && 
+  process.env.KV_REST_API_TOKEN
+);
+
 /**
  * Cache TTL values (in seconds)
  */
@@ -28,6 +34,11 @@ export class WeatherCache {
    * Get weather data from cache
    */
   async get(date: string): Promise<WeatherData | null> {
+    // Skip cache if KV not configured
+    if (!isKVConfigured) {
+      return null;
+    }
+    
     try {
       const key = getCacheKey(date);
       const entry = await kv.get<WeatherCacheEntry>(key);
@@ -62,6 +73,11 @@ export class WeatherCache {
     data: WeatherData,
     ttl?: number
   ): Promise<void> {
+    // Skip cache if KV not configured
+    if (!isKVConfigured) {
+      return;
+    }
+    
     try {
       const key = getCacheKey(date);
       
@@ -97,6 +113,10 @@ export class WeatherCache {
    * Delete weather data from cache
    */
   async delete(date: string): Promise<void> {
+    if (!isKVConfigured) {
+      return;
+    }
+    
     try {
       const key = getCacheKey(date);
       await kv.del(key);
@@ -110,6 +130,10 @@ export class WeatherCache {
    * Get multiple dates from cache (batch operation)
    */
   async getMany(dates: string[]): Promise<Map<string, WeatherData>> {
+    if (!isKVConfigured) {
+      return new Map();
+    }
+    
     const results = new Map<string, WeatherData>();
     
     // Fetch all in parallel
@@ -133,6 +157,10 @@ export class WeatherCache {
    * Set multiple dates in cache (batch operation)
    */
   async setMany(entries: Array<{ date: string; data: WeatherData }>): Promise<void> {
+    if (!isKVConfigured) {
+      return;
+    }
+    
     const promises = entries.map(({ date, data }) => this.set(date, data));
     await Promise.allSettled(promises);
   }
@@ -191,6 +219,10 @@ export function getWeatherCache(): WeatherCache {
  * Helper function to check if KV is available
  */
 export async function isKVAvailable(): Promise<boolean> {
+  if (!isKVConfigured) {
+    return false;
+  }
+  
   try {
     // Try a simple operation
     await kv.set('weather:health-check', 'ok', { ex: 10 });

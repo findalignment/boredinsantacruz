@@ -154,7 +154,8 @@ function BannerLoading() {
 }
 
 export default async function WeatherTypePage({ params }: PageProps) {
-  const { type: typeParam } = await params;
+  const resolvedParams = await params;
+  const { type: typeParam } = resolvedParams;
   const type = typeParam as WeatherType;
   const config = WEATHER_TYPES[type];
   
