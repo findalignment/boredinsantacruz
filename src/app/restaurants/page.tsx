@@ -19,9 +19,12 @@ export default async function RestaurantsPage() {
 
   console.log('Restaurants loaded:', restaurants.length, result.success ? 'success' : 'failed');
 
-  // Staff picks - can be flagged in Airtable or manually curated
+  // Staff picks - only show restaurants with complete data
   const staffPicks = restaurants.filter(r => 
-    STAFF_PICK_IDS.includes(r.id) || r.bestDish || r.tips
+    r.name && // Must have a name
+    r.description && // Must have a description
+    r.cuisine && r.cuisine.length > 0 && // Must have cuisine
+    (STAFF_PICK_IDS.includes(r.id) || (r.bestDish && r.bestDish.trim() !== ''))
   ).slice(0, 6);
 
   // If no restaurants, show import guide

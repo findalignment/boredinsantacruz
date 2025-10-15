@@ -172,20 +172,30 @@ export function HomepageChat() {
                         : 'bg-gray-100 text-gray-900'
                     }`}
                   >
-                    {message.role === 'assistant' ? (
-                      <div 
-                        className="text-sm md:text-base leading-relaxed prose prose-sm max-w-none"
-                        dangerouslySetInnerHTML={{
-                          __html: message.content
-                            // Convert markdown links to HTML
-                            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:text-blue-700 underline font-medium">$1</a>')
-                            // Convert line breaks
-                            .replace(/\n/g, '<br />')
-                        }}
-                      />
-                    ) : (
-                      <p className="text-sm md:text-base leading-relaxed whitespace-pre-line">{message.content}</p>
-                    )}
+                    <div className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">
+                      {message.role === 'assistant' ? (
+                        // Parse markdown links for assistant messages
+                        <div>
+                          {message.content.split(/(\[[^\]]+\]\([^)]+\))/).map((part, i) => {
+                            const linkMatch = part.match(/\[([^\]]+)\]\(([^)]+)\)/);
+                            if (linkMatch) {
+                              return (
+                                <a
+                                  key={i}
+                                  href={linkMatch[2]}
+                                  className="text-blue-600 hover:text-blue-700 underline font-medium"
+                                >
+                                  {linkMatch[1]}
+                                </a>
+                              );
+                            }
+                            return <span key={i}>{part}</span>;
+                          })}
+                        </div>
+                      ) : (
+                        message.content
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
