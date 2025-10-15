@@ -27,47 +27,27 @@ export function Header() {
             </span>
           </Link>
 
-          {/* Navigation */}
-          <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-6">
+          {/* Navigation - Simplified */}
+          <div className="flex items-center space-x-3 sm:space-x-4">
             {/* Search */}
             <Suspense fallback={<div className="w-24 h-10"></div>}>
               <SearchButton />
             </Suspense>
             
             <Link
-              href="/map"
+              href="/events"
               className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base whitespace-nowrap hover:scale-105"
             >
-              <span className="sm:hidden">🗺️</span>
-              <span className="hidden sm:inline">🗺️ Map</span>
+              <span className="sm:hidden">🎉</span>
+              <span className="hidden sm:inline">🎉 Events</span>
             </Link>
             
             <Link
-              href="/tonight"
-              className="hidden md:block text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base whitespace-nowrap hover:scale-105"
+              href="/trips"
+              className="text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base whitespace-nowrap hover:scale-105"
             >
-              🎉 Tonight
-            </Link>
-            
-            <Link
-              href="/best-time"
-              className="hidden lg:block text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base whitespace-nowrap hover:scale-105"
-            >
-              🗓️ Best Time
-            </Link>
-            
-            <Link
-              href="/activities"
-              className="hidden lg:block text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base hover:scale-105"
-            >
-              Activities
-            </Link>
-            
-            <Link
-              href="/restaurants"
-              className="hidden xl:block text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm lg:text-base hover:scale-105"
-            >
-              🍴 Restaurants
+              <span className="sm:hidden">📍</span>
+              <span className="hidden sm:inline">📍 Trips</span>
             </Link>
             
             {/* User Button */}
