@@ -9,6 +9,7 @@ import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSo
 import { updateTrip, deleteTrip, generateShareToken } from '@/app/actions/trips';
 import { reorderTripItems } from '@/app/actions/tripItems';
 import { TripItemCard } from './trip-item-card';
+import { ExportPDFButton } from './export-pdf-button';
 import { toast } from 'sonner';
 
 interface TripDetailProps {
@@ -199,30 +200,33 @@ export function TripDetail({ trip: initialTrip, canEdit, isOwner }: TripDetailPr
                 )}
               </div>
               
-              {canEdit && (
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setIsEditing(true)}
-                    className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={handleShare}
-                    className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"
-                  >
-                    Share
-                  </button>
-                  {isOwner && (
+              <div className="flex gap-2">
+                {canEdit && (
+                  <>
                     <button
-                      onClick={handleDelete}
-                      className="px-4 py-2 text-sm text-red-600 border border-red-300 rounded-lg hover:bg-red-50"
+                      onClick={() => setIsEditing(true)}
+                      className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"
                     >
-                      Delete
+                      Edit
                     </button>
-                  )}
-                </div>
-              )}
+                    <button
+                      onClick={handleShare}
+                      className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"
+                    >
+                      Share
+                    </button>
+                  </>
+                )}
+                <ExportPDFButton trip={trip} />
+                {isOwner && (
+                  <button
+                    onClick={handleDelete}
+                    className="px-4 py-2 text-sm text-red-600 border border-red-300 rounded-lg hover:bg-red-50"
+                  >
+                    Delete
+                  </button>
+                )}
+              </div>
             </div>
 
             <div className="flex items-center gap-4 text-sm text-gray-600">
