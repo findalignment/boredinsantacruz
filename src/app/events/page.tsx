@@ -32,9 +32,28 @@ export default async function EventsPage() {
           <h1 className="text-4xl font-bold text-gray-900 mb-3">
             🎉 Events in Santa Cruz
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl">
+          <p className="text-lg text-gray-600 max-w-2xl mb-6">
             Discover concerts, festivals, workshops, and events happening around Santa Cruz County
           </p>
+          
+          {/* Submit Event CTA */}
+          <div className="inline-flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-gradient-to-r from-purple-50 to-blue-50 border-2 border-purple-200 rounded-xl p-6">
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-gray-900 mb-1">
+                Hosting an event in Santa Cruz?
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Share it with the community for free! Takes less than 5 minutes.
+              </p>
+            </div>
+            <Link
+              href="/events/submit"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl whitespace-nowrap"
+            >
+              <span className="text-xl">📅</span>
+              Submit Your Event
+            </Link>
+          </div>
         </div>
 
         {/* No API Key Warning */}
