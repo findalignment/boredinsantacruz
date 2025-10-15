@@ -1,26 +1,5 @@
 # 🚀 Deployment Checklist
 
-## Pre-Deployment
-
-### 1. Environment Variables ✅
-Make sure your `.env.local` has:
-```env
-AIRTABLE_TOKEN=your_full_token_here
-AIRTABLE_BASE_ID=appOwFPy6P19bd3N6
-AIRTABLE_RAINY_TABLE=Rainy
-```
-
-### 2. Airtable Data
-- [ ] Add 30-40+ activities to your Airtable base
-- [ ] Ensure all required fields are filled:
-  - Title (required)
-  - VenueName
-  - Tags (at least 2-3 per activity)
-  - Cost (0 for free activities)
-  - Duration
-  - Notes/Description
-  - Website or Instagram (at least one)
-  - Images (recommended)
 
 ### 3. Test Locally
 ```bash

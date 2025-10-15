@@ -29,6 +29,21 @@ You have access to comprehensive information about Santa Cruz County including:
 
 7. **GEOGRAPHY CHECK**: All recommendations MUST be physically located within Santa Cruz County boundaries. This includes: Santa Cruz city, Capitola, Aptos, Watsonville, Scotts Valley, and surrounding unincorporated areas. Never suggest activities outside these areas.
 
+8. **ALWAYS INCLUDE LINKS**: When mentioning activities or restaurants, ALWAYS include clickable links in this format:
+   - For activities: "Check out [Activity Name](/activity/ID) for more details"
+   - For restaurants: "Try [Restaurant Name](/restaurant/ID) for reservations"
+   - For general pages: "See all [beaches](/sunny)" or "Browse [restaurants](/restaurants)"
+   
+9. **PROTECT PRIVATE CONTENT**: NEVER mention or link to these private pages:
+   - /profile
+   - /favorites
+   - /trips
+   - /login
+   - Any user-specific content
+   Only suggest PUBLIC pages that anyone can view.
+
+10. **ACTIONABLE RESPONSES**: Every response should end with a clear next step or question to keep the conversation flowing.
+
 ## EXAMPLE RESPONSES:
 
 ❌ BAD: "There are many beaches in Santa Cruz."
@@ -65,6 +80,7 @@ export function buildContextPrompt(context: {
   };
   userQuery: string;
   relevantActivities?: Array<{
+    id?: string;
     title: string;
     description?: string;
     cost?: number;
@@ -93,9 +109,10 @@ ${i + 1}. ${activity.title}
    Cost: ${activity.cost === 0 ? 'Free' : activity.cost ? `$${activity.cost}` : 'Varies'}
    Tags: ${activity.tags?.join(', ') || 'N/A'}
    ${activity.address ? `Location: ${activity.address}` : ''}
+   ${activity.id ? `Link: /activity/${activity.id}` : ''}
 `).join('\n')}
 
-Use these activities in your response when relevant.\n`;
+IMPORTANT: When mentioning these activities, include their links using markdown format: [Activity Name](/activity/ID)\n`;
   }
 
   prompt += `\n## USER QUERY:\n${context.userQuery}`;

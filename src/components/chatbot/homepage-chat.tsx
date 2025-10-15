@@ -172,7 +172,20 @@ export function HomepageChat() {
                         : 'bg-gray-100 text-gray-900'
                     }`}
                   >
-                    <p className="text-sm md:text-base leading-relaxed whitespace-pre-line">{message.content}</p>
+                    {message.role === 'assistant' ? (
+                      <div 
+                        className="text-sm md:text-base leading-relaxed prose prose-sm max-w-none"
+                        dangerouslySetInnerHTML={{
+                          __html: message.content
+                            // Convert markdown links to HTML
+                            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:text-blue-700 underline font-medium">$1</a>')
+                            // Convert line breaks
+                            .replace(/\n/g, '<br />')
+                        }}
+                      />
+                    ) : (
+                      <p className="text-sm md:text-base leading-relaxed whitespace-pre-line">{message.content}</p>
+                    )}
                   </div>
                 </div>
               ))}

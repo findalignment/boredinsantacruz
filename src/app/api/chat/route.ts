@@ -93,6 +93,7 @@ export async function POST(req: Request) {
           })
           .slice(0, 5)
           .map(activity => ({
+            id: activity.id,
             title: activity.title,
             description: activity.notes,
             cost: activity.cost,
