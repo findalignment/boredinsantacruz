@@ -184,7 +184,10 @@ export default async function ActivityDetailPage({ params }: PageProps) {
               <div className="flex flex-wrap items-center gap-4 mb-4">
                 {activity.cost !== undefined && (
                   <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
-                    💰 {activity.cost === 0 ? 'Free' : '$'.repeat(activity.cost)}
+                    💰 {activity.cost === 0 ? 'Free' : 
+                         activity.cost <= 10 ? '$' :
+                         activity.cost <= 30 ? '$$' :
+                         activity.cost <= 60 ? '$$$' : '$$$$'}
                   </span>
                 )}
                 {activity.duration && (

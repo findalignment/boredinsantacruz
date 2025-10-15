@@ -10,8 +10,10 @@ interface ActivityCardProps {
 }
 
 export function ActivityCardWithFavorite({ activity, isFavorited = false }: ActivityCardProps) {
-  const costLabels = ['Free', '$', '$$', '$$$', '$$$$'];
-  const costLabel = costLabels[activity.cost] || 'N/A';
+  const costLabel = activity.cost === 0 ? 'Free' : 
+                    activity.cost <= 10 ? '$' :
+                    activity.cost <= 30 ? '$$' :
+                    activity.cost <= 60 ? '$$$' : '$$$$';
 
   return (
     <Link href={`/activity/${activity.id}`}>

@@ -149,7 +149,10 @@ export function InteractiveMap({
           ` : ''}
           ${activity.cost !== undefined ? `
             <p style="font-size: 14px; color: #374151; margin-bottom: 8px;">
-              ${activity.cost === 0 ? 'Free' : `$${activity.cost}`}
+              ${activity.cost === 0 ? 'Free' : 
+                activity.cost <= 10 ? '$' :
+                activity.cost <= 30 ? '$$' :
+                activity.cost <= 60 ? '$$$' : '$$$$'}
             </p>
           ` : ''}
           <a 

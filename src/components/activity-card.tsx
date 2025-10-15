@@ -17,7 +17,10 @@ export function ActivityCard({
   isFeatured = false,
   isSponsored = false,
 }: ActivityCardProps) {
-  const costDisplay = activity.cost === 0 ? 'Free' : `$${activity.cost}`;
+  const costDisplay = activity.cost === 0 ? 'Free' : 
+                      activity.cost <= 10 ? '$' :
+                      activity.cost <= 30 ? '$$' :
+                      activity.cost <= 60 ? '$$$' : '$$$$';
   const scoredActivity = activity as ScoredActivity;
   const hasWeatherScore = 'weatherScore' in activity;
   
