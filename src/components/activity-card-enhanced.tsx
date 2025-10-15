@@ -4,6 +4,7 @@
 import { ScoredActivity } from '@/types';
 import Link from 'next/link';
 import Image from 'next/image';
+import { SaveToTripButton } from '@/components/trips/save-to-trip-button';
 
 interface ActivityCardEnhancedProps {
   activity: ScoredActivity;
@@ -145,9 +146,22 @@ export function ActivityCardEnhanced({
           </p>
         )}
 
-        {/* View Details Button */}
-        <div className="mt-auto pt-4">
-          <div className="px-4 py-2 bg-blue-600 text-white text-center text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+        {/* Action Buttons */}
+        <div className="mt-auto pt-4 space-y-2">
+          <SaveToTripButton
+            itemType="Activity"
+            itemId={activity.id}
+            itemName={activity.title}
+            itemData={{
+              address: address,
+              cost: activity.cost,
+              duration: activity.duration,
+              imageUrl: activity.imageUrl,
+              indoorOutdoor: activity.indoorOutdoor,
+            }}
+            variant="compact"
+          />
+          <div className="px-4 py-2 bg-gray-900 text-white text-center text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
             View Details →
           </div>
         </div>
