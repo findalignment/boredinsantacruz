@@ -3,6 +3,7 @@
 import { tables } from '@/lib/airtable';
 import { auth } from '@/lib/auth/config';
 import { v4 as uuidv4 } from 'uuid';
+import { AirtableQuery } from '@/lib/security/airtable';
 import type { Trip, TripWithItems, CreateTripInput } from '@/types/trips';
 
 /**
@@ -59,7 +60,7 @@ export async function getTrips() {
     }
 
     const records = await tables.trips.select({
-      filterByFormula: `OR({UserId} = '${session.user.email}', FIND('${session.user.email}', {Collaborators}))`,
+      filterByFormula: AirtableQuery.byOwnerOrCollaborator(session.user.email),
       sort: [{ field: 'Created', direction: 'desc' }],
     }).all();
 
@@ -121,7 +122,7 @@ export async function getTripById(tripId: string): Promise<{ success: boolean; d
 
     // Get items
     const itemRecords = await tables.tripItems.select({
-      filterByFormula: `{TripId} = '${tripId}'`,
+      filterByFormula: AirtableQuery.byTripId(tripId),
       sort: [{ field: 'Day', direction: 'asc' }, { field: 'Order', direction: 'asc' }],
     }).all();
 
@@ -151,7 +152,7 @@ export async function getTripById(tripId: string): Promise<{ success: boolean; d
 export async function getTripByToken(token: string): Promise<{ success: boolean; data?: TripWithItems; error?: string }> {
   try {
     const records = await tables.trips.select({
-      filterByFormula: `{ShareToken} = '${token}'`,
+      filterByFormula: AirtableQuery.byShareToken(token),
       maxRecords: 1,
     }).all();
 

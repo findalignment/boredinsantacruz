@@ -3,6 +3,7 @@
 import { tables } from '@/lib/airtable';
 import { auth } from '@/lib/auth/config';
 import { revalidatePath } from 'next/cache';
+import { AirtableQuery } from '@/lib/security/airtable';
 
 export interface Favorite {
   id: string;
@@ -30,7 +31,7 @@ export async function addFavorite(itemType: 'Activity' | 'Restaurant' | 'Wellnes
     // Check if already favorited
     const existing = await tables.favorites
       .select({
-        filterByFormula: `AND({UserId} = '${session.user.id}', {ItemType} = '${itemType}', {ItemId} = '${itemId}')`,
+        filterByFormula: AirtableQuery.byUserAndItem(session.user.id, itemType, itemId),
         maxRecords: 1,
       })
       .firstPage();
@@ -92,7 +93,7 @@ export async function removeFavorite(itemType: 'Activity' | 'Restaurant' | 'Well
     // Find the favorite
     const records = await tables.favorites
       .select({
-        filterByFormula: `AND({UserId} = '${session.user.id}', {ItemType} = '${itemType}', {ItemId} = '${itemId}')`,
+        filterByFormula: AirtableQuery.byUserAndItem(session.user.id, itemType, itemId),
         maxRecords: 1,
       })
       .firstPage();
@@ -136,7 +137,7 @@ export async function isFavorited(itemType: 'Activity' | 'Restaurant', itemId: s
   try {
     const records = await tables.favorites
       .select({
-        filterByFormula: `AND({UserId} = '${session.user.id}', {ItemType} = '${itemType}', {ItemId} = '${itemId}')`,
+        filterByFormula: AirtableQuery.byUserAndItem(session.user.id, itemType, itemId),
         maxRecords: 1,
       })
       .firstPage();
@@ -165,7 +166,7 @@ export async function getFavorites() {
   try {
     const records = await tables.favorites
       .select({
-        filterByFormula: `{UserId} = '${session.user.id}'`,
+        filterByFormula: AirtableQuery.byUserId(session.user.id),
         sort: [{ field: 'CreatedAt', direction: 'desc' }],
       })
       .all();
@@ -206,7 +207,7 @@ export async function getFavoriteCount() {
   try {
     const records = await tables.favorites
       .select({
-        filterByFormula: `{UserId} = '${session.user.id}'`,
+        filterByFormula: AirtableQuery.byUserId(session.user.id),
         fields: ['id'],
       })
       .all();

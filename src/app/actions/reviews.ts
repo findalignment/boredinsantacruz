@@ -3,6 +3,7 @@
 import { tables } from '@/lib/airtable';
 import { auth } from '@/lib/auth/config';
 import { revalidatePath } from 'next/cache';
+import { AirtableQuery } from '@/lib/security/airtable';
 
 export interface Review {
   id: string;
@@ -85,7 +86,7 @@ export async function createReview(data: CreateReviewData) {
     // Check if user already reviewed this item
     const existing = await tables.reviews
       .select({
-        filterByFormula: `AND({UserId} = '${session.user.id}', {ItemType} = '${data.itemType}', {ItemId} = '${data.itemId}')`,
+        filterByFormula: AirtableQuery.byUserAndItem(session.user.id, data.itemType, data.itemId),
         maxRecords: 1,
       })
       .firstPage();
@@ -333,7 +334,7 @@ export async function getUserReviews() {
   try {
     const records = await tables.reviews
       .select({
-        filterByFormula: `{UserId} = '${session.user.id}'`,
+        filterByFormula: AirtableQuery.byUserId(session.user.id),
         sort: [{ field: 'CreatedAt', direction: 'desc' }],
       })
       .all();
@@ -382,7 +383,7 @@ export async function getAverageRating(itemType: 'Activity' | 'Restaurant' | 'We
   try {
     const records = await tables.reviews
       .select({
-        filterByFormula: `AND({ItemType} = '${itemType}', {ItemId} = '${itemId}', {IsPublic} = TRUE())`,
+        filterByFormula: AirtableQuery.byItemAndPublic(itemType, itemId),
         fields: ['Rating'],
       })
       .all();
@@ -423,7 +424,7 @@ export async function hasUserReviewed(itemType: 'Activity' | 'Restaurant', itemI
   try {
     const records = await tables.reviews
       .select({
-        filterByFormula: `AND({UserId} = '${session.user.id}', {ItemType} = '${itemType}', {ItemId} = '${itemId}')`,
+        filterByFormula: AirtableQuery.byUserAndItem(session.user.id, itemType, itemId),
         maxRecords: 1,
       })
       .firstPage();
