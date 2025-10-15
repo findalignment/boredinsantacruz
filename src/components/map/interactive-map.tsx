@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import type { RainyActivity } from '@/types';
 import { findCoordinatesForActivity, SANTA_CRUZ_CENTER } from '@/lib/map/known-locations';
+import { MapFiltersComponent, MapFilters } from './map-filters';
 
 // Mapbox access token - should be in environment variables
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || '';
@@ -46,6 +47,59 @@ export function InteractiveMap({
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [filters, setFilters] = useState<MapFilters>({
+    categories: [],
+    indoorOutdoor: 'all',
+    priceRange: 'all',
+    kidFriendly: false,
+    searchQuery: '',
+  });
+
+  // Filter activities based on selected filters
+  const filteredActivities = useMemo(() => {
+    return activities.filter(activity => {
+      // Search query
+      if (filters.searchQuery) {
+        const query = filters.searchQuery.toLowerCase();
+        const matchesSearch = 
+          activity.title.toLowerCase().includes(query) ||
+          activity.venueName?.toLowerCase().includes(query) ||
+          activity.address?.toLowerCase().includes(query) ||
+          activity.notes?.toLowerCase().includes(query);
+        if (!matchesSearch) return false;
+      }
+
+      // Categories
+      if (filters.categories.length > 0) {
+        const tags = activity.tags?.map(t => t.toLowerCase()) || [];
+        const hasMatchingCategory = filters.categories.some(cat => 
+          tags.some(tag => tag.includes(cat))
+        );
+        if (!hasMatchingCategory) return false;
+      }
+
+      // Indoor/Outdoor
+      if (filters.indoorOutdoor !== 'all') {
+        const isIndoor = activity.indoorOutdoor?.toLowerCase().includes('indoor');
+        if (filters.indoorOutdoor === 'indoor' && !isIndoor) return false;
+        if (filters.indoorOutdoor === 'outdoor' && isIndoor) return false;
+      }
+
+      // Price Range
+      if (filters.priceRange !== 'all') {
+        const cost = activity.cost || 0;
+        if (filters.priceRange === 'free' && cost !== 0) return false;
+        if (filters.priceRange === 'low' && (cost === 0 || cost > 15)) return false;
+        if (filters.priceRange === 'medium' && (cost <= 15 || cost > 40)) return false;
+        if (filters.priceRange === 'high' && cost <= 40) return false;
+      }
+
+      // Kid-Friendly
+      if (filters.kidFriendly && !activity.kidFriendly) return false;
+
+      return true;
+    });
+  }, [activities, filters]);
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -90,7 +144,7 @@ export function InteractiveMap({
     };
   }, [center, zoom]);
 
-  // Add markers when map is loaded
+  // Add markers when map is loaded or filters change
   useEffect(() => {
     if (!map.current || !mapLoaded) return;
 
@@ -98,8 +152,8 @@ export function InteractiveMap({
     const markers = document.querySelectorAll('.mapboxgl-marker');
     markers.forEach(marker => marker.remove());
 
-    // Add markers for each activity
-    activities.forEach((activity) => {
+    // Add markers for each filtered activity
+    filteredActivities.forEach((activity) => {
       const coords = findCoordinatesForActivity({
         title: activity.title,
         venueName: activity.venueName,
