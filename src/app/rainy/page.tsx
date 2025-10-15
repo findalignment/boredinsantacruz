@@ -1,5 +1,6 @@
 // src/app/rainy/page.tsx
-import { getActivities } from '@/app/actions/getActivities';
+import { getRainyActivities } from '@/app/actions/getMasterActivities';
+import { getActivities } from '@/app/actions/getActivities'; // Fallback
 import { FilteredActivities } from '@/components/filtered-activities';
 import { getCurrentWeather, getWeatherConditions } from '@/lib/weather';
 import { Suspense } from 'react';
@@ -87,23 +88,45 @@ async function WeatherAwareBanner() {
 }
 
 async function ActivitiesSection() {
-  const result = await getActivities();
+  // Try master activities table first
+  let result = await getRainyActivities();
   
-  if (!result.success) {
-    return (
-      <div className="text-center py-12 bg-white rounded-xl shadow-lg">
-        <div className="text-6xl mb-4">⚠️</div>
-        <p className="text-red-600 text-xl font-semibold mb-2">Error loading activities</p>
-        <p className="text-gray-600">{result.error}</p>
-      </div>
-    );
+  // If master table not configured or empty, fallback to legacy
+  if (!result.success || result.data.length === 0) {
+    console.log('[Rainy Page] Falling back to legacy activities table');
+    const legacyResult = await getActivities();
+    
+    if (!legacyResult.success) {
+      return (
+        <div className="text-center py-12 bg-white rounded-xl shadow-lg">
+          <div className="text-6xl mb-4">⚠️</div>
+          <p className="text-red-600 text-xl font-semibold mb-2">Error loading activities</p>
+          <p className="text-gray-600">{legacyResult.error}</p>
+        </div>
+      );
+    }
+
+    if (legacyResult.data.length === 0) {
+      return (
+        <div className="text-center py-12 bg-white rounded-xl shadow-lg">
+          <div className="text-6xl mb-4">🌧️</div>
+          <p className="text-gray-600 text-lg">No activities found</p>
+        </div>
+      );
+    }
+    
+    return <FilteredActivities activities={legacyResult.data} />;
   }
 
+  // Use master activities
+  console.log(`[Rainy Page] Using master activities table: ${result.data.length} activities`);
+  
   if (result.data.length === 0) {
     return (
       <div className="text-center py-12 bg-white rounded-xl shadow-lg">
         <div className="text-6xl mb-4">🌧️</div>
-        <p className="text-gray-600 text-lg">No activities found</p>
+        <p className="text-gray-600 text-lg">No rainy day activities found yet.</p>
+        <p className="text-gray-500 text-sm mt-2">Check back soon as we add more activities!</p>
       </div>
     );
   }

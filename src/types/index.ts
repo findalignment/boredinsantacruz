@@ -77,6 +77,100 @@ export interface ActivityFilters {
   indoorOnly: boolean;
 }
 
+// Master Activity type (unified table with all fields)
+export interface Activity {
+  // Core fields
+  id: string;
+  name: string;
+  description: string;
+  writeUp?: string;
+  category: string;
+  cost: number;
+  duration: string;
+  indoorOutdoor: 'Indoor' | 'Outdoor' | 'Mixed' | 'Covered';
+  
+  // Location
+  address?: string;
+  latitude?: number;
+  longitude?: number;
+  neighborhood?: string;
+  city?: string;
+  zipCode?: string;
+  
+  // Contact
+  phone?: string;
+  website?: string;
+  instagram?: string;
+  email?: string;
+  
+  // Practical info
+  hours?: string;
+  parkingInfo?: string;
+  publicTransit?: string;
+  
+  // Media
+  photoUrl?: string;
+  imageUrl?: string; // Alias for photoUrl
+  
+  // Tags & categorization
+  tags: string[];
+  kidFriendly?: boolean;
+  petFriendly?: boolean | string;
+  accessibility?: string;
+  
+  // Weather-aware fields
+  weatherPreferences?: string; // Comma-separated: "sunny,partly-cloudy,warm"
+  rainOk?: boolean;
+  idealTempMin?: number;
+  idealTempMax?: number;
+  windSensitive?: boolean;
+  requiresGoodVisibility?: boolean;
+  weatherBoost?: number;
+  
+  // Tide-aware fields
+  tidePreference?: 'low-tide' | 'high-tide' | 'mid-tide' | 'rising-tide' | 'falling-tide' | 'tide-change' | 'any-tide';
+  tideCritical?: boolean;
+  
+  // Insider tips & content
+  tips?: string;
+  bestTimeToVisit?: string;
+  bestFeature?: string;
+  whatToBring?: string;
+  
+  // Display & sorting
+  staffPick?: boolean;
+  featured?: boolean;
+  priority?: number;
+  sponsored?: boolean;
+  
+  // Ratings
+  rating?: number;
+  reviewCount?: number;
+  
+  // SEO
+  metaDescription?: string;
+  keywords?: string;
+  slug?: string;
+  
+  // Admin
+  status?: string;
+  source?: string;
+  
+  // Optional advanced
+  difficulty?: string;
+  ageRestriction?: string;
+  groupSize?: string;
+  reservationRequired?: boolean;
+  seasonalAvailability?: string;
+}
+
+// Activity with weather score
+export interface ScoredMasterActivity extends Activity {
+  weatherScore: number;
+  matchReason?: string;
+  weatherWarning?: string;
+}
+
 // Restaurant types
 export interface Restaurant {
   id: string;

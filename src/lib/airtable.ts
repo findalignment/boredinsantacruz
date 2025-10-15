@@ -4,13 +4,21 @@ const base = new Airtable({ apiKey: process.env.AIRTABLE_TOKEN })
   .base(process.env.AIRTABLE_BASE_ID!);
 
 export const tables = {
+  // Master Activities table (new unified table)
+  activities: process.env.AIRTABLE_ACTIVITIES_TABLE
+    ? base(process.env.AIRTABLE_ACTIVITIES_TABLE)
+    : null,
+  
+  // Legacy tables (kept for backwards compatibility)
   venues: base('Venues'),
   rainyActivities: base(process.env.AIRTABLE_RAINY_TABLE || 'RainyActivities'),
-  restaurants: process.env.AIRTABLE_RESTAURANTS_TABLE 
-    ? base(process.env.AIRTABLE_RESTAURANTS_TABLE) 
-    : null,
   sunnyActivities: process.env.AIRTABLE_SUNNY_TABLE
     ? base(process.env.AIRTABLE_SUNNY_TABLE)
+    : null,
+  
+  // Other tables
+  restaurants: process.env.AIRTABLE_RESTAURANTS_TABLE 
+    ? base(process.env.AIRTABLE_RESTAURANTS_TABLE) 
     : null,
   wellness: process.env.AIRTABLE_WELLNESS_TABLE
     ? base(process.env.AIRTABLE_WELLNESS_TABLE)

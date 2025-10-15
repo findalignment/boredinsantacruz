@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { RainyActivity } from '@/types';
+import { RainyActivity, Activity } from '@/types';
 import { ActivityCard } from './activity-card';
 import { ActivityFilters } from './activity-filters';
 
@@ -13,7 +13,7 @@ interface FilterState {
 }
 
 interface FilteredActivitiesProps {
-  activities: RainyActivity[];
+  activities: (RainyActivity | Activity)[];
 }
 
 export function FilteredActivities({ activities }: FilteredActivitiesProps) {
