@@ -1,4 +1,3 @@
-import { SectionCard } from '@/components/ui/section-card';
 import { TodayRecommendations } from '@/components/today-recommendations';
 import { WeeklyForecast } from '@/components/weekly-forecast';
 import { BestDayBanner } from '@/components/best-day-banner';
@@ -8,14 +7,15 @@ import { FeaturedLocalSpotlight } from '@/components/featured-local-spotlight';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { getWeeklyForecast } from '@/app/actions/getForecast';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Bored in Santa Cruz - Your Ultimate Guide to Local Activities',
-  description: 'Never be bored in Santa Cruz again! Discover activities for sunny days, rainy days, hidden gems, events, and the best local experiences in Santa Cruz, California.',
-  keywords: ['Santa Cruz guide', 'things to do Santa Cruz', 'Santa Cruz activities', 'Santa Cruz events', 'visit Santa Cruz', 'Santa Cruz beaches', 'Santa Cruz hiking'],
+  title: 'Bored in Santa Cruz - Your Local Guide',
+  description: 'Find the best things to do in Santa Cruz today. Get personalized recommendations for activities, restaurants, beaches, and hidden gems.',
+  keywords: ['Santa Cruz guide', 'things to do Santa Cruz', 'Santa Cruz activities', 'Santa Cruz restaurants', 'visit Santa Cruz'],
   openGraph: {
-    title: 'Bored in Santa Cruz - Your Ultimate Local Guide',
-    description: 'Discover the best activities, venues, and experiences in Santa Cruz - rain or shine!',
+    title: 'Bored in Santa Cruz - Your Local Guide',
+    description: 'Find the best things to do in Santa Cruz today.',
     type: 'website',
   },
 };
@@ -26,8 +26,7 @@ function LoadingRecommendations() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="animate-pulse space-y-6">
           <div className="h-12 bg-gray-200 rounded w-1/3 mx-auto"></div>
-          <div className="h-48 bg-gray-200 rounded-xl max-w-2xl mx-auto"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
               <div key={i} className="h-96 bg-gray-200 rounded-xl"></div>
             ))}
@@ -53,7 +52,7 @@ async function ForecastWidget() {
   const result = await getWeeklyForecast();
   
   if (!result.success || result.data.length === 0) {
-    return null; // Gracefully hide if forecast fails
+    return null;
   }
 
   return (
@@ -71,61 +70,90 @@ export default function Home() {
         <BestDayBanner />
       </Suspense>
 
-      {/* MAIN FEATURE: AI Chatbot */}
-      <section className="py-16 px-4">
+      {/* MAIN: AI Assistant */}
+      <section className="py-12 md:py-16 px-4">
         <HomepageChat />
       </section>
 
-      {/* Quick Links Below Chat */}
-      <section className="pb-16">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-center text-lg font-semibold text-gray-700 mb-4">
-            Or browse by category
+      {/* Quick Category Buttons - 2 Clicks to Recommendation */}
+      <section className="pb-12 md:pb-16">
+        <div className="max-w-5xl mx-auto px-4">
+          <h2 className="text-center text-base md:text-lg font-semibold text-gray-700 mb-4 md:mb-6">
+            Or choose a category
           </h2>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <a
-              href="/rainy"
-              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-2xl hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
+          <div className="grid grid-cols-2 md:flex md:flex-wrap gap-3 md:gap-4 md:justify-center">
+            <Link
+              href="/activities"
+              className="flex flex-col items-center gap-2 p-4 md:px-8 md:py-4 bg-white hover:bg-blue-50 rounded-2xl border-2 border-gray-200 hover:border-blue-400 transition-all shadow-sm hover:shadow-md group"
             >
-              🌧️ Things to Do
-            </a>
-            <a
-              href="/sunny"
-              className="px-6 py-3 bg-gradient-to-r from-orange-400 to-orange-500 text-white font-semibold rounded-2xl hover:from-orange-500 hover:to-orange-600 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
-            >
-              ☀️ Outdoors
-            </a>
-            <a
+              <span className="text-3xl md:text-4xl group-hover:scale-110 transition-transform" role="img" aria-label="Things to do">
+                🎯
+              </span>
+              <span className="text-sm md:text-base font-bold text-gray-900">Things to Do</span>
+            </Link>
+
+            <Link
               href="/restaurants"
-              className="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-600 text-white font-semibold rounded-2xl hover:from-red-600 hover:to-pink-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
+              className="flex flex-col items-center gap-2 p-4 md:px-8 md:py-4 bg-white hover:bg-red-50 rounded-2xl border-2 border-gray-200 hover:border-red-400 transition-all shadow-sm hover:shadow-md group"
             >
-              🍴 Eat & Drink
-            </a>
-            <a
-              href="/secret-map"
-              className="px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold rounded-2xl hover:from-purple-600 hover:to-purple-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
+              <span className="text-3xl md:text-4xl group-hover:scale-110 transition-transform" role="img" aria-label="Eat">
+                🍴
+              </span>
+              <span className="text-sm md:text-base font-bold text-gray-900">Eat</span>
+            </Link>
+
+            <Link
+              href="/rainy"
+              className="flex flex-col items-center gap-2 p-4 md:px-8 md:py-4 bg-white hover:bg-blue-50 rounded-2xl border-2 border-gray-200 hover:border-blue-400 transition-all shadow-sm hover:shadow-md group"
             >
-              🗺️ Hidden Gems
-            </a>
-            <a
+              <span className="text-3xl md:text-4xl group-hover:scale-110 transition-transform" role="img" aria-label="Indoors">
+                🏠
+              </span>
+              <span className="text-sm md:text-base font-bold text-gray-900">Indoors</span>
+            </Link>
+
+            <Link
+              href="/sunny"
+              className="flex flex-col items-center gap-2 p-4 md:px-8 md:py-4 bg-white hover:bg-orange-50 rounded-2xl border-2 border-gray-200 hover:border-orange-400 transition-all shadow-sm hover:shadow-md group"
+            >
+              <span className="text-3xl md:text-4xl group-hover:scale-110 transition-transform" role="img" aria-label="Outdoors">
+                ☀️
+              </span>
+              <span className="text-sm md:text-base font-bold text-gray-900">Outdoors</span>
+            </Link>
+
+            <Link
               href="/tonight"
-              className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold rounded-2xl hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-md hover:shadow-xl transform hover:scale-105"
+              className="flex flex-col items-center gap-2 p-4 md:px-8 md:py-4 bg-white hover:bg-purple-50 rounded-2xl border-2 border-gray-200 hover:border-purple-400 transition-all shadow-sm hover:shadow-md group"
             >
-              🎵 Tonight
-            </a>
+              <span className="text-3xl md:text-4xl group-hover:scale-110 transition-transform" role="img" aria-label="Tonight">
+                🎵
+              </span>
+              <span className="text-sm md:text-base font-bold text-gray-900">Tonight</span>
+            </Link>
+
+            <Link
+              href="/secret-map"
+              className="flex flex-col items-center gap-2 p-4 md:px-8 md:py-4 bg-white hover:bg-purple-50 rounded-2xl border-2 border-gray-200 hover:border-purple-400 transition-all shadow-sm hover:shadow-md group"
+            >
+              <span className="text-3xl md:text-4xl group-hover:scale-110 transition-transform" role="img" aria-label="Hidden gems">
+                🗺️
+              </span>
+              <span className="text-sm md:text-base font-bold text-gray-900">Hidden Gems</span>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Top 3 for Today */}
+      {/* Top 3 Picks Today */}
       <Suspense fallback={<LoadingRecommendations />}>
         <TopThreeToday />
       </Suspense>
 
-      {/* Featured Local Spotlight (Monetization) */}
+      {/* Featured Local Business */}
       <FeaturedLocalSpotlight />
 
-      {/* Today's Recommendations - Weather-Aware */}
+      {/* More Options */}
       <Suspense fallback={<LoadingRecommendations />}>
         <TodayRecommendations />
       </Suspense>
@@ -137,34 +165,35 @@ export default function Home() {
         </Suspense>
       </section>
 
-      {/* Newsletter Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 py-20">
+      {/* Newsletter */}
+      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 py-16 md:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4">
             Never Miss Out
           </h2>
-          <p className="text-blue-100 text-lg mb-8">
-            Get weekly recommendations for the best things to do in Santa Cruz, 
-            plus exclusive insider tips and new venue updates.
+          <p className="text-blue-100 text-base md:text-lg mb-6 md:mb-8">
+            Get weekly recommendations for the best things to do in Santa Cruz
           </p>
           
-          <form className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+          <form className="flex flex-col sm:flex-row gap-3 md:gap-4 max-w-2xl mx-auto">
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-6 py-4 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-blue-300 shadow-lg"
+              className="flex-1 px-6 py-4 rounded-full text-gray-900 placeholder-gray-500 text-base focus:outline-none focus:ring-4 focus:ring-blue-300 shadow-lg"
               required
+              aria-label="Email address"
             />
             <button
               type="submit"
-              className="px-8 py-4 bg-white text-blue-600 font-semibold rounded-full hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg"
+              className="px-8 py-4 bg-white text-blue-600 font-semibold rounded-full hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg text-base"
+              aria-label="Subscribe to newsletter"
             >
               Subscribe
             </button>
           </form>
           
           <p className="text-blue-200 text-sm mt-4">
-            No spam, unsubscribe anytime. We respect your inbox! 📧
+            No spam. Unsubscribe anytime.
           </p>
         </div>
       </section>

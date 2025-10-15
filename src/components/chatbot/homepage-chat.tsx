@@ -9,12 +9,12 @@ interface ChatMessage {
 }
 
 const EXAMPLE_QUESTIONS = [
-  "Best beach for sunset today?",
-  "Where can I get tacos in downtown?",
-  "Rainy day activities with kids",
-  "Hiking trails near Santa Cruz",
-  "Live music tonight",
-  "Coffee shops with wifi"
+  "🏖️ Beach for sunset",
+  "🌮 Tacos downtown",
+  "👶 Kids activities",
+  "🥾 Hiking trails",
+  "🎵 Live music tonight",
+  "☕ Coffee with wifi"
 ];
 
 export function HomepageChat() {
@@ -23,7 +23,6 @@ export function HomepageChat() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -94,7 +93,7 @@ export function HomepageChat() {
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "Sorry, I couldn't process that request. Please try again!",
+        content: "Sorry, I couldn't help with that. Please try again!",
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
@@ -104,7 +103,6 @@ export function HomepageChat() {
 
   const handleExampleClick = (question: string) => {
     setInput(question);
-    // Auto-submit after a brief delay
     setTimeout(() => {
       const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
       handleSubmit(fakeEvent, question);
@@ -113,43 +111,44 @@ export function HomepageChat() {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      {/* Hero Section */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-400 via-cyan-400 to-teal-400 rounded-2xl mb-4 shadow-lg">
-          <span className="text-3xl">🌊</span>
+      {/* Header */}
+      <div className="text-center mb-6 md:mb-8">
+        <div className="inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-blue-400 via-cyan-400 to-teal-400 rounded-2xl mb-4 shadow-lg">
+          <span className="text-2xl md:text-3xl" role="img" aria-label="Wave">🌊</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
-          What to do in Santa Cruz
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
+          What should I do today?
         </h1>
-        <p className="text-lg text-gray-600 mb-2">
-          Your AI-powered local guide
+        <p className="text-base md:text-lg text-gray-600 mb-2">
+          Your AI local guide for Santa Cruz
         </p>
-        <p className="text-sm text-gray-500 max-w-xl mx-auto">
-          💡 <strong>Tip:</strong> Tell me what you're looking for — beach, food, hike, art, music, coffee, etc.
+        <p className="text-sm text-gray-500 max-w-xl mx-auto px-4">
+          💡 <strong>Try:</strong> "beach", "tacos", "kids", "hike", "music", "coffee"
         </p>
       </div>
 
       {/* Chat Container */}
       <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-gray-200/50">
         {/* Messages */}
-        <div className="h-[500px] overflow-y-auto p-6 space-y-4">
+        <div className="h-[400px] md:h-[500px] overflow-y-auto p-4 md:p-6 space-y-4">
           {messages.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-5xl mb-4">👋</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Ask me anything about Santa Cruz
+            <div className="text-center py-8 md:py-12">
+              <div className="text-4xl md:text-5xl mb-4" role="img" aria-label="Wave">👋</div>
+              <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">
+                Ask me anything
               </h3>
-              <p className="text-gray-600 mb-8">
-                Try one of these popular questions:
+              <p className="text-sm md:text-base text-gray-600 mb-6 md:mb-8 px-4">
+                Tap a suggestion or type your own
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 max-w-2xl mx-auto px-2">
                 {EXAMPLE_QUESTIONS.map((q, i) => (
                   <button
                     key={i}
                     onClick={() => handleExampleClick(q)}
-                    className="text-left p-4 bg-gradient-to-br from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 rounded-xl text-sm text-gray-800 transition-all border border-blue-200/50 shadow-sm hover:shadow-md font-medium"
+                    className="text-left p-3 md:p-4 bg-gradient-to-br from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 rounded-xl text-xs md:text-sm text-gray-800 transition-all border border-blue-200/50 shadow-sm hover:shadow-md font-medium active:scale-95"
+                    aria-label={`Ask about ${q}`}
                   >
-                    💬 {q}
+                    {q}
                   </button>
                 ))}
               </div>
@@ -162,13 +161,13 @@ export function HomepageChat() {
                   className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] rounded-2xl p-4 shadow-sm ${
+                    className={`max-w-[85%] rounded-2xl p-3 md:p-4 shadow-sm ${
                       message.role === 'user'
                         ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white'
                         : 'bg-white text-gray-900 border border-gray-200'
                     }`}
                   >
-                    <p className="text-sm leading-relaxed whitespace-pre-line">{message.content}</p>
+                    <p className="text-sm md:text-base leading-relaxed whitespace-pre-line">{message.content}</p>
                   </div>
                 </div>
               ))}
@@ -189,22 +188,24 @@ export function HomepageChat() {
         </div>
 
         {/* Input Form */}
-        <form onSubmit={(e) => handleSubmit(e)} className="border-t border-gray-200/50 p-4 bg-gradient-to-br from-gray-50 to-white">
-          <div className="flex gap-3">
+        <form onSubmit={(e) => handleSubmit(e)} className="border-t border-gray-200/50 p-3 md:p-4 bg-gradient-to-br from-gray-50 to-white">
+          <div className="flex gap-2 md:gap-3">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask me anything: beach, tacos, hike, music..."
-              className="flex-1 px-5 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-base bg-white shadow-sm"
+              placeholder="Ask: beach, tacos, kids..."
+              className="flex-1 px-4 md:px-5 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-sm md:text-base bg-white shadow-sm"
               disabled={isLoading}
+              aria-label="Ask a question"
             />
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-7 py-3 rounded-2xl hover:from-blue-600 hover:to-cyan-600 transition-all disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed font-semibold text-base shadow-md hover:shadow-lg"
+              className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 md:px-7 py-3 rounded-2xl hover:from-blue-600 hover:to-cyan-600 transition-all disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed font-semibold text-sm md:text-base shadow-md hover:shadow-lg active:scale-95"
+              aria-label={isLoading ? 'Sending...' : 'Send message'}
             >
-              {isLoading ? '...' : 'Send'}
+              {isLoading ? '...' : 'Ask'}
             </button>
           </div>
         </form>
