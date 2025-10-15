@@ -13,9 +13,11 @@ const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 export function isRestaurantOpen(hoursString: string | undefined): boolean {
   if (!hoursString) return false;
   
+  // Get current time in Pacific Time (Santa Cruz, CA)
   const now = new Date();
-  const currentDay = DAYS[now.getDay()];
-  const currentTime = now.getHours() * 60 + now.getMinutes(); // minutes since midnight
+  const pacificTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+  const currentDay = DAYS[pacificTime.getDay()];
+  const currentTime = pacificTime.getHours() * 60 + pacificTime.getMinutes(); // minutes since midnight
   
   try {
     const hours = parseHours(hoursString);

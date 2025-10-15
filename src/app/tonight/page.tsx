@@ -8,8 +8,10 @@ export const metadata: Metadata = {
 
 // Placeholder events data - will be dynamic later
 const getCurrentEvents = () => {
-  const today = new Date();
-  const dayOfWeek = today.getDay();
+  // Get current date in Pacific Time (Santa Cruz, CA)
+  const now = new Date();
+  const pacificTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+  const dayOfWeek = pacificTime.getDay();
 
   // Weekly recurring events
   const recurringEvents = [

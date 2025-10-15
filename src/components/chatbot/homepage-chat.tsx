@@ -24,7 +24,10 @@ export function HomepageChat() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Only scroll when assistant is responding, not when user is typing
+    if (messages.length > 0 && messages[messages.length - 1].role === 'assistant') {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [messages]);
 
   const handleSubmit = async (e: React.FormEvent, question?: string) => {
@@ -69,22 +72,35 @@ export function HomepageChat() {
 
       setMessages((prev) => [...prev, assistantMessage]);
 
+      let buffer = '';
+      
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
-        const chunk = decoder.decode(value);
-        const lines = chunk.split('\n');
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        
+        // Keep the last incomplete line in the buffer
+        buffer = lines.pop() || '';
 
         for (const line of lines) {
-          if (line.startsWith('0:')) {
-            const text = line.slice(3, -1);
-            assistantMessage.content += text;
-            setMessages((prev) => {
-              const newMessages = [...prev];
-              newMessages[newMessages.length - 1] = { ...assistantMessage };
-              return newMessages;
-            });
+          if (line.trim()) {
+            // Parse the streaming text response format from Vercel AI SDK
+            if (line.startsWith('0:')) {
+              // Text chunk: 0:"text content"
+              try {
+                const text = JSON.parse(line.slice(2));
+                assistantMessage.content += text;
+                setMessages((prev) => {
+                  const newMessages = [...prev];
+                  newMessages[newMessages.length - 1] = { ...assistantMessage };
+                  return newMessages;
+                });
+              } catch (e) {
+                console.error('Failed to parse text chunk:', line, e);
+              }
+            }
           }
         }
       }

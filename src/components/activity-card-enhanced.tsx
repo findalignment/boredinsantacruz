@@ -114,7 +114,7 @@ export function ActivityCardEnhanced({
                 key={index}
                 className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
               >
-                {tag}
+                {tag.charAt(0).toUpperCase() + tag.slice(1)}
               </span>
             ))}
           </div>
@@ -128,13 +128,12 @@ export function ActivityCardEnhanced({
           {activity.duration && (
             <span>⏱️ {activity.duration}</span>
           )}
-          {activity.indoorOutdoor && (
+          {activity.indoorOutdoor && activity.indoorOutdoor.length > 1 && (
             <span>
-              {activity.indoorOutdoor === 'Indoor' && '🏠'}
-              {activity.indoorOutdoor === 'Outdoor' && '🌳'}
-              {activity.indoorOutdoor === 'Mixed' && '🏠🌳'}
-              {activity.indoorOutdoor === 'Covered' && '⛱️'}
-              {' '}{activity.indoorOutdoor}
+              {activity.indoorOutdoor === 'Indoor' && '🏠 Indoor'}
+              {activity.indoorOutdoor === 'Outdoor' && '🌳 Outdoor'}
+              {activity.indoorOutdoor === 'Mixed' && '🏠🌳 Mixed'}
+              {activity.indoorOutdoor === 'Covered' && '⛱️ Covered'}
             </span>
           )}
         </div>
