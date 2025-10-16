@@ -206,11 +206,9 @@ export default function GuidesPage() {
 
       {/* Filters */}
       <section className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-gray-900">Search Guides</h2>
-          <div className="text-sm text-gray-500">
-            <LastUpdated date="2025-01-16" />
-          </div>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Search Guides</h2>
+        <div className="mb-4">
+          <LastUpdated date="2025-01-16" />
         </div>
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
