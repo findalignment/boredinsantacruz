@@ -202,18 +202,7 @@ export default async function WellnessDetailPage({ params }: WellnessPageProps) 
                 {wellness.address && (
                   <div>
                     <p className="text-sm font-semibold text-gray-700 mb-1">Address</p>
-                    {googleMapsUrl ? (
-                      <a
-                        href={googleMapsUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 flex items-center gap-1"
-                      >
-                        📍 {wellness.address}, Santa Cruz, CA
-                      </a>
-                    ) : (
-                      <p className="text-gray-800">{wellness.address}, Santa Cruz, CA</p>
-                    )}
+                    <ClickableAddress address={`${wellness.address}, Santa Cruz, CA`} />
                   </div>
                 )}
 

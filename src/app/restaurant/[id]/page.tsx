@@ -8,6 +8,7 @@ import { ReviewsSummary } from '@/components/reviews/reviews-summary';
 import { ReviewsList } from '@/components/reviews/reviews-list';
 import { FavoriteButton } from '@/components/favorites/favorite-button';
 import { getRestaurantStatus } from '@/lib/restaurants/hours';
+import { ClickableAddress } from '@/components/clickable-address';
 
 interface RestaurantPageProps {
   params: Promise<{
@@ -168,14 +169,7 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
                 {restaurant.address && (
                   <div>
                     <p className="text-sm font-semibold text-gray-700 mb-1">Address</p>
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(restaurant.address)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 flex items-center gap-1"
-                    >
-                      📍 {restaurant.address}
-                    </a>
+                    <ClickableAddress address={restaurant.address} />
                   </div>
                 )}
 

@@ -13,6 +13,7 @@ import { ReviewsSummary } from '@/components/reviews/reviews-summary';
 import { ReviewsList } from '@/components/reviews/reviews-list';
 import { FavoriteButton } from '@/components/favorites/favorite-button';
 import { ActivityStructuredData } from '@/components/seo/structured-data';
+import { ClickableAddress } from '@/components/clickable-address';
 import type { Metadata } from 'next';
 
 interface PageProps {
@@ -252,21 +253,8 @@ export default async function ActivityDetailPage({ params }: PageProps) {
               {/* Address */}
               {address && (
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                    📍 Location
-                  </h3>
-                  {googleMapsUrl ? (
-                    <a
-                      href={googleMapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-700 hover:underline"
-                    >
-                      {address}, Santa Cruz, CA
-                    </a>
-                  ) : (
-                    <p className="text-gray-700">{address}, Santa Cruz, CA</p>
-                  )}
+                  <h3 className="font-semibold text-gray-900 mb-2">Location</h3>
+                  <ClickableAddress address={`${address}, Santa Cruz, CA`} />
                 </div>
               )}
 
