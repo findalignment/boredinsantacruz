@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import type { RainyActivity } from '@/types';
+import type { Activity } from '@/types';
 import { findCoordinatesForActivity, SANTA_CRUZ_CENTER } from '@/lib/map/known-locations';
 import { MapFiltersComponent, MapFilters } from './map-filters';
 
@@ -11,7 +11,7 @@ import { MapFiltersComponent, MapFilters } from './map-filters';
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || '';
 
 interface InteractiveMapProps {
-  activities: RainyActivity[];
+  activities: Activity[];
   center?: [number, number]; // [lng, lat]
   zoom?: number;
 }
@@ -27,7 +27,7 @@ const ACTIVITY_COLORS: Record<string, string> = {
 };
 
 // Get color based on activity tags
-function getActivityColor(activity: RainyActivity): string {
+function getActivityColor(activity: Activity): string {
   const tags = activity.tags || [];
   if (tags.some(t => t.toLowerCase().includes('beach'))) return ACTIVITY_COLORS.beach;
   if (tags.some(t => t.toLowerCase().includes('hik'))) return ACTIVITY_COLORS.hiking;

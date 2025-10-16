@@ -78,16 +78,21 @@ You have access to comprehensive information about Santa Cruz County including:
    * Scenic Views → [views](/scenic-views)
    * Arts & Culture → [arts](/arts-and-culture)
    
-   **Specific Activity Links** (only if ID provided):
-   - Format: [Activity Name](/activity/ID) ONLY if ID is in context
+   **Specific Business Links** (ALWAYS link to specific businesses when mentioned):
+   - Activities: [Activity Name](/activity/ID) - only if ID is in context
+   - Restaurants: [Restaurant Name](/restaurant/ID) - only if ID is in context
+   - Wellness: [Studio Name](/wellness/ID) - only if ID is in context
    - DO NOT make up IDs like "/activity/natural-bridges"
+   - If no ID is provided, link to the category page instead
    
    **Examples**:
    ✅ "For beaches, check out [sunny activities](/sunny)"
    ✅ "Need food ideas? Browse [restaurants](/restaurants) or [happy hours](/deals)"
+   ✅ "Try [Cafe Brazil](/restaurant/rec123) for breakfast" (if ID is rec123)
+   ✅ "Check out [Yoga Source](/wellness/rec456) for yoga" (if ID is rec456)
    ✅ "With kids? See [kid-friendly activities](/kid-friendly-activities)"
    ✅ "Looking for free options? Check out [free things to do](/free-things-to-do)"
-   ❌ "Check out Natural Bridges" (no link)
+   ❌ "Check out Natural Bridges" (no link - should link to /sunny)
    ❌ "[Natural Bridges](/activity/fake-id)" (made-up ID)
    
 9. **PROTECT PRIVATE CONTENT**: NEVER mention or link to these private pages:
@@ -166,24 +171,35 @@ Consider this weather when making recommendations.\n`;
 
   // Add relevant activities if available
   if (context.relevantActivities && context.relevantActivities.length > 0) {
-    prompt += `\n## RELEVANT ACTIVITIES FOR THIS QUERY:
-${context.relevantActivities.slice(0, 5).map((activity, i) => `
+    prompt += `\n## RELEVANT BUSINESSES FOR THIS QUERY:
+${context.relevantActivities.slice(0, 8).map((activity, i) => `
 ${i + 1}. ${activity.title}
    ${activity.description || ''}
    Cost: ${activity.cost === 0 ? 'Free' : activity.cost ? `$${activity.cost}` : 'Varies'}
    Tags: ${activity.tags?.join(', ') || 'N/A'}
    ${activity.address ? `Location: ${activity.address}` : ''}
-   ${activity.id ? `Link: /activity/${activity.id}` : ''}
+   ${activity.id ? `**ID: ${activity.id}**` : ''}
 `).join('\n')}
 
-CRITICAL LINKING RULES:
-- ONLY create links for activities listed above that have an ID
-- DO NOT make up fake activity IDs like "natural-bridges" or "westcliff"
-- If an activity doesn't have an ID above, link to the category page instead
-- ALWAYS include at least ONE relevant page link in your response
-- Example GOOD: [Specific Activity Name](/activity/rec123abc) - if ID is rec123abc
-- Example BAD: [Natural Bridges](/activity/natural-bridges) - DO NOT make up IDs
-- Example GOOD fallback: "Visit [Natural Bridges State Beach](/sunny) or explore more [beaches](/sunny)"\n`;
+CRITICAL LINKING RULES FOR BUSINESSES:
+- **ALWAYS link to specific businesses when you mention them by name**
+- Determine the type based on tags/context:
+  * Restaurants/Food → use /restaurant/[ID]
+  * Yoga/Fitness/Spa/Wellness → use /wellness/[ID]
+  * Activities/Attractions → use /activity/[ID]
+- ONLY create links for businesses listed above that have an ID
+- DO NOT make up fake IDs like "natural-bridges" or "westcliff"
+- If a business doesn't have an ID above, link to the category page instead
+
+**Correct Linking Examples:**
+✅ "Try [Cafe Brazil](/restaurant/rec123abc) for breakfast" - if ID is rec123abc
+✅ "Check out [Yoga Source](/wellness/rec456xyz) for yoga classes" - if ID is rec456xyz
+✅ "Visit [Natural Bridges State Beach](/activity/rec789def)" - if ID is rec789def
+✅ "For more restaurants, see [restaurants](/restaurants)" - category fallback
+❌ "[Natural Bridges](/activity/natural-bridges)" - DO NOT make up IDs
+❌ "Try Cafe Brazil for breakfast" - MISSING link entirely
+
+IMPORTANT: When you mention a specific business NAME, you MUST include the link to its detail page if an ID is provided above.\n`;
   }
 
   prompt += `\n## USER QUERY:\n${context.userQuery}`;
