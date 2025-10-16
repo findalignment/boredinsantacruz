@@ -270,10 +270,7 @@ export function RestaurantWeekClient({ initialRestaurants }: RestaurantWeekClien
 function RestaurantCard({ name, restaurant, emoji }: { name: string; restaurant?: Restaurant; emoji: string }) {
   if (restaurant) {
     return (
-      <Link
-        href={`/restaurant/${restaurant.id}`}
-        className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-orange-200 overflow-hidden hover:scale-[1.02] cursor-pointer block"
-      >
+      <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-orange-200 overflow-hidden hover:scale-[1.02] group">
         <div className="h-32 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
           <span className="text-5xl">🍽️</span>
         </div>
@@ -290,11 +287,14 @@ function RestaurantCard({ name, restaurant, emoji }: { name: string; restaurant?
               📍 {restaurant.neighborhood || restaurant.address.split(',')[0]}
             </p>
           )}
-          <span className="inline-block w-full py-2 bg-orange-600 text-white text-center font-semibold rounded-lg hover:bg-orange-700 transition-colors">
+          <Link
+            href={`/restaurant/${restaurant.id}`}
+            className="inline-block w-full py-2 bg-orange-600 text-white text-center font-semibold rounded-lg hover:bg-orange-700 transition-colors cursor-pointer"
+          >
             View Details →
-          </span>
+          </Link>
         </div>
-      </Link>
+      </div>
     );
   }
 
@@ -311,7 +311,7 @@ function RestaurantCard({ name, restaurant, emoji }: { name: string; restaurant?
           href="https://santacruzrestaurantweek.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="block w-full py-2 bg-gray-600 text-white text-center font-semibold rounded-lg hover:bg-gray-700 transition-colors"
+          className="block w-full py-2 bg-gray-600 text-white text-center font-semibold rounded-lg hover:bg-gray-700 transition-colors cursor-pointer"
         >
           Learn More →
         </a>
