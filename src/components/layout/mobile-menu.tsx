@@ -10,14 +10,12 @@ export function MobileMenu() {
 
   const menuItems = [
     { label: 'Home', href: '/', emoji: '🏠' },
+    { label: 'Guides', href: '/guides', emoji: '📖' },
     { label: 'Activities', href: '/activities', emoji: '🎯' },
     { label: 'Restaurants', href: '/restaurants', emoji: '🍽️' },
-    { label: 'Restaurant Week', href: '/restaurant-week', emoji: '🍽️' },
     { label: 'Events', href: '/events', emoji: '🎉' },
     { label: 'Deals', href: '/deals', emoji: '🍻' },
     { label: 'Wellness', href: '/wellness', emoji: '🧘' },
-    { label: 'Sunny Days', href: '/sunny', emoji: '☀️' },
-    { label: 'Rainy Days', href: '/rainy', emoji: '🌧️' },
     { label: 'Trip Planner', href: '/trips', emoji: '🗺️' },
   ];
 

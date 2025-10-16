@@ -48,10 +48,33 @@ export default async function ActivitiesPage() {
       <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
         <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
           <div className="text-center py-12 bg-white rounded-xl shadow-lg">
-            <div className="text-6xl mb-4">⚠️</div>
-            <p className="text-red-600 text-xl font-semibold">
-              Unable to load recommendations
+            <div className="text-6xl mb-4">🌤️</div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Getting Today's Recommendations
+            </h2>
+            <p className="text-gray-600 text-lg mb-6">
+              We're analyzing current weather conditions to personalize your experience.
             </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                href="/rainy"
+                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                🌧️ Rainy Day Activities
+              </Link>
+              <Link
+                href="/sunny"
+                className="px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg hover:bg-yellow-600 transition-colors"
+              >
+                ☀️ Sunny Day Activities
+              </Link>
+              <Link
+                href="/restaurants"
+                className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
+              >
+                🍽️ Restaurants
+              </Link>
+            </div>
           </div>
         </div>
       </main>

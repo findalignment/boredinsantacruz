@@ -12,7 +12,28 @@ export async function TopThreeToday() {
   const restaurantsResult = await getRestaurants();
   
   if (!recsResult.success || !recsResult.data) {
-    return null;
+    // Show a friendly message instead of nothing
+    return (
+      <section className="py-16 px-4 bg-gradient-to-br from-white to-blue-50/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center py-12 bg-white rounded-xl shadow-lg">
+            <div className="text-5xl mb-4">🌤️</div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              Checking today's conditions...
+            </h3>
+            <p className="text-gray-600 mb-6">
+              We're updating our recommendations based on weather and activities.
+            </p>
+            <Link
+              href="/activities"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Browse All Activities →
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   const { tiers } = recsResult.data;
