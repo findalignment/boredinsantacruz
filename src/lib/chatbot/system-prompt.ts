@@ -148,13 +148,17 @@ export function buildContextPrompt(context: {
     precipitation: number;
   };
   userQuery: string;
-  relevantActivities?: Array<{
-    id?: string;
-    title: string;
+  relevantBusinesses?: Array<{
+    id: string;
+    name: string;
     description?: string;
     cost?: number;
     tags?: string[];
+    cuisine?: string[];
+    priceLevel?: number;
+    category?: string;
     address?: string;
+    type: 'activity' | 'restaurant' | 'wellness';
   }>;
 }) {
   let prompt = '';
@@ -169,37 +173,49 @@ ${context.weather.precipitation > 0 ? `⚠️ Rain expected` : '☀️ No rain e
 Consider this weather when making recommendations.\n`;
   }
 
-  // Add relevant activities if available
-  if (context.relevantActivities && context.relevantActivities.length > 0) {
+  // Add relevant businesses if available
+  if (context.relevantBusinesses && context.relevantBusinesses.length > 0) {
     prompt += `\n## RELEVANT BUSINESSES FOR THIS QUERY:
-${context.relevantActivities.slice(0, 8).map((activity, i) => `
-${i + 1}. ${activity.title}
-   ${activity.description || ''}
-   Cost: ${activity.cost === 0 ? 'Free' : activity.cost ? `$${activity.cost}` : 'Varies'}
-   Tags: ${activity.tags?.join(', ') || 'N/A'}
-   ${activity.address ? `Location: ${activity.address}` : ''}
-   ${activity.id ? `**ID: ${activity.id}**` : ''}
-`).join('\n')}
+${context.relevantBusinesses.slice(0, 10).map((business, i) => {
+  let details = `${i + 1}. **${business.name}** (${business.type.toUpperCase()})
+   ${business.description || ''}`;
+  
+  // Type-specific details
+  if (business.type === 'restaurant') {
+    details += `\n   Cuisine: ${business.cuisine?.join(', ') || 'N/A'}`;
+    details += `\n   Price: ${'$'.repeat(business.priceLevel || 2)}`;
+  } else if (business.type === 'activity') {
+    details += `\n   Cost: ${business.cost === 0 ? 'Free' : business.cost ? `$${business.cost}` : 'Varies'}`;
+    details += `\n   Tags: ${business.tags?.join(', ') || 'N/A'}`;
+  } else if (business.type === 'wellness') {
+    details += `\n   Category: ${business.category || 'N/A'}`;
+  }
+  
+  details += `\n   ${business.address ? `Location: ${business.address}` : ''}`;
+  details += `\n   **LINK ID: ${business.id}** → /${business.type}/${business.id}`;
+  
+  return details;
+}).join('\n\n')}
 
 CRITICAL LINKING RULES FOR BUSINESSES:
 - **ALWAYS link to specific businesses when you mention them by name**
-- Determine the type based on tags/context:
-  * Restaurants/Food → use /restaurant/[ID]
-  * Yoga/Fitness/Spa/Wellness → use /wellness/[ID]
-  * Activities/Attractions → use /activity/[ID]
-- ONLY create links for businesses listed above that have an ID
-- DO NOT make up fake IDs like "natural-bridges" or "westcliff"
-- If a business doesn't have an ID above, link to the category page instead
+- Use the correct URL pattern based on business type:
+  * Activities → [Name](/activity/[ID])
+  * Restaurants → [Name](/restaurant/[ID])
+  * Wellness → [Name](/wellness/[ID])
+- ONLY create links for businesses listed above with their EXACT ID
+- DO NOT make up fake IDs or slugs
+- If mentioning a business not in the list above, link to the category page instead
 
 **Correct Linking Examples:**
-✅ "Try [Cafe Brazil](/restaurant/rec123abc) for breakfast" - if ID is rec123abc
-✅ "Check out [Yoga Source](/wellness/rec456xyz) for yoga classes" - if ID is rec456xyz
-✅ "Visit [Natural Bridges State Beach](/activity/rec789def)" - if ID is rec789def
+✅ "Try [Cafe Brazil](/restaurant/rec123abc)" - using exact ID from list
+✅ "Check out [Yoga Source](/wellness/rec456xyz)" - using exact ID from list
+✅ "Visit [Natural Bridges](/activity/rec789def)" - using exact ID from list
 ✅ "For more restaurants, see [restaurants](/restaurants)" - category fallback
-❌ "[Natural Bridges](/activity/natural-bridges)" - DO NOT make up IDs
-❌ "Try Cafe Brazil for breakfast" - MISSING link entirely
+❌ "[Natural Bridges](/activity/natural-bridges)" - DO NOT make up slug IDs
+❌ "Try Cafe Brazil for breakfast" - MISSING required link
 
-IMPORTANT: When you mention a specific business NAME, you MUST include the link to its detail page if an ID is provided above.\n`;
+IMPORTANT: When you mention ANY business NAME from the list above, you MUST include its clickable link using the exact ID provided.\n`;
   }
 
   prompt += `\n## USER QUERY:\n${context.userQuery}`;

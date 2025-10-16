@@ -2,6 +2,8 @@ import { streamText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { SYSTEM_PROMPT, buildContextPrompt, validateQuery } from '@/lib/chatbot/system-prompt';
 import { getActivities } from '@/app/actions/getActivities';
+import { getRestaurants } from '@/app/actions/getRestaurants';
+import { getWellness } from '@/app/actions/getWellness';
 import { getCurrentWeather } from '@/lib/weather/service';
 import { chatLimiter, getIdentifier, checkRateLimit } from '@/lib/security/ratelimit';
 import { sanitizeText } from '@/lib/security/sanitize';
@@ -78,15 +80,21 @@ export async function POST(req: Request) {
       console.error('Failed to fetch weather for chat context:', error);
     }
 
-    // Fetch relevant activities for RAG
-    let relevantActivities;
+    // Fetch relevant businesses (activities, restaurants, wellness) for RAG
+    let relevantBusinesses: any[] = [];
     try {
-      const activitiesResult = await getActivities();
+      // Fetch all business types in parallel for speed
+      const [activitiesResult, restaurantsResult, wellnessResult] = await Promise.all([
+        getActivities(),
+        getRestaurants(),
+        getWellness(),
+      ]);
+
+      const keywords = userQuery.toLowerCase().split(/\s+/).filter(k => k.length > 2);
+      
+      // Process activities
       if (activitiesResult.success && activitiesResult.data) {
-        // Simple keyword matching for relevant activities
-        // In production, use vector embeddings for better relevance
-        const keywords = userQuery.toLowerCase().split(' ');
-        relevantActivities = activitiesResult.data
+        const matchedActivities = activitiesResult.data
           .filter(activity => {
             const searchText = `${activity.title} ${activity.notes} ${activity.tags?.join(' ')}`.toLowerCase();
             return keywords.some(keyword => searchText.includes(keyword));
@@ -94,22 +102,66 @@ export async function POST(req: Request) {
           .slice(0, 5)
           .map(activity => ({
             id: activity.id,
-            title: activity.title,
+            name: activity.title,
             description: activity.notes,
             cost: activity.cost,
             tags: activity.tags,
             address: activity.address,
+            type: 'activity',
           }));
+        relevantBusinesses.push(...matchedActivities);
       }
+
+      // Process restaurants
+      if (restaurantsResult.success && restaurantsResult.data) {
+        const matchedRestaurants = restaurantsResult.data
+          .filter(restaurant => {
+            const searchText = `${restaurant.name} ${restaurant.description} ${restaurant.cuisine?.join(' ')} ${restaurant.bestDish || ''}`.toLowerCase();
+            return keywords.some(keyword => searchText.includes(keyword));
+          })
+          .slice(0, 5)
+          .map(restaurant => ({
+            id: restaurant.id,
+            name: restaurant.name,
+            description: restaurant.description,
+            cuisine: restaurant.cuisine,
+            priceLevel: restaurant.priceLevel,
+            address: restaurant.address,
+            type: 'restaurant',
+          }));
+        relevantBusinesses.push(...matchedRestaurants);
+      }
+
+      // Process wellness
+      if (wellnessResult.success && wellnessResult.data) {
+        const matchedWellness = wellnessResult.data
+          .filter(wellness => {
+            const searchText = `${wellness.name} ${wellness.description} ${wellness.category} ${wellness.wellnessType?.join(' ')}`.toLowerCase();
+            return keywords.some(keyword => searchText.includes(keyword));
+          })
+          .slice(0, 5)
+          .map(wellness => ({
+            id: wellness.id,
+            name: wellness.name,
+            description: wellness.description,
+            category: wellness.category,
+            address: wellness.address,
+            type: 'wellness',
+          }));
+        relevantBusinesses.push(...matchedWellness);
+      }
+
+      // Limit total results to top 10 most relevant
+      relevantBusinesses = relevantBusinesses.slice(0, 10);
     } catch (error) {
-      console.error('Failed to fetch activities for chat context:', error);
+      console.error('Failed to fetch businesses for chat context:', error);
     }
 
     // Build context-aware prompt
     const contextPrompt = buildContextPrompt({
       weather: weatherContext,
       userQuery,
-      relevantActivities,
+      relevantBusinesses,
     });
 
     // Prepare messages for OpenAI
@@ -126,8 +178,9 @@ export async function POST(req: Request) {
     ];
 
     // Call OpenAI API with streaming using Vercel AI SDK
+    // Using gpt-4o-mini for faster responses (2-3x faster than gpt-4-turbo)
     const result = streamText({
-      model: openai('gpt-4-turbo-preview'), // or 'gpt-3.5-turbo' for lower cost
+      model: openai('gpt-4o-mini'),
       system: SYSTEM_PROMPT,
       messages: chatMessages.slice(1), // Remove system message (we set it separately)
       temperature: 0.7,
