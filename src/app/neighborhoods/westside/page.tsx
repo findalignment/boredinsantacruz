@@ -339,6 +339,7 @@ export default function WestsidePage() {
         </div>
       </section>
     </main>
+    </>
   );
 }
 

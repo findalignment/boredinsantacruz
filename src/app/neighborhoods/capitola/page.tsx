@@ -366,6 +366,7 @@ export default function CapitolaPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }
 

@@ -441,6 +441,7 @@ export default function LastMinutePlansPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }
 

@@ -196,5 +196,6 @@ export default function RainyPage() {
         </Suspense>
       </div>
     </main>
+    </>
   );
 }
