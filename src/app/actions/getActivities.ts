@@ -53,7 +53,13 @@ function transformActivity(record: any): RainyActivity {
 export const getActivities = unstable_cache(
   async () => {
     try {
-      const records = await tables.rainyActivities
+      // Use the main activities table instead of rainyActivities
+      const activitiesTable = tables.activities || tables.rainyActivities;
+      if (!activitiesTable) {
+        throw new Error('No activities table configured');
+      }
+      
+      const records = await activitiesTable
         .select({
           view: 'Grid view',
           sort: [{ field: 'Title', direction: 'asc' }],
