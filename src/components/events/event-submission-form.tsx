@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { ImageUpload } from './image-upload';
 
 // Event categories matching our design
 const EVENT_CATEGORIES = [
@@ -575,20 +576,18 @@ export function EventSubmissionForm() {
           </h2>
 
           <div className="space-y-4">
-            {/* Image URL */}
+            {/* Image Upload */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Event Image URL <span className="text-gray-400">(Recommended)</span>
+                Event Image <span className="text-gray-400">(Recommended)</span>
               </label>
-              <input
-                type="url"
+              <ImageUpload
                 value={formData.imageUrl}
-                onChange={(e) => updateField('imageUrl', e.target.value)}
-                placeholder="https://example.com/image.jpg"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onChange={(url) => updateField('imageUrl', url)}
+                disabled={isSubmitting}
               />
-              <p className="mt-1 text-sm text-gray-500">
-                Add an eye-catching image to increase visibility. Events with images get 3x more views!
+              <p className="mt-2 text-sm text-gray-500">
+                📸 Add an eye-catching image to increase visibility. Events with images get 3x more views!
               </p>
             </div>
 
