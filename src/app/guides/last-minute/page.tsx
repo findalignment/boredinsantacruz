@@ -117,7 +117,7 @@ export default function LastMinutePlansPage() {
                   <strong>Twin Lakes:</strong> Quieter, warmer water, good for families.
                 </p>
                 <p className="text-sm text-gray-600 mt-2">
-                  ⏱️ Anytime | 🅿️ Beach Street parking structure | 💰 $2/hr
+                  ⏱️ Anytime | 🅿️ Nearby street parking or lots | 💰 Varies
                 </p>
               </div>
 
@@ -365,7 +365,7 @@ export default function LastMinutePlansPage() {
               <h3 className="font-semibold text-gray-900 mb-2">🅿️ Parking Hacks</h3>
               <ul className="text-gray-700 text-sm space-y-1">
                 <li>• <strong>Downtown:</strong> Cedar St. garage usually has space</li>
-                <li>• <strong>Beach:</strong> Beach Street structure ($2/hr)</li>
+                <li>• <strong>Beach:</strong> Beach area lots and nearby street parking</li>
                 <li>• <strong>Free options:</strong> Residential streets (check signs!)</li>
                 <li>• <strong>Sunday:</strong> All downtown parking is FREE</li>
               </ul>

@@ -22,7 +22,7 @@ const howToSchema = {
     {
       "@type": "HowToStep",
       "name": "Mid-Morning: Beach Boardwalk",
-      "text": "Spend 2 hours at the Santa Cruz Beach Boardwalk. Ride the historic Giant Dipper roller coaster, play arcade games, or relax on Main Beach. Parking: Beach Street structure ($2/hr)."
+      "text": "Spend 2 hours at the Santa Cruz Beach Boardwalk. Ride the historic Giant Dipper roller coaster, play arcade games, or relax on Main Beach. Parking: Beach lots or nearby street parking available."
     },
     {
       "@type": "HowToStep",

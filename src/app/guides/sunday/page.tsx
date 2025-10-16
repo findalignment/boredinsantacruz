@@ -243,7 +243,7 @@ export default function SundayGuidePage() {
                 <p className="text-gray-700 mt-1">Classic Santa Cruz beach. Walk to the Wharf, ice cream at Marini's, people watching.</p>
                 <p className="text-sm text-gray-600 mt-1">
                   ✅ Volleyball courts, boardwalk nearby, lifeguards on duty<br/>
-                  🅿️ Beach Street parking structure ($2/hr)
+                  🅿️ Nearby street parking or beach lots
                 </p>
               </div>
 

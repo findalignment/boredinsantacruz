@@ -17,7 +17,7 @@ const howToSchema = {
     {
       "@type": "HowToStep",
       "name": "Morning: Beach Boardwalk",
-      "text": "Spend 2-2.5 hours at the Santa Cruz Beach Boardwalk. Start with Kid's Kingdom rides for toddlers, then the Giant Dipper for older kids. Play arcade games and enjoy the beach. Parking: Beach Street structure ($25/day). Arrive when it opens to avoid crowds."
+      "text": "Spend 2-2.5 hours at the Santa Cruz Beach Boardwalk. Start with Kid's Kingdom rides for toddlers, then the Giant Dipper for older kids. Play arcade games and enjoy the beach. Parking: Beach lots or nearby street parking (rates vary). Arrive when it opens to avoid crowds."
     },
     {
       "@type": "HowToStep",
