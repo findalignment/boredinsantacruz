@@ -271,7 +271,7 @@ function RestaurantCard({ name, restaurant, emoji }: { name: string; restaurant?
     return (
       <Link
         href={`/restaurant/${restaurant.id}`}
-        className="block bg-white rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-orange-200 overflow-hidden hover:scale-[1.02] group cursor-pointer"
+        className="block bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-orange-200 overflow-hidden hover:scale-[1.02] group"
       >
         <div className="h-32 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
           <span className="text-5xl">🍽️</span>
@@ -289,9 +289,9 @@ function RestaurantCard({ name, restaurant, emoji }: { name: string; restaurant?
               📍 {restaurant.neighborhood || restaurant.address.split(',')[0]}
             </p>
           )}
-          <div className="inline-block w-full py-2 bg-orange-600 text-white text-center font-semibold rounded-lg group-hover:bg-orange-700 transition-colors">
+          <span className="block w-full py-2 bg-orange-600 text-white text-center font-semibold rounded-lg group-hover:bg-orange-700 transition-colors pointer-events-none">
             View Details →
-          </div>
+          </span>
         </div>
       </Link>
     );
