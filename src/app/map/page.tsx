@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { getActivities } from '@/app/actions/getActivities';
+import { getMasterActivities } from '@/app/actions/getMasterActivities';
 import { InteractiveMap } from '@/components/map/interactive-map';
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 async function MapContent() {
-  const result = await getActivities();
+  const result = await getMasterActivities();
   
   if (!result.success || !result.data) {
     return (

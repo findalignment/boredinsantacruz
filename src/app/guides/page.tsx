@@ -180,7 +180,7 @@ export default function GuidesPage() {
 
       // Duration filter (only for time-based guides)
       if (selectedDuration !== 'all' && guide.type === 'time') {
-        const duration = guide.duration || '';
+        const duration = 'duration' in guide ? guide.duration : '';
         if (selectedDuration === 'short' && !duration.includes('3')) return false;
         if (selectedDuration === 'medium' && !duration.includes('6')) return false;
         if (selectedDuration === 'long' && !duration.includes('Full')) return false;
@@ -331,7 +331,7 @@ export default function GuidesPage() {
                   {guide.title}
                 </h3>
                 
-                {guide.duration && (
+                {'duration' in guide && guide.duration && (
                   <div className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">
                     {guide.duration}
                   </div>
