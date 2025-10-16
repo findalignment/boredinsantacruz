@@ -53,16 +53,23 @@ export default function BestRestaurantsPage() {
               { name: "Chocolate", cuisine: "Dessert", price: "$", why: "Decadent desserts, coffee, wine" },
               { name: "Betty's Noodles", cuisine: "Asian Fusion", price: "$", why: "Quick, fresh, customizable bowls" }
             ].map((restaurant, i) => (
-              <div key={i} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+              <Link
+                key={i}
+                href="/restaurants"
+                className="block bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg hover:border-orange-300 transition-all hover:-translate-y-1 cursor-pointer"
+              >
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold text-gray-900">{i + 1}. {restaurant.name}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 hover:text-orange-600 transition-colors">{i + 1}. {restaurant.name}</h3>
                   <span className="text-sm font-semibold text-red-600">{restaurant.price}</span>
                 </div>
                 <div className="flex gap-2 mb-3">
                   <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">{restaurant.cuisine}</span>
                 </div>
-                <p className="text-gray-600">{restaurant.why}</p>
-              </div>
+                <p className="text-gray-600 mb-3">{restaurant.why}</p>
+                <div className="text-sm font-medium text-orange-600 flex items-center gap-1">
+                  View on full list →
+                </div>
+              </Link>
             ))}
           </div>
         </section>
