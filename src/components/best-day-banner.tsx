@@ -132,7 +132,7 @@ export async function BestDayBanner() {
                 </div>
               </div>
             </div>
-            <span className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold group-hover:bg-white/30 transition-colors pointer-events-none">
+            <span className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold group-hover:bg-white/30 transition-colors">
               <span>See Activities</span>
               <span>→</span>
             </span>
