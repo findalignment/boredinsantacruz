@@ -116,7 +116,7 @@ export async function BestDayBanner() {
     return (
       <Link
         href={`/activities/${bestDay.date}`}
-        className={`block bg-gradient-to-r ${bgColor} hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]`}
+        className={`block bg-gradient-to-r ${bgColor} hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] group`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between flex-wrap gap-3">
@@ -132,10 +132,10 @@ export async function BestDayBanner() {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold hover:bg-white/30 transition-colors">
+            <span className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold group-hover:bg-white/30 transition-colors pointer-events-none">
               <span>See Activities</span>
               <span>→</span>
-            </div>
+            </span>
           </div>
         </div>
       </Link>

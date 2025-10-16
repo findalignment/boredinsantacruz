@@ -1,23 +1,29 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { SurfReportWidget } from '@/components/surf/surf-report-widget';
 
 export const metadata: Metadata = {
-  title: 'Best Surfing Spots in Santa Cruz | Complete Surf Guide 2025',
-  description: 'Discover the best surf spots in Santa Cruz for all skill levels. From beginner-friendly Cowells to world-class Steamer Lane.',
-  keywords: 'santa cruz surfing, best surf spots, steamer lane, cowells beach, pleasure point, surf guide',
+  title: 'Best Surfing Spots in Santa Cruz | Live Surf Report 2025',
+  description: 'Discover the best surf spots in Santa Cruz for all skill levels. Live surf report, wave heights, and conditions updated every 15 minutes.',
+  keywords: 'santa cruz surfing, surf report, steamer lane, cowells beach, pleasure point, surf guide, live surf conditions',
 };
 
 export default function BestSurfingSpotsPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-cyan-50 to-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             🏄 Best Surfing Spots in Santa Cruz
           </h1>
           <p className="text-xl text-gray-600">
-            Your complete guide to Santa Cruz surf breaks for every skill level
+            Live surf report + complete guide to Santa Cruz surf breaks
           </p>
+        </div>
+
+        {/* Live Surf Report */}
+        <div className="mb-16">
+          <SurfReportWidget />
         </div>
 
         <div className="prose prose-lg max-w-none mb-12">
@@ -26,6 +32,12 @@ export default function BestSurfingSpotsPage() {
             and perfect waves year-round. Whether you're a first-timer or a seasoned pro, Santa Cruz has the perfect 
             spot for you.
           </p>
+        </div>
+
+        {/* Surf Spot Details */}
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">Complete Surf Spot Guide</h2>
+          <p className="text-center text-gray-600 mb-8">Detailed breakdown of each surf spot by skill level</p>
         </div>
 
         {/* Beginner Spots */}
