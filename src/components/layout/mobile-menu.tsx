@@ -90,40 +90,7 @@ export function MobileMenu() {
             ))}
           </div>
 
-          {/* Divider */}
-          <div className="my-6 border-t border-gray-200" />
-
-          {/* More Section */}
-          <div className="px-3">
-            <h3 className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              More
-            </h3>
-            <div className="space-y-1">
-              {[
-                { label: 'Map', href: '/map' },
-                { label: 'Best Time to Visit', href: '/best-time' },
-                { label: 'Secret Map', href: '/secret-map' },
-                { label: 'Advertise', href: '/advertise' },
-              ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="block px-4 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
         </nav>
-
-        {/* Menu Footer */}
-        <div className="border-t border-gray-200 p-4 bg-gray-50">
-          <p className="text-xs text-center text-gray-500">
-            Bored in Santa Cruz
-          </p>
-        </div>
       </div>
     </>
   );
