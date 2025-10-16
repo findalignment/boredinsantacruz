@@ -50,7 +50,7 @@ export function WeeklyForecast({ forecast }: WeeklyForecastProps) {
               key={date}
               href={`/activities/${date}`}
               className={`
-                group p-4 rounded-lg border-2 transition-all hover:shadow-lg hover:scale-105
+                group p-4 rounded-lg border-2 transition-all hover:shadow-lg hover:scale-105 cursor-pointer
                 ${getWeatherColor(conditions.category)}
               `}
             >
@@ -91,7 +91,7 @@ export function WeeklyForecast({ forecast }: WeeklyForecastProps) {
                 key={date}
                 href={`/activities/${date}`}
                 className={`
-                  group flex-shrink-0 w-32 p-4 rounded-lg border-2 transition-all hover:shadow-lg
+                  group flex-shrink-0 w-32 p-4 rounded-lg border-2 transition-all hover:shadow-lg cursor-pointer
                   ${getWeatherColor(conditions.category)}
                 `}
               >
