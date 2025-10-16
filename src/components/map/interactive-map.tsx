@@ -62,10 +62,10 @@ export function InteractiveMap({
       if (filters.searchQuery) {
         const query = filters.searchQuery.toLowerCase();
         const matchesSearch = 
-          activity.title.toLowerCase().includes(query) ||
-          activity.venueName?.toLowerCase().includes(query) ||
+          activity.name.toLowerCase().includes(query) ||
+          activity.description?.toLowerCase().includes(query) ||
           activity.address?.toLowerCase().includes(query) ||
-          activity.notes?.toLowerCase().includes(query);
+          activity.neighborhood?.toLowerCase().includes(query);
         if (!matchesSearch) return false;
       }
 
@@ -158,12 +158,12 @@ export function InteractiveMap({
     // Add markers for each filtered activity
     filteredActivities.forEach((activity) => {
       const coords = findCoordinatesForActivity({
-        title: activity.title,
-        venueName: activity.venueName,
+        title: activity.name,
+        venueName: activity.neighborhood,
         address: activity.address,
       });
       if (!coords) {
-        console.log('No coordinates found for:', activity.title);
+        console.log('No coordinates found for:', activity.name);
         return;
       }
 
@@ -188,11 +188,11 @@ export function InteractiveMap({
       }).setHTML(`
         <div style="min-width: 200px;">
           <h3 style="font-weight: bold; font-size: 16px; margin-bottom: 8px;">
-            ${activity.title}
+            ${activity.name}
           </h3>
-          ${activity.venueName ? `
+          ${activity.neighborhood ? `
             <p style="color: #6B7280; font-size: 14px; margin-bottom: 8px;">
-              ${activity.venueName}
+              ${activity.neighborhood}
             </p>
           ` : ''}
           ${activity.tags && activity.tags.length > 0 ? `

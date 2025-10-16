@@ -270,15 +270,18 @@ export function RestaurantWeekClient({ initialRestaurants }: RestaurantWeekClien
 function RestaurantCard({ name, restaurant, emoji }: { name: string; restaurant?: Restaurant; emoji: string }) {
   if (restaurant) {
     return (
-      <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-orange-200 overflow-hidden hover:scale-[1.02] group">
+      <Link
+        href={`/restaurant/${restaurant.id}`}
+        className="block bg-white rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-orange-200 overflow-hidden hover:scale-[1.02] group cursor-pointer"
+      >
         <div className="h-32 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
           <span className="text-5xl">🍽️</span>
         </div>
         
         <div className="p-6">
-          <h4 className="text-xl font-bold text-gray-900 mb-2">{name}</h4>
+          <h4 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">{name}</h4>
           {restaurant.cuisine && (
-            <p className="text-sm text-orange-600 mb-3">
+            <p className="text-sm text-orange-600 mb-3 font-medium">
               {restaurant.cuisine.join(', ')}
             </p>
           )}
@@ -287,14 +290,11 @@ function RestaurantCard({ name, restaurant, emoji }: { name: string; restaurant?
               📍 {restaurant.neighborhood || restaurant.address.split(',')[0]}
             </p>
           )}
-          <Link
-            href={`/restaurant/${restaurant.id}`}
-            className="inline-block w-full py-2 bg-orange-600 text-white text-center font-semibold rounded-lg hover:bg-orange-700 transition-colors cursor-pointer"
-          >
+          <div className="inline-block w-full py-2 bg-orange-600 text-white text-center font-semibold rounded-lg group-hover:bg-orange-700 transition-colors">
             View Details →
-          </Link>
+          </div>
         </div>
-      </div>
+      </Link>
     );
   }
 
