@@ -90,6 +90,15 @@ export async function GET(request: NextRequest) {
           const domains = data.data.map((d: any) => `${d.name} (${d.status})`).join(', ');
           success.push(`   Domains: ${domains}`);
         }
+      } else if (response.status === 401) {
+        // 401 with "restricted_api_key" message is OK - means it's a send-only key
+        const errorData = await response.json().catch(() => ({}));
+        if (errorData.name === 'restricted_api_key') {
+          success.push(`✅ Resend API key configured (send-only mode)`);
+          warnings.push(`⚠️ API key is send-only (can't check domains via API, but email sending works fine)`);
+        } else {
+          issues.push(`❌ Resend API authentication failed - check your API key`);
+        }
       } else {
         const errorText = await response.text();
         issues.push(`❌ Resend API connection failed (${response.status}): ${errorText.substring(0, 200)}`);
