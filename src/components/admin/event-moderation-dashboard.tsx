@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import { AdminAnalytics } from './admin-analytics';
+import { BulkActions } from './bulk-actions';
 
 interface PendingEvent {
   id: string;
@@ -27,10 +29,33 @@ export function EventModerationDashboard() {
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'today' | 'this-week'>('all');
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [stats, setStats] = useState({
+    totalEvents: 0,
+    pendingEvents: 0,
+    approvedEvents: 0,
+    rejectedEvents: 0,
+    approvalRate: 0,
+    avgReviewTime: '< 1h',
+  });
 
   useEffect(() => {
     fetchPendingEvents();
+    fetchAnalytics();
   }, []);
+
+  const fetchAnalytics = async () => {
+    try {
+      const response = await fetch('/api/admin/events/analytics');
+      const data = await response.json();
+      
+      if (data.success) {
+        setStats(data.stats);
+      }
+    } catch (error) {
+      console.error('Failed to fetch analytics:', error);
+    }
+  };
 
   const fetchPendingEvents = async () => {
     setLoading(true);
@@ -140,6 +165,9 @@ export function EventModerationDashboard() {
 
   return (
     <div>
+      {/* Analytics Dashboard */}
+      <AdminAnalytics stats={stats} />
+
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-6">
