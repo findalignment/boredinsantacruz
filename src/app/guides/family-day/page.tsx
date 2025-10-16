@@ -432,6 +432,7 @@ export default function FamilyDayPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }
 

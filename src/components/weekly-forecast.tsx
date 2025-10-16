@@ -50,7 +50,7 @@ export function WeeklyForecast({ forecast }: WeeklyForecastProps) {
               key={date}
               href={`/activities/${date}`}
               className={`
-                p-4 rounded-lg border-2 transition-all hover:shadow-lg hover:scale-105
+                group p-4 rounded-lg border-2 transition-all hover:shadow-lg hover:scale-105
                 ${getWeatherColor(conditions.category)}
               `}
             >
@@ -70,9 +70,9 @@ export function WeeklyForecast({ forecast }: WeeklyForecastProps) {
                 <div className="text-xs mt-1 capitalize">
                   {conditions.displayName}
                 </div>
-                <button className="mt-3 text-xs font-medium underline hover:no-underline">
+                <div className="mt-3 text-xs font-medium underline group-hover:no-underline">
                   View Activities
-                </button>
+                </div>
               </div>
             </Link>
           );
@@ -91,7 +91,7 @@ export function WeeklyForecast({ forecast }: WeeklyForecastProps) {
                 key={date}
                 href={`/activities/${date}`}
                 className={`
-                  flex-shrink-0 w-32 p-4 rounded-lg border-2 transition-all hover:shadow-lg
+                  group flex-shrink-0 w-32 p-4 rounded-lg border-2 transition-all hover:shadow-lg
                   ${getWeatherColor(conditions.category)}
                 `}
               >
@@ -111,7 +111,7 @@ export function WeeklyForecast({ forecast }: WeeklyForecastProps) {
                   <div className="text-xs mt-1 capitalize">
                     {conditions.displayName}
                   </div>
-                  <div className="mt-2 text-xs font-medium underline">
+                  <div className="mt-2 text-xs font-medium underline group-hover:no-underline">
                     View
                   </div>
                 </div>

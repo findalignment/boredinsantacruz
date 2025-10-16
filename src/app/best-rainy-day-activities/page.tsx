@@ -235,6 +235,7 @@ export default async function BestRainyDayActivitiesPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }
 
