@@ -10,7 +10,7 @@ export function MobileMenu() {
 
   const menuItems = [
     { label: 'Home', href: '/', emoji: '🏠' },
-    { label: 'Guides', href: '/guides', emoji: '📖' },
+    { label: 'Popular Guides', href: '/guides', emoji: '📖' },
     { label: 'Activities', href: '/activities', emoji: '🎯' },
     { label: 'Restaurants', href: '/restaurants', emoji: '🍽️' },
     { label: 'Events', href: '/events', emoji: '🎉' },
@@ -93,19 +93,17 @@ export function MobileMenu() {
           {/* Divider */}
           <div className="my-6 border-t border-gray-200" />
 
-          {/* SEO Pages Section */}
+          {/* More Section */}
           <div className="px-3">
             <h3 className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              Popular Guides
+              More
             </h3>
             <div className="space-y-1">
               {[
-                { label: 'Weekend Guide', href: '/weekend-guide' },
-                { label: 'Best Beaches', href: '/best-beaches' },
-                { label: 'Surfing Spots', href: '/best-surfing-spots' },
-                { label: 'Free Things', href: '/free-things-to-do' },
-                { label: 'Kid Friendly', href: '/kid-friendly-activities' },
-                { label: 'Pet Friendly', href: '/pet-friendly-activities' },
+                { label: 'Map', href: '/map' },
+                { label: 'Best Time to Visit', href: '/best-time' },
+                { label: 'Secret Map', href: '/secret-map' },
+                { label: 'Advertise', href: '/advertise' },
               ].map((item) => (
                 <Link
                   key={item.href}

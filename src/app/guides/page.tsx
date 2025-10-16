@@ -1,12 +1,8 @@
-import Link from 'next/link';
-import type { Metadata } from 'next';
-import { LastUpdated } from '@/components/last-updated';
+'use client';
 
-export const metadata: Metadata = {
-  title: 'Santa Cruz Guides - Complete Collection | 2025',
-  description: 'Browse our complete collection of Santa Cruz guides. Time-based itineraries, neighborhood guides, and expert local recommendations.',
-  keywords: 'santa cruz guides, santa cruz itineraries, visit santa cruz, santa cruz planning',
-};
+import { useState, useMemo } from 'react';
+import Link from 'next/link';
+import { LastUpdated } from '@/components/last-updated';
 
 // Define all guides with metadata
 const timeBasedGuides = [
@@ -17,9 +13,7 @@ const timeBasedGuides = [
     duration: '3 hours',
     href: '/guides/3-hours',
     emoji: '⚡',
-    gradient: 'from-blue-500 to-cyan-500',
-    tags: ['Quick', 'Morning', 'Afternoon'],
-    bestFor: ['First Visit', 'Layover', 'Short Stop'],
+    bestFor: 'First Visit, Layover, Short Stop',
   },
   {
     id: '6-hours',
@@ -28,20 +22,16 @@ const timeBasedGuides = [
     duration: '6 hours',
     href: '/guides/6-hours',
     emoji: '🌅',
-    gradient: 'from-orange-500 to-pink-500',
-    tags: ['Half Day', 'Morning', 'Afternoon'],
-    bestFor: ['Comprehensive', 'Tourists', 'Day Trip'],
+    bestFor: 'Comprehensive, Tourists, Day Trip',
   },
   {
     id: 'full-day',
     title: 'Full Day',
     description: 'Complete Santa Cruz experience from sunrise to sunset',
-    duration: '8-10 hours',
+    duration: 'Full Day',
     href: '/guides/full-day',
     emoji: '☀️',
-    gradient: 'from-yellow-500 to-orange-500',
-    tags: ['Full Day', 'Complete'],
-    bestFor: ['Everything', 'Full Experience', 'Thorough'],
+    bestFor: 'Everything, Full Experience',
   },
   {
     id: 'date-night',
@@ -50,9 +40,7 @@ const timeBasedGuides = [
     duration: '2-3 hours',
     href: '/guides/date-night',
     emoji: '❤️',
-    gradient: 'from-rose-500 to-pink-500',
-    tags: ['Evening', 'Romantic'],
-    bestFor: ['Couples', 'Romance', 'Special Occasion'],
+    bestFor: 'Couples, Romance, Special Occasion',
   },
   {
     id: 'family-day',
@@ -61,9 +49,7 @@ const timeBasedGuides = [
     duration: '4-5 hours',
     href: '/guides/family-day',
     emoji: '👨‍👩‍👧‍👦',
-    gradient: 'from-green-500 to-teal-500',
-    tags: ['Morning', 'Family'],
-    bestFor: ['Kids', 'Families', 'All Ages'],
+    bestFor: 'Kids, Families, All Ages',
   },
   {
     id: 'sunday',
@@ -72,9 +58,7 @@ const timeBasedGuides = [
     duration: 'All day',
     href: '/guides/sunday',
     emoji: '🥐',
-    gradient: 'from-purple-500 to-indigo-500',
-    tags: ['Weekend', 'Full Day'],
-    bestFor: ['Relaxed', 'Locals', 'Weekend'],
+    bestFor: 'Relaxed, Locals, Weekend',
   },
   {
     id: 'last-minute',
@@ -83,9 +67,7 @@ const timeBasedGuides = [
     duration: 'Flexible',
     href: '/guides/last-minute',
     emoji: '🎲',
-    gradient: 'from-yellow-500 to-red-500',
-    tags: ['Spontaneous', 'Flexible'],
-    bestFor: ['No Planning', 'Walk-ins', 'Improvise'],
+    bestFor: 'No Planning, Walk-ins',
   },
   {
     id: 'tonight',
@@ -94,9 +76,7 @@ const timeBasedGuides = [
     duration: 'Evening',
     href: '/guides/tonight',
     emoji: '🌙',
-    gradient: 'from-indigo-600 to-purple-600',
-    tags: ['Evening', 'Night'],
-    bestFor: ['Nightlife', 'Music', 'Evening Plans'],
+    bestFor: 'Nightlife, Music, Evening Plans',
   },
 ];
 
@@ -107,9 +87,7 @@ const neighborhoodGuides = [
     description: 'Pacific Avenue shops, restaurants, arts & culture',
     href: '/neighborhoods/downtown',
     emoji: '🏙️',
-    gradient: 'from-blue-600 to-purple-600',
-    tags: ['Urban', 'Shopping'],
-    bestFor: ['Shopping', 'Dining', 'Culture'],
+    bestFor: 'Shopping, Dining, Culture',
   },
   {
     id: 'westside',
@@ -117,9 +95,7 @@ const neighborhoodGuides = [
     description: 'Natural Bridges, West Cliff Drive, surfing & beaches',
     href: '/neighborhoods/westside',
     emoji: '🌊',
-    gradient: 'from-cyan-600 to-blue-600',
-    tags: ['Coastal', 'Surfing'],
-    bestFor: ['Beaches', 'Surfing', 'Coastal'],
+    bestFor: 'Beaches, Surfing, Coastal',
   },
   {
     id: 'capitola',
@@ -127,9 +103,7 @@ const neighborhoodGuides = [
     description: 'Colorful beach houses, boutique shops, village charm',
     href: '/neighborhoods/capitola',
     emoji: '🏘️',
-    gradient: 'from-pink-600 to-rose-600',
-    tags: ['Beach Town', 'Charming'],
-    bestFor: ['Beach Town', 'Photos', 'Relaxed'],
+    bestFor: 'Beach Town, Photos, Relaxed',
   },
   {
     id: 'harbor',
@@ -137,20 +111,92 @@ const neighborhoodGuides = [
     description: 'Waterfront dining, sea lions, working harbor',
     href: '/neighborhoods/harbor',
     emoji: '⚓',
-    gradient: 'from-teal-600 to-cyan-600',
-    tags: ['Waterfront', 'Dining'],
-    bestFor: ['Seafood', 'Harbor', 'Sea Lions'],
+    bestFor: 'Seafood, Harbor, Sea Lions',
+  },
+];
+
+const activityGuides = [
+  {
+    id: 'beaches',
+    title: 'Best Beaches',
+    description: 'Complete guide to Santa Cruz beaches and coastal access',
+    href: '/best-beaches',
+    emoji: '🏖️',
+    bestFor: 'Swimming, Surfing, Sunbathing',
+  },
+  {
+    id: 'hiking',
+    title: 'Best Hiking Trails',
+    description: 'Redwood forests, coastal trails, and scenic paths',
+    href: '/best-hiking-trails',
+    emoji: '🥾',
+    bestFor: 'Nature, Exercise, Views',
+  },
+  {
+    id: 'surfing',
+    title: 'Surfing Spots',
+    description: 'Top surf breaks and conditions guide',
+    href: '/best-surfing-spots',
+    emoji: '🏄',
+    bestFor: 'Surfing, Wave Watching',
+  },
+  {
+    id: 'rainy',
+    title: 'Rainy Day Activities',
+    description: 'Indoor fun when weather doesn\'t cooperate',
+    href: '/best-rainy-day-activities',
+    emoji: '☔',
+    bestFor: 'Indoor, Museums, Shopping',
   },
 ];
 
 export default function GuidesPage() {
+  const [selectedType, setSelectedType] = useState<'all' | 'time' | 'neighborhood' | 'activity'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDuration, setSelectedDuration] = useState<'all' | 'short' | 'medium' | 'long'>('all');
+
+  // Combine all guides into one array
+  const allGuides = useMemo(() => [
+    ...timeBasedGuides.map(g => ({ ...g, type: 'time' as const })),
+    ...neighborhoodGuides.map(g => ({ ...g, type: 'neighborhood' as const })),
+    ...activityGuides.map(g => ({ ...g, type: 'activity' as const })),
+  ], []);
+
+  // Filter guides
+  const filteredGuides = useMemo(() => {
+    return allGuides.filter(guide => {
+      // Type filter
+      if (selectedType !== 'all' && guide.type !== selectedType) return false;
+
+      // Search query
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        const matchesSearch = 
+          guide.title.toLowerCase().includes(query) ||
+          guide.description.toLowerCase().includes(query) ||
+          guide.bestFor?.toLowerCase().includes(query);
+        if (!matchesSearch) return false;
+      }
+
+      // Duration filter (only for time-based guides)
+      if (selectedDuration !== 'all' && guide.type === 'time') {
+        const duration = guide.duration || '';
+        if (selectedDuration === 'short' && !duration.includes('3')) return false;
+        if (selectedDuration === 'medium' && !duration.includes('6')) return false;
+        if (selectedDuration === 'long' && !duration.includes('Full')) return false;
+      }
+
+      return true;
+    });
+  }, [allGuides, selectedType, searchQuery, selectedDuration]);
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Hero */}
       <section className="py-16 px-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Santa Cruz Guides
+            Popular Guides
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-6">
             Expert local guides for every type of visit. Simple, clear, and designed to help you make the most of Santa Cruz.
@@ -161,152 +207,148 @@ export default function GuidesPage() {
         </div>
       </section>
 
-      {/* Time-Based Guides */}
-      <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Plan by Time Available
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              How much time do you have? We'll show you exactly how to spend it.
-            </p>
+      {/* Filters */}
+      <section className="max-w-7xl mx-auto px-4 py-8">
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            {/* Search */}
+            <div className="md:col-span-3">
+              <input
+                type="text"
+                placeholder="🔍 Search guides..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            {/* Type Filter */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Guide Type</label>
+              <select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value as any)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="all">All Types</option>
+                <option value="time">Time-Based</option>
+                <option value="neighborhood">Neighborhoods</option>
+                <option value="activity">Activities</option>
+              </select>
+            </div>
+
+            {/* Duration Filter */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Duration</label>
+              <select
+                value={selectedDuration}
+                onChange={(e) => setSelectedDuration(e.target.value as any)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="all">Any Duration</option>
+                <option value="short">3 Hours</option>
+                <option value="medium">6 Hours</option>
+                <option value="long">Full Day</option>
+              </select>
+            </div>
+
+            {/* Results Count */}
+            <div className="flex items-end">
+              <div className="px-4 py-2 bg-blue-50 rounded-lg text-blue-900 font-semibold">
+                {filteredGuides.length} guide{filteredGuides.length !== 1 ? 's' : ''} found
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {timeBasedGuides.map((guide) => (
-              <Link
-                key={guide.id}
-                href={guide.href}
-                className="group relative overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-              >
-                {/* Gradient Background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${guide.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
-                
-                {/* Content */}
-                <div className="relative p-6">
-                  {/* Emoji */}
-                  <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                    {guide.emoji}
-                  </div>
+          {/* Quick Filters */}
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => { setSelectedType('all'); setSearchQuery(''); setSelectedDuration('all'); }}
+              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition-colors"
+            >
+              Clear Filters
+            </button>
+            <button
+              onClick={() => setSelectedType('time')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                selectedType === 'time' ? 'bg-blue-600 text-white' : 'bg-gray-100 hover:bg-gray-200'
+              }`}
+            >
+              ⏱️ Time-Based
+            </button>
+            <button
+              onClick={() => setSelectedType('neighborhood')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                selectedType === 'neighborhood' ? 'bg-blue-600 text-white' : 'bg-gray-100 hover:bg-gray-200'
+              }`}
+            >
+              📍 Neighborhoods
+            </button>
+            <button
+              onClick={() => setSelectedType('activity')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                selectedType === 'activity' ? 'bg-blue-600 text-white' : 'bg-gray-100 hover:bg-gray-200'
+              }`}
+            >
+              🎯 Activities
+            </button>
+          </div>
+        </div>
+      </section>
 
-                  {/* Duration Badge */}
-                  <div className="inline-block px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-semibold mb-3">
+      {/* All Guides Grid */}
+      <section className="max-w-7xl mx-auto px-4 pb-16">
+        {filteredGuides.length === 0 ? (
+          <div className="text-center py-12 bg-white rounded-xl shadow-lg">
+            <div className="text-6xl mb-4">🔍</div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">No guides found</h3>
+            <p className="text-gray-600 mb-6">Try adjusting your filters</p>
+            <button
+              onClick={() => { setSelectedType('all'); setSearchQuery(''); setSelectedDuration('all'); }}
+              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Clear All Filters
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredGuides.map((guide, index) => (
+              <Link
+                key={index}
+                href={guide.href}
+                className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all p-6 border-2 border-transparent hover:border-blue-500"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="text-4xl">{guide.emoji}</div>
+                  <div className="text-xs px-2 py-1 rounded-full font-semibold bg-gray-100 text-gray-700">
+                    {guide.type === 'time' && '⏱️ Time'}
+                    {guide.type === 'neighborhood' && '📍 Area'}
+                    {guide.type === 'activity' && '🎯 Activity'}
+                  </div>
+                </div>
+                
+                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                  {guide.title}
+                </h3>
+                
+                {guide.duration && (
+                  <div className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">
                     {guide.duration}
                   </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-                    {guide.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-sm text-gray-600 mb-4">
-                    {guide.description}
-                  </p>
-
-                  {/* Best For Tags */}
-                  <div className="flex flex-wrap gap-1">
-                    {guide.bestFor.slice(0, 2).map((tag) => (
-                      <span key={tag} className="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs font-medium">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Arrow */}
-                  <div className="mt-4 flex items-center text-blue-600 font-semibold text-sm group-hover:gap-2 transition-all">
-                    View Guide
-                    <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Neighborhood Guides */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Explore by Neighborhood
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Each area has its own personality. Discover what makes them special.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {neighborhoodGuides.map((guide) => (
-              <Link
-                key={guide.id}
-                href={guide.href}
-                className="group relative overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-              >
-                {/* Gradient Background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${guide.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+                )}
                 
-                {/* Content */}
-                <div className="relative p-6">
-                  {/* Emoji */}
-                  <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                    {guide.emoji}
+                <p className="text-gray-600 text-sm mb-3">{guide.description}</p>
+                
+                {guide.bestFor && (
+                  <div className="text-xs text-gray-500 mt-2 border-t pt-2">
+                    <strong>Best for:</strong> {guide.bestFor}
                   </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
-                    {guide.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-sm text-gray-600 mb-4">
-                    {guide.description}
-                  </p>
-
-                  {/* Best For Tags */}
-                  <div className="flex flex-wrap gap-1">
-                    {guide.bestFor.slice(0, 2).map((tag) => (
-                      <span key={tag} className="px-2 py-1 bg-purple-50 text-purple-700 rounded text-xs font-medium">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Arrow */}
-                  <div className="mt-4 flex items-center text-purple-600 font-semibold text-sm group-hover:gap-2 transition-all">
-                    Explore Area
-                    <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
-                  </div>
-                </div>
+                )}
               </Link>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12 text-white shadow-2xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Need Help Choosing?
-            </h2>
-            <p className="text-xl text-blue-100 mb-8">
-              Our AI assistant can help you find the perfect guide based on your interests, time, and weather.
-            </p>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-600 font-bold rounded-xl hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
-            >
-              Ask the Assistant
-              <span>→</span>
-            </Link>
-          </div>
-        </div>
+        )}
       </section>
     </main>
   );
 }
-
