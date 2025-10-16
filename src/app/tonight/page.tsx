@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { getCurrentWeatherAction } from '@/app/actions/getWeather';
+import { getMoonPhaseData, formatTime } from '@/lib/moon-phase';
 
 export const metadata: Metadata = {
   title: 'Santa Cruz Tonight - Events & Happenings',
@@ -90,11 +92,25 @@ const upcomingVenues = [
   },
 ];
 
-export default function TonightPage() {
+export default async function TonightPage() {
   const todayEvents = getCurrentEvents();
   const today = new Date();
   const dayName = today.toLocaleDateString('en-US', { weekday: 'long' });
   const dateStr = today.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+  // Get weather data for sunset/sunrise
+  let weatherData = null;
+  try {
+    const result = await getCurrentWeatherAction();
+    if (result.success) {
+      weatherData = result.data;
+    }
+  } catch (error) {
+    console.error('Failed to fetch weather data:', error);
+  }
+
+  // Get moon phase
+  const moonPhase = getMoonPhaseData(today);
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
@@ -117,6 +133,51 @@ export default function TonightPage() {
             </p>
           </div>
         </div>
+
+        {/* Sunset/Sunrise & Moon Phase Info */}
+        {weatherData && (
+          <div className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Sunset */}
+            {weatherData.sunset && (
+              <div className="bg-gradient-to-br from-orange-400 to-pink-500 text-white rounded-xl p-6 shadow-lg">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-4xl">🌅</span>
+                  <div>
+                    <div className="text-sm opacity-90">Sunset</div>
+                    <div className="text-3xl font-bold">{formatTime(weatherData.sunset)}</div>
+                  </div>
+                </div>
+                <p className="text-sm opacity-80 mt-2">Perfect time for a beach walk!</p>
+              </div>
+            )}
+
+            {/* Sunrise */}
+            {weatherData.sunrise && (
+              <div className="bg-gradient-to-br from-yellow-400 to-orange-400 text-white rounded-xl p-6 shadow-lg">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-4xl">🌄</span>
+                  <div>
+                    <div className="text-sm opacity-90">Sunrise Tomorrow</div>
+                    <div className="text-3xl font-bold">{formatTime(weatherData.sunrise + 86400)}</div>
+                  </div>
+                </div>
+                <p className="text-sm opacity-80 mt-2">Early start for tomorrow's adventures</p>
+              </div>
+            )}
+
+            {/* Moon Phase */}
+            <div className="bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-xl p-6 shadow-lg">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="text-4xl">{moonPhase.emoji}</span>
+                <div>
+                  <div className="text-sm opacity-90">Moon Phase</div>
+                  <div className="text-2xl font-bold">{moonPhase.phaseName}</div>
+                </div>
+              </div>
+              <p className="text-sm opacity-80 mt-2">{moonPhase.illumination}% illuminated</p>
+            </div>
+          </div>
+        )}
 
         {/* Today's Events */}
         {todayEvents.length > 0 ? (
