@@ -1,24 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
+import { sendRejectionEmail } from '@/lib/email/event-notifications';
+import { isAdmin, AdminErrors } from '@/lib/auth/admin';
 
 export async function POST(request: NextRequest) {
   try {
     // Check authentication
     const session = await auth();
     if (!session) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json(AdminErrors.UNAUTHORIZED, { status: 401 });
     }
 
-    // TODO: Check admin role
-    // if (session.user?.role !== 'admin') {
-    //   return NextResponse.json(
-    //     { success: false, error: 'Forbidden' },
-    //     { status: 403 }
-    //   );
-    // }
+    // Check admin role
+    if (!isAdmin(session)) {
+      return NextResponse.json(AdminErrors.FORBIDDEN, { status: 403 });
+    }
 
     const { eventId, reason } = await request.json();
 
@@ -73,11 +69,21 @@ export async function POST(request: NextRequest) {
 
     const updatedRecord = await response.json();
 
-    // TODO: Send rejection email to submitter
-    // const submitterEmail = updatedRecord.fields['Submitter Email'];
-    // const submitterName = updatedRecord.fields['Submitter Name'];
-    // const eventTitle = updatedRecord.fields['Title'];
-    // await sendRejectionEmail(submitterEmail, submitterName, eventTitle, reason);
+    // Send rejection email to submitter
+    const fields = updatedRecord.fields;
+    if (fields['Submitter Email']) {
+      await sendRejectionEmail(
+        fields['Submitter Email'],
+        fields['Submitter Name'] || 'Event Organizer',
+        {
+          title: fields['Title'],
+          date: fields['Start Date'],
+          location: fields['Location'],
+          description: fields['Description'],
+        },
+        reason
+      );
+    }
 
     console.log(`[Admin] Event rejected: ${eventId} - Reason: ${reason}`);
 

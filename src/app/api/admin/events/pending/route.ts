@@ -1,24 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
+import { isAdmin, AdminErrors } from '@/lib/auth/admin';
 
 export async function GET(request: NextRequest) {
   try {
     // Check authentication
     const session = await auth();
     if (!session) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json(AdminErrors.UNAUTHORIZED, { status: 401 });
     }
 
-    // TODO: Check admin role
-    // if (session.user?.role !== 'admin') {
-    //   return NextResponse.json(
-    //     { success: false, error: 'Forbidden' },
-    //     { status: 403 }
-    //   );
-    // }
+    // Check admin role
+    if (!isAdmin(session)) {
+      return NextResponse.json(AdminErrors.FORBIDDEN, { status: 403 });
+    }
 
     // Check if Airtable is configured
     if (!process.env.AIRTABLE_TOKEN || !process.env.AIRTABLE_BASE_ID) {

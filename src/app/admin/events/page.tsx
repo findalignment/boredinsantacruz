@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { auth } from '@/lib/auth';
+import { isAdmin } from '@/lib/auth/admin';
 import { EventModerationDashboard } from '@/components/admin/event-moderation-dashboard';
 
 export const metadata: Metadata = {
@@ -12,17 +13,15 @@ export const metadata: Metadata = {
 export default async function AdminEventsPage() {
   const session = await auth();
 
-  // TODO: Add proper admin role check
-  // For now, require any logged-in user
+  // Check authentication
   if (!session) {
     redirect('/api/auth/signin?callbackUrl=/admin/events');
   }
 
-  // TODO: Check if user has admin role
-  // const isAdmin = session.user?.role === 'admin';
-  // if (!isAdmin) {
-  //   redirect('/?error=unauthorized');
-  // }
+  // Check admin role
+  if (!isAdmin(session)) {
+    redirect('/?error=unauthorized');
+  }
 
   return (
     <main className="min-h-screen bg-gray-50 py-8 px-4">
