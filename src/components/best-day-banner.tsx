@@ -115,7 +115,7 @@ export async function BestDayBanner() {
 
     return (
       <Link
-        href={`/activities/${bestDay.date}`}
+        href={`/activities`}
         className={`block bg-gradient-to-r ${bgColor} hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] group`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
