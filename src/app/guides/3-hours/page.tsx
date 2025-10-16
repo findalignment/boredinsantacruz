@@ -12,6 +12,31 @@ export const metadata: Metadata = {
 };
 
 // FAQ Schema for SEO
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Spend 3 Hours in Santa Cruz",
+  "description": "Complete guide for a perfect 3-hour visit to Santa Cruz",
+  "totalTime": "PT3H",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "West Cliff Drive Coastal Walk",
+      "text": "Start with a 45-minute walk along West Cliff Drive for ocean views, seal spotting, and lighthouse photos. Park at Natural Bridges ($10) or find street parking (free 2-hour limit)."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Downtown Lunch & Shopping",
+      "text": "Spend 1.5 hours exploring downtown Pacific Avenue. Enjoy lunch at Picnic Basket, Laili, or Betty Burgers. Browse Bookshop Santa Cruz, O'Neill Surf Shop, and local boutiques. Park at Louden Nelson Center ($1.50/hr)."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Santa Cruz Wharf or Beach Time",
+      "text": "End with 45 minutes at the historic Santa Cruz Wharf to see sea lions and shops, or relax on Main Beach. Both options are free to access."
+    }
+  ]
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -46,6 +71,12 @@ const faqSchema = {
 export default function ThreeHoursPage() {
   return (
     <>
+      {/* HowTo Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
+      
       {/* FAQ Schema */}
       <script
         type="application/ld+json"

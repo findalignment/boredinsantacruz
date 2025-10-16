@@ -7,6 +7,31 @@ export const metadata: Metadata = {
   keywords: ['santa cruz date night', 'romantic santa cruz', 'date ideas santa cruz', 'couples santa cruz', 'romantic restaurants santa cruz'],
 };
 
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Plan a Perfect Date Night in Santa Cruz",
+  "description": "Complete guide for a romantic evening in Santa Cruz",
+  "totalTime": "PT2H30M",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Sunset Walk on West Cliff Drive",
+      "text": "Start with a 30-45 minute romantic sunset walk along West Cliff Drive. Watch surfers at Steamer Lane, see seals at Seal Rock, and enjoy ocean views. Best 30 minutes before sunset. Free street parking."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Romantic Dinner with Views",
+      "text": "Enjoy 1.5 hours at a waterfront restaurant. Top choices: Crow's Nest or Aldo's (harbor views), The Dream Inn (upscale oceanfront), or Laili (beautiful downtown patio). Make reservations ahead for window seats."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Evening Drinks or Dessert",
+      "text": "End with cocktails at The Crow's Nest lounge, Aquarius Bar at Dream Inn, or dessert at Penny Ice Creamery. Live music venues: Kuumbwa Jazz or The Catalyst (check schedules)."
+    }
+  ]
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -41,6 +66,10 @@ const faqSchema = {
 export default function DateNightPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

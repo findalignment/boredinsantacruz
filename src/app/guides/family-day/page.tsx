@@ -7,6 +7,31 @@ export const metadata: Metadata = {
   keywords: ['santa cruz with kids', 'family activities santa cruz', 'kid friendly santa cruz', 'santa cruz boardwalk kids', 'family day santa cruz'],
 };
 
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Plan a Perfect Family Day in Santa Cruz",
+  "description": "Complete 4-hour family itinerary with kid-friendly activities",
+  "totalTime": "PT4H",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Morning: Beach Boardwalk",
+      "text": "Spend 2-2.5 hours at the Santa Cruz Beach Boardwalk. Start with Kid's Kingdom rides for toddlers, then the Giant Dipper for older kids. Play arcade games and enjoy the beach. Parking: Beach Street structure ($25/day). Arrive when it opens to avoid crowds."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Lunch: Family-Friendly Dining",
+      "text": "Take 1 hour for lunch at kid-friendly spots: Zelda's on the Beach (beachfront, casual), Betty Burgers (burgers and milkshakes), Paradise Beach Grille (kids menu), or Pizza My Heart (by the slice). All have high chairs and relaxed atmospheres."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Afternoon: Beach or Exploration",
+      "text": "Finish with 30-60 minutes on Main Beach for sandcastles and splashing, or visit the Santa Cruz Wharf to see sea lions (kids love them!). Alternative: Seymour Marine Discovery Center for touch tanks and marine exhibits ($10 adults, $6 kids)."
+    }
+  ]
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -49,6 +74,10 @@ const faqSchema = {
 export default function FamilyDayPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

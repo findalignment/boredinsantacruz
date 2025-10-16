@@ -7,6 +7,36 @@ export const metadata: Metadata = {
   keywords: ['Sunday Santa Cruz', 'weekend activities', 'brunch Santa Cruz', 'Sunday plans', 'weekend guide'],
 };
 
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Spend a Perfect Sunday in Santa Cruz",
+  "description": "Complete Sunday guide with brunch, beach time, and sunset dinner",
+  "totalTime": "PT9H",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Morning: Brunch (10am-12pm)",
+      "text": "Start with brunch at Zachary's (classic American, expect 20-30 min wait), The Picnic Basket (healthy, less crowded), or Walnut Avenue Cafe (cozy Westside spot). Arrive by 10:30am to beat the rush. Free downtown parking on Sundays!"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Midday: Farmers Market or Beach (12pm-5pm)",
+      "text": "Visit Aptos Farmers Market (Sundays 10am-2:30pm, free parking) for fresh produce and live music, OR spend the afternoon at the beach: Main Beach (volleyball, boardwalk), Natural Bridges (tide pools, sunset views, $10 parking), or Capitola Beach (charming village, calm water)."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Afternoon: West Cliff Drive Walk (3pm-5pm)",
+      "text": "Take a scenic 2-mile walk along West Cliff Drive. See surfers at Steamer Lane, seals at Seal Rock, and visit the Lighthouse & Surfing Museum. Free and always open."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Evening: Sunset Dinner (5:30pm-7:30pm)",
+      "text": "End with sunset dinner at Crow's Nest or Aldo's (harbor views), Dream Inn (upscale oceanfront), or Zelda's on the Beach (casual beachfront). Make reservations for window seats. Check sunset time and arrive 30 minutes early for best light."
+    }
+  ]
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -49,6 +79,10 @@ const faqSchema = {
 export default function SundayGuidePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

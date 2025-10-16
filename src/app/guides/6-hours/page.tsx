@@ -7,6 +7,36 @@ export const metadata: Metadata = {
   keywords: ['6 hours santa cruz', 'half day santa cruz', 'santa cruz itinerary', 'santa cruz morning', 'santa cruz afternoon'],
 };
 
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Spend 6 Hours in Santa Cruz",
+  "description": "Complete half-day guide to experiencing the best of Santa Cruz",
+  "totalTime": "PT6H",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Morning: West Cliff Drive Walk",
+      "text": "Start with a 1-hour coastal walk along West Cliff Drive. See surfers at Steamer Lane, seals at Seal Rock, and the Lighthouse & Surfing Museum. Free street parking or Natural Bridges lot ($10)."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Mid-Morning: Beach Boardwalk",
+      "text": "Spend 2 hours at the Santa Cruz Beach Boardwalk. Ride the historic Giant Dipper roller coaster, play arcade games, or relax on Main Beach. Parking: Beach Street structure ($2/hr)."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Lunch: Downtown Dining",
+      "text": "Take 1.5 hours for lunch downtown. Try Laili (Afghan), Oswald (upscale), or Betty Burgers (casual). Browse shops and grab coffee at Verve. Park at Louden Nelson ($1.50/hr)."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Afternoon: Nature or Harbor",
+      "text": "Finish with 1.5 hours at Natural Bridges (tide pools, sunset), Henry Cowell redwoods (easy hiking), or Santa Cruz Harbor (sea lions, waterfront dining)."
+    }
+  ]
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -25,6 +55,7 @@ const faqSchema = {
 export default function SixHoursPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       
       <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
