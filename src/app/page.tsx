@@ -12,11 +12,11 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Santa Cruz Guide - Things to Do Right Now | Bored in Santa Cruz',
-  description: 'Your personalized guide to Santa Cruz. Get weather-aware recommendations for activities, restaurants, beaches & hidden gems - updated in real-time.',
+  description: 'Your personalized guide to Santa Cruz. Get recommendations for activities, restaurants, beaches & hidden gems - updated in real-time.',
   keywords: ['Santa Cruz guide', 'things to do Santa Cruz', 'Santa Cruz activities', 'Santa Cruz restaurants', 'visit Santa Cruz', 'Santa Cruz today'],
   openGraph: {
     title: 'Your Personalized Santa Cruz Guide',
-    description: 'Things to do in Santa Cruz right now. Weather-aware recommendations for beaches, food, activities & more.',
+    description: 'Things to do in Santa Cruz right now. Recommendations for beaches, food, activities & more.',
     type: 'website',
   },
 };
@@ -93,7 +93,7 @@ export default function Home() {
             </h1>
             
             <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-2">
-              Weather-aware recommendations for beaches, restaurants, activities & hidden gems
+              Discover beaches, restaurants, activities & hidden gems
             </p>
             <p className="text-sm md:text-base text-teal-600 font-semibold">
               ↓ Just tell us what you're looking for ↓
