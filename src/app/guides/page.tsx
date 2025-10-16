@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { LastUpdated } from '@/components/last-updated';
 
 export const metadata: Metadata = {
   title: 'Santa Cruz Guides - Complete Collection | 2025',
@@ -151,9 +152,12 @@ export default function GuidesPage() {
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             Santa Cruz Guides
           </h1>
-          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-6">
             Expert local guides for every type of visit. Simple, clear, and designed to help you make the most of Santa Cruz.
           </p>
+          <div className="flex justify-center">
+            <LastUpdated date="2025-01-16" />
+          </div>
         </div>
       </section>
 
