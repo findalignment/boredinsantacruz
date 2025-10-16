@@ -8,6 +8,7 @@ import { getReviews, getAverageRating } from '@/app/actions/reviews';
 import { ReviewsSummary } from '@/components/reviews/reviews-summary';
 import { ReviewsList } from '@/components/reviews/reviews-list';
 import { FavoriteButton } from '@/components/favorites/favorite-button';
+import { ClickableAddress } from '@/components/clickable-address';
 
 interface WellnessPageProps {
   params: Promise<{
