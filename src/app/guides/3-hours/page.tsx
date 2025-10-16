@@ -351,26 +351,35 @@ export default function ThreeHoursPage() {
           {/* Related Guides */}
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-8 mt-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Want More Time?
+              Explore More Santa Cruz
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Link
                 href="/guides/6-hours"
                 className="bg-white rounded-lg p-6 hover:shadow-lg transition-shadow"
               >
                 <div className="text-3xl mb-2">⏰</div>
-                <div className="font-bold text-gray-900 mb-1">6 Hours Free in Santa Cruz</div>
+                <div className="font-bold text-gray-900 mb-1">6 Hours Free</div>
                 <div className="text-gray-600 text-sm">Add beaches, boardwalk, or hiking</div>
               </Link>
               
               <Link
-                href="/guides/full-day"
+                href="/neighborhoods/downtown"
                 className="bg-white rounded-lg p-6 hover:shadow-lg transition-shadow"
               >
-                <div className="text-3xl mb-2">☀️</div>
-                <div className="font-bold text-gray-900 mb-1">Full Day Itinerary</div>
-                <div className="text-gray-600 text-sm">Complete Santa Cruz experience</div>
+                <div className="text-3xl mb-2">🏙️</div>
+                <div className="font-bold text-gray-900 mb-1">Downtown Guide</div>
+                <div className="text-gray-600 text-sm">Explore Pacific Avenue</div>
+              </Link>
+
+              <Link
+                href="/restaurants"
+                className="bg-white rounded-lg p-6 hover:shadow-lg transition-shadow"
+              >
+                <div className="text-3xl mb-2">🍽️</div>
+                <div className="font-bold text-gray-900 mb-1">All Restaurants</div>
+                <div className="text-gray-600 text-sm">Find the perfect lunch spot</div>
               </Link>
             </div>
           </div>

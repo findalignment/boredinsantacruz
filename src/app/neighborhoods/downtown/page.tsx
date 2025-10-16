@@ -282,9 +282,9 @@ export default function DowntownPage() {
 
           {/* Related */}
           <div className="bg-white rounded-xl shadow-lg p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Explore Other Neighborhoods</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Continue Exploring Santa Cruz</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <Link href="/neighborhoods/westside" className="bg-blue-50 rounded-lg p-6 hover:shadow-lg transition">
                 <div className="text-3xl mb-2">🌊</div>
                 <div className="font-bold text-gray-900 mb-1">Westside</div>
@@ -302,6 +302,21 @@ export default function DowntownPage() {
                 <div className="font-bold text-gray-900 mb-1">Seabright/Harbor</div>
                 <div className="text-gray-600 text-sm">Working waterfront</div>
               </Link>
+            </div>
+
+            <div className="border-t border-gray-200 pt-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Planning Your Visit?</h3>
+              <div className="flex flex-wrap gap-2">
+                <Link href="/guides/3-hours" className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition text-sm font-medium">
+                  3 Hour Guide
+                </Link>
+                <Link href="/restaurants" className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition text-sm font-medium">
+                  Downtown Restaurants
+                </Link>
+                <Link href="/events" className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition text-sm font-medium">
+                  Tonight's Events
+                </Link>
+              </div>
             </div>
           </div>
         </section>
