@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { EventModerationDashboard } from '@/components/admin/event-moderation-dashboard';
 
 export const metadata: Metadata = {
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminEventsPage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   // TODO: Add proper admin role check
   // For now, require any logged-in user
