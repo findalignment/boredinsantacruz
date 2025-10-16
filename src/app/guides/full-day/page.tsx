@@ -167,10 +167,10 @@ export default function FullDayPage() {
               <div className="p-4">
                 <p className="text-gray-700 mb-3">Refuel with Santa Cruz's best dining:</p>
                 <div className="space-y-2 text-sm">
-                  <div className="bg-gray-50 rounded p-2"><strong>Laili:</strong> Afghan, beautiful patio (\$\$)</div>
-                  <div className="bg-gray-50 rounded p-2"><strong>Akira:</strong> Fresh sushi (\$\$)</div>
-                  <div className="bg-gray-50 rounded p-2"><strong>Assembly:</strong> California comfort food (\$\$\$)</div>
-                  <div className="bg-gray-50 rounded p-2"><strong>Picnic Basket:</strong> Quick sandwiches (\$)</div>
+                  <div className="bg-gray-50 rounded p-2"><strong>Laili:</strong> Afghan, beautiful patio ($$)</div>
+                  <div className="bg-gray-50 rounded p-2"><strong>Akira:</strong> Fresh sushi ($$)</div>
+                  <div className="bg-gray-50 rounded p-2"><strong>Assembly:</strong> California comfort food ($$$)</div>
+                  <div className="bg-gray-50 rounded p-2"><strong>Picnic Basket:</strong> Quick sandwiches ($)</div>
                 </div>
               </div>
             </div>
