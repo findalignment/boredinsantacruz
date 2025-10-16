@@ -55,7 +55,7 @@ export function MobileMenu() {
         }`}
       >
         {/* Menu Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-cyan-50">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-white">
           <h2 className="text-xl font-bold text-gray-900">
             Menu
           </h2>

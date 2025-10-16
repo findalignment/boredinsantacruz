@@ -194,23 +194,24 @@ export default function GuidesPage() {
     <main className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Hero */}
       <section className="py-16 px-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Popular Guides
-            </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
-              Expert local guides for every type of visit. Simple, clear, and designed to help you make the most of Santa Cruz.
-            </p>
-          </div>
-          <div className="flex justify-end mt-4">
-            <LastUpdated date="2025-01-16" />
-          </div>
+        <div className="max-w-7xl mx-auto text-center">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            Popular Guides
+          </h1>
+          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
+            Expert local guides for every type of visit. Simple, clear, and designed to help you make the most of Santa Cruz.
+          </p>
         </div>
       </section>
 
       {/* Filters */}
       <section className="max-w-7xl mx-auto px-4 py-8">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-bold text-gray-900">Search Guides</h2>
+          <div className="text-sm text-gray-500">
+            <LastUpdated date="2025-01-16" />
+          </div>
+        </div>
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             {/* Search */}

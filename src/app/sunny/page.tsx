@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getCurrentWeather, getWeatherConditions } from '@/lib/weather';
 import { getSunnyActivities } from '@/app/actions/getMasterActivities';
-import { ActivityCard } from '@/components/activity-card';
+import { SunnyActivitiesClient } from '@/components/activities/sunny-activities-client';
 
 export const metadata: Metadata = {
   title: 'Sunny Day Activities - Santa Cruz',
@@ -106,57 +106,7 @@ async function ActivitiesSection() {
 
   const activities = result.data;
 
-  return (
-    <div className="space-y-8">
-      {/* Categories */}
-      <div className="flex flex-wrap gap-4 justify-center">
-        {[
-          { name: 'Beaches', emoji: '🏖️', count: activities.filter(a => a.category === 'Beach').length },
-          { name: 'Hiking', emoji: '🥾', count: activities.filter(a => a.category === 'Hiking').length },
-          { name: 'Parks', emoji: '🌳', count: activities.filter(a => a.category === 'Park').length },
-          { name: 'Water Activities', emoji: '🌊', count: activities.filter(a => a.category === 'Water Activity').length },
-        ].filter(cat => cat.count > 0).map((category) => (
-          <div
-            key={category.name}
-            className="px-4 py-2 bg-white rounded-full border-2 border-orange-200 text-gray-700 font-medium"
-          >
-            {category.emoji} {category.name} ({category.count})
-          </div>
-        ))}
-      </div>
-
-      {/* Activities Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {activities.map((activity) => (
-          <ActivityCard
-            key={activity.id}
-            activity={{
-              id: activity.id,
-              title: activity.name,
-              venue: {} as any,
-              venueName: activity.neighborhood || 'Santa Cruz',
-              tags: activity.tags,
-              cost: activity.cost,
-              duration: activity.duration,
-              notes: activity.description,
-              website: activity.website || null,
-              instagram: activity.instagram || null,
-              imageUrl: activity.photoUrl || activity.imageUrl || null,
-              address: activity.address,
-              hours: activity.hours,
-              parking: activity.parkingInfo,
-              tips: activity.tips,
-              phone: activity.phone,
-              indoorOutdoor: activity.indoorOutdoor,
-              rainOk: activity.rainOk,
-              tidePreference: activity.tidePreference,
-            }}
-            showRecommendationReason={false}
-          />
-        ))}
-      </div>
-    </div>
-  );
+  return <SunnyActivitiesClient activities={activities} />;
 }
 
 export default function SunnyPage() {
