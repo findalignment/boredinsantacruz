@@ -153,16 +153,21 @@ export async function POST(request: NextRequest) {
       await sendSubmissionConfirmationEmail(
         validatedData.submitterEmail,
         validatedData.submitterName,
-        validatedData.title
+        {
+          title: validatedData.title,
+          date: validatedData.startDate,
+          location: validatedData.venueName || validatedData.venueAddress,
+          description: validatedData.description,
+        }
       );
 
       // Send notification to admin
-      await sendAdminNotificationEmail(
-        validatedData.title,
-        validatedData.submitterName,
-        validatedData.submitterEmail,
-        recordId
-      );
+      await sendAdminNotificationEmail({
+        title: validatedData.title,
+        date: validatedData.startDate,
+        location: validatedData.venueName || validatedData.venueAddress,
+        description: validatedData.description,
+      });
     } catch (emailError) {
       // Log but don't fail the submission if email fails
       console.error('[Event Submission] Email notification failed:', emailError);

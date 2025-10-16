@@ -10,13 +10,14 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     date: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const dateObj = parseISO(params.date);
+  const { date } = await params;
+  const dateObj = parseISO(date);
   
   if (!isValid(dateObj)) {
     return {
@@ -33,14 +34,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function DateActivitiesPage({ params }: PageProps) {
-  const dateObj = parseISO(params.date);
+  const { date } = await params;
+  const dateObj = parseISO(date);
   
   // Validate date
   if (!isValid(dateObj)) {
     notFound();
   }
 
-  const result = await getRecommendationsForDate(params.date);
+  const result = await getRecommendationsForDate(date);
 
   if (!result.success || !result.data) {
     return (
@@ -84,7 +86,7 @@ export default async function DateActivitiesPage({ params }: PageProps) {
   const acceptable = tiers.acceptable || [];
 
   const formattedDate = format(dateObj, 'EEEE, MMMM d, yyyy');
-  const isToday = format(new Date(), 'yyyy-MM-dd') === params.date;
+  const isToday = format(new Date(), 'yyyy-MM-dd') === date;
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">

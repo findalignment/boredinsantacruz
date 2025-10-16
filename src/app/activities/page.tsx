@@ -1,5 +1,6 @@
 // src/app/activities/page.tsx
 import { Suspense } from 'react';
+import Link from 'next/link';
 import { getRecommendationsByTier } from '@/app/actions/getRecommendations';
 import { getTodaysTides } from '@/app/actions/getTides';
 import { WeatherDisplay } from '@/components/weather/weather-display';

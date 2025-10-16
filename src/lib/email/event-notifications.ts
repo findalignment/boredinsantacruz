@@ -9,6 +9,105 @@ interface EventDetails {
   description?: string;
 }
 
+export async function sendSubmissionConfirmationEmail(
+  to: string,
+  submitterName: string,
+  eventDetails: EventDetails
+) {
+  try {
+    const from = process.env.EMAIL_FROM || 'events@boredinsantacruz.com';
+    
+    const { data, error } = await resend.emails.send({
+      from,
+      to,
+      subject: `Event Submitted: "${eventDetails.title}"`,
+      html: `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="utf-8">
+            <style>
+              body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #333; }
+              .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+              .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center; }
+              .content { background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; }
+              .footer { text-align: center; margin-top: 30px; color: #6b7280; font-size: 14px; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1 style="margin: 0; font-size: 28px;">✅ Event Submitted!</h1>
+              </div>
+              <div class="content">
+                <p>Hi ${submitterName},</p>
+                <p>Thank you for submitting your event to Bored in Santa Cruz!</p>
+                <p><strong>Event:</strong> ${eventDetails.title}</p>
+                <p>We'll review it within 24 hours and send you an update.</p>
+              </div>
+              <div class="footer">
+                <p>Bored in Santa Cruz</p>
+              </div>
+            </div>
+          </body>
+        </html>
+      `,
+    });
+
+    if (error) {
+      console.error('[Email] Failed to send confirmation email:', error);
+      return { success: false, error };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('[Email] Error sending confirmation email:', error);
+    return { success: false, error };
+  }
+}
+
+export async function sendAdminNotificationEmail(eventDetails: EventDetails) {
+  try {
+    const from = process.env.EMAIL_FROM || 'events@boredinsantacruz.com';
+    const adminEmail = process.env.ADMIN_EMAIL;
+    
+    if (!adminEmail) {
+      return { success: false, error: 'Admin email not configured' };
+    }
+    
+    const { data, error } = await resend.emails.send({
+      from,
+      to: adminEmail,
+      subject: `New Event Submission: "${eventDetails.title}"`,
+      html: `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="utf-8">
+          </head>
+          <body>
+            <h2>New Event Submission</h2>
+            <p><strong>Title:</strong> ${eventDetails.title}</p>
+            <p><strong>Date:</strong> ${eventDetails.date}</p>
+            <p><strong>Location:</strong> ${eventDetails.location || 'N/A'}</p>
+            <p><a href="https://boredinsantacruz.com/admin/events">Review in Dashboard</a></p>
+          </body>
+        </html>
+      `,
+    });
+
+    if (error) {
+      console.error('[Email] Failed to send admin notification:', error);
+      return { success: false, error };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('[Email] Error sending admin notification:', error);
+    return { success: false, error };
+  }
+}
+
 export async function sendApprovalEmail(
   to: string,
   submitterName: string,
