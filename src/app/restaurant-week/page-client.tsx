@@ -41,7 +41,6 @@ const PARTICIPATING_RESTAURANTS = {
     'Aquarius',
     'Bantam',
     'Sanderlings',
-    'Alderwood',
     'The Picnic Basket',
     'Vinocruz',
     'Laili Restaurant',

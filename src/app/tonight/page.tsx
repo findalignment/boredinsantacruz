@@ -298,7 +298,7 @@ export default function TonightPage() {
                 </li>
                 <li className="flex items-center gap-2">
                   <span>✓</span>
-                  <span>Movie showtimes at Rio, Nickelodeon, Del Mar</span>
+                  <span>Movie showtimes at Rio and Del Mar</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <span>✓</span>

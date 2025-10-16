@@ -103,13 +103,6 @@ export default async function BestRainyDayActivitiesPage() {
                 link: "/restaurant/verve-coffee"
               },
               {
-                title: "The Nickelodeon Theatre",
-                description: "Watch independent and mainstream films at this historic art deco cinema in downtown Santa Cruz.",
-                cost: "$$",
-                time: "2-3 hours",
-                link: "/activity/nickelodeon"
-              },
-              {
                 title: "The MAH (Museum of Art & History)",
                 description: "Contemporary art exhibitions, local history, and rotating installations. Free first Friday of every month.",
                 cost: "$ (sometimes free)",

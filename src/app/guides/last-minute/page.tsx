@@ -223,7 +223,7 @@ export default function LastMinutePlansPage() {
                 </div>
                 <div className="border-l-4 border-yellow-500 pl-4">
                   <p className="font-semibold text-gray-900">🍹 Cocktail Spots</p>
-                  <p className="text-gray-700 text-sm">Venus Spirits, Alderwood, The Crepe Place (patio bar)</p>
+                  <p className="text-gray-700 text-sm">Venus Spirits, The Crepe Place (patio bar)</p>
                 </div>
               </div>
             </div>
@@ -255,8 +255,7 @@ export default function LastMinutePlansPage() {
               <h3 className="font-bold text-gray-900">🎬 Movies</h3>
               <p className="text-gray-700 text-sm mt-2">
                 <strong>Del Mar Theatre:</strong> Historic downtown cinema<br/>
-                <strong>Regal Cinema</strong>: Standard first-run movies<br/>
-                <strong>Nickelodeon Theatre:</strong> Art house & independent films
+                <strong>Regal Cinema</strong>: Standard first-run movies
               </p>
             </div>
 

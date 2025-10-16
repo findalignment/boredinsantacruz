@@ -78,7 +78,7 @@ const ACTIVITY_CATEGORIES = [
   // Indoor Activities - Rainy day options
   {
     query: 'indoor activities entertainment Santa Cruz',
-    keywords: ['Nickelodeon Theatre', 'Del Mar Theatre', 'The Catalyst', 'bowling', 'arcade'],
+    keywords: ['Del Mar Theatre', 'The Catalyst', 'bowling', 'arcade'],
     category: 'Indoor Activity',
     indoorOutdoor: 'Indoor',
     weatherPreferences: 'rainy,cloudy,foggy,any',

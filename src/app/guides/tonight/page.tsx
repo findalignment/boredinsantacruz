@@ -212,7 +212,7 @@ export default function TonightGuidePage() {
               <p className="text-sm text-gray-200 mb-2">
                 <strong>Italian:</strong> La Posta, Gabriella Cafe, Ristorante Avanti<br/>
                 <strong>Seafood:</strong> Crow's Nest, Aldo's (harbor views)<br/>
-                <strong>Upscale:</strong> Oswald, Alderwood, Aquarius at Dream Inn<br/>
+                <strong>Upscale:</strong> Oswald, Aquarius at Dream Inn<br/>
                 <strong>Farm-to-Table:</strong> Soif, Assembly
               </p>
             </div>
@@ -316,7 +316,6 @@ export default function TonightGuidePage() {
                   <p className="font-semibold">🍹 Cocktails & Upscale</p>
                   <p className="text-sm text-gray-200">
                     <strong>Venus Spirits:</strong> Craft cocktails, distillery<br/>
-                    <strong>Alderwood:</strong> Sophisticated, seasonal drinks<br/>
                     <strong>Soif Wine Bar:</strong> Wine-focused, small plates
                   </p>
                 </div>
