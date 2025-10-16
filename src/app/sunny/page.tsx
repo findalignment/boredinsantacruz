@@ -10,6 +10,37 @@ export const metadata: Metadata = {
   description: 'Beaches, hiking, outdoor adventures, and the best things to do on sunny days in Santa Cruz.',
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the best things to do on a sunny day in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On sunny days in Santa Cruz, enjoy the beaches (Main Beach, Natural Bridges, Capitola), hike in Henry Cowell Redwoods or Pogonip, walk West Cliff Drive for ocean views, visit the Santa Cruz Beach Boardwalk, surf or paddleboard, explore tide pools at Natural Bridges, bike the coastal trail, or enjoy outdoor dining with ocean views."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best beach in Santa Cruz for sunny days?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Best beaches depend on your needs: Main Beach (classic boardwalk experience, volleyball, lifeguards), Natural Bridges (tide pools, sunset, less crowded), Capitola Beach (protected cove, calm water, charming village), Cowells Beach (gentle waves, beginner surfing), or Seabright Beach (local vibe, dog-friendly areas). All offer different experiences."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where can I hike in Santa Cruz on a sunny day?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Top sunny-day hikes include Henry Cowell Redwoods State Park (redwood groves, easy trails), Pogonip Open Space (meadows and forest near UCSC), Wilder Ranch State Park (coastal bluffs and wildflowers), Forest of Nisene Marks (creek trails, shaded), and West Cliff Drive coastal path (paved, wheelchair accessible, ocean views). Most trails offer a mix of sun and shade."
+      }
+    }
+  ]
+};
+
 async function WeatherBanner() {
   try {
     const weather = await getCurrentWeather();
@@ -130,7 +161,13 @@ async function ActivitiesSection() {
 
 export default function SunnyPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50">
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">

@@ -7,9 +7,46 @@ export const metadata: Metadata = {
   keywords: ['last minute Santa Cruz', 'spontaneous plans', 'no reservations', 'walk-in restaurants', 'impromptu activities'],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What can I do in Santa Cruz right now without a reservation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Walk West Cliff Drive for ocean views (free, always open), visit the beach or Santa Cruz Wharf (free), explore downtown Pacific Avenue shops and street performers, check out Natural Bridges tide pools, or walk-in to casual restaurants like Betty Burgers, Pizza My Heart, or Tacos Moreno."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which restaurants in Santa Cruz don't need reservations?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Walk-in friendly restaurants include Betty Burgers, Pizza My Heart, Tacos Moreno, Paradise Beach Grille, The Picnic Basket, and most food trucks at the harbor. Avoid peak dinner hours (6-8pm) for shorter waits. Downtown has many casual cafes and quick-service spots."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's free to do in Santa Cruz today?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Free activities include all beaches (Main, Cowells, Natural Bridges), West Cliff coastal trail, Santa Cruz Wharf, downtown Pacific Avenue shopping and people-watching, Natural Bridges tide pools (no parking fee after 6pm), and UCSC campus walks through redwoods."
+      }
+    }
+  ]
+};
+
 export default function LastMinutePlansPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50">
       <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         {/* Back Link */}
         <Link

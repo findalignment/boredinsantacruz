@@ -7,9 +7,54 @@ export const metadata: Metadata = {
   keywords: ['capitola village', 'capitola beach', 'shadowbrook restaurant', 'capitola shopping', 'venetian court capitola'],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Capitola Village known for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Capitola Village is known for its colorful Venetian Court beach houses (Instagram-famous), charming esplanade along the beach, boutique shopping, Shadowbrook Restaurant (cable car dining), and small-town beach atmosphere. It's California's oldest seaside resort town, founded in 1874."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Capitola Beach good for swimming?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! Capitola Beach is protected by a jetty, making it calmer than open ocean beaches. It's family-friendly with gentle waves, lifeguards in summer, and shallow areas perfect for kids. The beach is sandy and clean. Nearby amenities include restaurants, restrooms, and parking (though parking can be challenging)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where should I eat in Capitola Village?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Top Capitola restaurants: Shadowbrook (romantic, cable car entrance, creekside setting), Paradise Sushi (fresh, local favorite), Zelda's (beachfront, casual), Mr. Toots Coffeehouse (breakfast, patio), Gayle's Bakery (nearby, must-visit for pastries and bread). Reserve ahead for Shadowbrook on weekends."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get to Capitola Village from Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Capitola Village is 5 miles east of Santa Cruz, about 10-15 minutes by car via Highway 1 or scenic East Cliff Drive coastal route. Free parking is limited (street parking fills fast). Paid lots available. You can also bike via the coastal path or take the Santa Cruz Metro bus (routes 54, 55)."
+      }
+    }
+  ]
+};
+
 export default function CapitolaPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
       <section className="bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-4">

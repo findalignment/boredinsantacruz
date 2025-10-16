@@ -7,9 +7,54 @@ export const metadata: Metadata = {
   keywords: ['tonight Santa Cruz', 'nightlife Santa Cruz', 'evening plans', 'live music tonight', 'bars Santa Cruz', 'what to do tonight'],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is there to do tonight in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tonight in Santa Cruz: Catch sunset at West Cliff Drive or Natural Bridges (check sunset time), enjoy dinner downtown or at the harbor, see live music at The Catalyst, Kuumbwa Jazz, or Moe's Alley, visit bars and breweries on Pacific Avenue, or take an evening beach walk along Main Beach or the Wharf."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is the best nightlife in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Best nightlife spots include The Catalyst (live bands, dancing), Kuumbwa Jazz Center (world-class jazz), Seabright Brewery (craft beer, food), 515 Kitchen & Cocktails (upscale cocktails), The Crepe Place (bohemian vibe, live music), Blue Lagoon (cocktail lounge), and Motiv (club/lounge)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Santa Cruz safe at night?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Santa Cruz is generally safe at night, especially in well-lit areas like downtown Pacific Avenue, the Wharf, and populated restaurant/bar districts. Stick to main streets, travel in groups when possible, use rideshare for late-night transport, and be aware of your surroundings. Beach areas can be dark - bring a flashlight."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What time does sunset happen in Santa Cruz today?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sunset time in Santa Cruz varies by season: around 5:30pm in winter (December-February) and 8:30pm in summer (June-August). Check today's exact sunset time online before heading out. Best sunset viewing spots are West Cliff Drive, Natural Bridges, and Lighthouse Point."
+      }
+    }
+  ]
+};
+
 export default function TonightGuidePage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white">
       <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         {/* Back Link */}
         <Link

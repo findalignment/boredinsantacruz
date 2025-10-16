@@ -22,10 +22,50 @@ const neighborhoodSchema = {
   }
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is there to do in downtown Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Downtown Santa Cruz offers shopping on Pacific Avenue with local boutiques and O'Neill Surf Shop, dining from casual to upscale (Laili, Oswald, Betty Burgers), coffee shops (Verve, Cat & Cloud), bookstores (Bookshop Santa Cruz, Logo's), nightlife (The Catalyst, Kuumbwa Jazz), and the Wednesday Downtown Farmers Market. First Friday Art Walk is popular monthly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where should I park in downtown Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Best parking options: Louden Nelson Center lot (301 Center St, $1.50/hr), Lot 4 at Cedar & Locust (first hour free), or street parking on Pacific Avenue (2-hour meters). Downtown parking is FREE on Sundays. Lots and street parking are within easy walking distance of everything."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is downtown Santa Cruz walkable?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, downtown Santa Cruz is very walkable! Everything is within 6 blocks along Pacific Avenue from Water Street to Cathcart Street. The pedestrian-friendly street has wide sidewalks, outdoor dining, and shade trees. You can easily explore on foot once you park."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When is First Friday Art Walk in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "First Friday Art Walk happens the first Friday of every month from 5-9pm in downtown Santa Cruz. Art galleries open their doors, plus food trucks, live music, street performers, and art sales along Pacific Avenue. It's free to attend and family-friendly."
+      }
+    }
+  ]
+};
+
 export default function DowntownPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(neighborhoodSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       
       <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <section className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white py-16 px-4">

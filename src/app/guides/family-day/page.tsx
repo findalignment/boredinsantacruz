@@ -7,9 +7,54 @@ export const metadata: Metadata = {
   keywords: ['santa cruz with kids', 'family activities santa cruz', 'kid friendly santa cruz', 'santa cruz boardwalk kids', 'family day santa cruz'],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the best family-friendly activities in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Top family activities include the Santa Cruz Beach Boardwalk (rides and games), Main Beach (swimming and sandcastles), Seymour Marine Discovery Center (touch tanks, whale exhibits), Natural Bridges State Beach (tide pools), and Roaring Camp Railroads (scenic train rides through redwoods)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Santa Cruz Beach Boardwalk good for toddlers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! The Boardwalk has a Kid's Kingdom section with age-appropriate rides for toddlers and young children, plus the beach and arcade. Height requirements vary by ride. Wristbands offer unlimited rides. Best to visit on weekdays for smaller crowds."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where are the best kid-friendly restaurants in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Family-friendly restaurants include Betty Burgers (burgers and milkshakes), Zelda's on the Beach (beachfront, casual), Paradise Beach Grille (kids menu, ocean views), Pizza My Heart (pizza by the slice), and The Picnic Basket (healthy options, outdoor seating)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does a family day at the Santa Cruz Beach Boardwalk cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Beach access is free. Boardwalk rides cost $4-8 per ride, or unlimited ride wristbands are $40-50 (varies by season). Budget $100-150 for a family of 4 including rides, food, and parking ($25/day). Check for special discount days and online coupons."
+      }
+    }
+  ]
+};
+
 export default function FamilyDayPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-green-50">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-green-50">
       <section className="bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-4">

@@ -7,9 +7,46 @@ export const metadata: Metadata = {
   keywords: ['santa cruz date night', 'romantic santa cruz', 'date ideas santa cruz', 'couples santa cruz', 'romantic restaurants santa cruz'],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the best date night restaurants in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Top romantic restaurants include Laili Restaurant (Afghan cuisine with beautiful patio), Oswald (seasonal California with wine bar), Aldo's Harbor Restaurant (Italian seafood on the harbor), Crow's Nest (sunset views), and The Crepe Place (bohemian atmosphere with live music)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where can I watch the sunset in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Best sunset spots include West Cliff Drive overlooking Steamer Lane, Natural Bridges State Beach, Lighthouse Point, Its Beach (romantic cove), and the Dream Inn rooftop bar. Arrive 30 minutes before sunset for the best light."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I do on a date night in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A perfect date night: Start with sunset walk on West Cliff Drive (30-45 min), romantic dinner with ocean views at Aldo's or Crow's Nest (1.5 hours), then end with cocktails at The Crow's Nest or Aquarius Bar, or catch live music at Kuumbwa Jazz Center or The Catalyst."
+      }
+    }
+  ]
+};
+
 export default function DateNightPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-purple-50">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-purple-50">
       <section className="bg-gradient-to-r from-rose-600 via-pink-600 to-purple-600 text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-4">

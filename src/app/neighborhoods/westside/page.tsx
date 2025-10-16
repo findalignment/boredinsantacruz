@@ -7,9 +7,54 @@ export const metadata: Metadata = {
   keywords: ['westside santa cruz', 'natural bridges', 'its beach', 'west cliff drive', 'santa cruz surfing', 'coastal living santa cruz'],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What beaches are in Westside Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Westside Santa Cruz beaches include Natural Bridges State Beach (tide pools, sunset views, $10 parking), Its Beach (romantic cove, stairs down), Mitchell's Cove (dog-friendly), and Lighthouse Field State Beach. West Cliff Drive connects them all via a scenic coastal walking/biking path."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is West Cliff Drive in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "West Cliff Drive is a scenic 2-mile coastal road with a paved walking/biking path along the cliffs. It offers stunning ocean views, surf watching at Steamer Lane, seal spotting at Seal Rock, the Lighthouse & Surfing Museum, and connects Natural Bridges to the Wharf. It's free and open 24/7."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is the best surfing in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Best surf spots in Westside Santa Cruz: Steamer Lane (world-famous, advanced), The Hook/Pleasure Point (long right point break, intermediate), Cowells Beach (beginner-friendly longboarding), and Four Mile Beach (powerful, advanced). Steamer Lane hosts professional competitions and is visible from West Cliff Drive."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When is the best time to visit Natural Bridges for tide pools?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Visit Natural Bridges tide pools during low tide, ideally at minus tides (-0.5 feet or lower). Check tide charts for Santa Cruz. Best months are winter/spring when tides are lowest. Arrive 1-2 hours before low tide. You'll see anemones, starfish, crabs, and small fish. Parking is $10/day."
+      }
+    }
+  ]
+};
+
 export default function WestsidePage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-cyan-50 via-white to-blue-50">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-br from-cyan-50 via-white to-blue-50">
       <section className="bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-4">

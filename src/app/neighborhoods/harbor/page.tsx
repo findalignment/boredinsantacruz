@@ -7,9 +7,54 @@ export const metadata: Metadata = {
   keywords: ['santa cruz harbor', 'seabright santa cruz', 'crows nest restaurant', 'santa cruz sea lions', 'harbor fishing'],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is there to do at Santa Cruz Harbor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Santa Cruz Harbor offers waterfront dining (Crow's Nest, Aldo's), watching sea lions on the docks, kayaking and paddleboarding, fishing charters, harbor cruises, scenic walks along the breakwater, and visiting Seymour Marine Discovery Center. The working harbor has fishing boats, sailboats, and authentic coastal atmosphere."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where can I see sea lions in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "See sea lions at Santa Cruz Harbor on the floating docks (especially near the restaurant area), under the Santa Cruz Wharf (visible from above or boat), and at Seal Rock off West Cliff Drive. Harbor sea lions are most active morning and evening. They're wild animals - maintain distance and don't feed them."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What restaurants are at Santa Cruz Harbor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Santa Cruz Harbor restaurants include Crow's Nest (seafood, harbor views, sunset patio), Aldo's Harbor Restaurant (Italian seafood, romantic deck), Stagnaro Bros (casual seafood, family-friendly), and food trucks near the beach. Crow's Nest and Aldo's are best for sunset dining - reservations recommended for window seats."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I rent kayaks at Santa Cruz Harbor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! Kayak Connection and Venture Quest rent kayaks, paddleboards, and offer tours from Santa Cruz Harbor. Launch from the harbor and explore the coastline, kelp forests, and wildlife. Rentals are available year-round, weather permitting. Tours are beginner-friendly. Also check O'Neill Sea Odyssey for youth programs."
+      }
+    }
+  ]
+};
+
 export default function HarborPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-blue-50">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-blue-50">
       <section className="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-4">

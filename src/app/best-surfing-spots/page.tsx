@@ -8,9 +8,54 @@ export const metadata: Metadata = {
   keywords: 'santa cruz surfing, surf report, steamer lane, cowells beach, pleasure point, surf guide, live surf conditions',
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the best surf spots in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The best surf spots in Santa Cruz include Steamer Lane (world-famous, advanced), Pleasure Point/The Hook (intermediate, longboard-friendly), Cowells Beach (beginner-friendly), Manresa State Beach (powerful beach break), 26th Avenue (fun right point), and Four Mile Beach (heavy, advanced). Each spot offers different wave conditions for varying skill levels."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Steamer Lane good for beginner surfers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, Steamer Lane is NOT recommended for beginners. It's an advanced surf spot with powerful waves, rocks, strong currents, and crowds. Beginners should start at Cowells Beach (longboard-friendly, mellow waves) or take lessons with a local surf school. Once you have solid fundamentals, you can progress to intermediate spots."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is the best place to learn to surf in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cowells Beach is the best place to learn surfing in Santa Cruz. It has mellow, consistent waves, a sandy bottom (safer than rocks), lifeguards in summer, and is close to downtown. Several surf schools operate there including Surf School Santa Cruz, Richard Schmidt Surf School, and Club Ed. Lessons typically run $80-120 for 2 hours."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When is the best time to surf in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Fall and winter (September-March) typically have the biggest swells in Santa Cruz, with waves from 4-12+ feet at advanced spots. Spring and summer (April-August) have smaller, more consistent waves (2-4 feet) ideal for beginners and intermediates. Early morning offers the best conditions with offshore winds and fewer crowds. Check the surf report before heading out."
+      }
+    }
+  ]
+};
+
 export default function BestSurfingSpotsPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-cyan-50 to-white">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-b from-cyan-50 to-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">

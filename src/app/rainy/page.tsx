@@ -18,6 +18,37 @@ export const metadata: Metadata = {
   },
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What can I do on a rainy day in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On rainy days in Santa Cruz, visit the Santa Cruz Museum of Art & History (MAH), browse Bookshop Santa Cruz, enjoy coffee at Verve or Cat & Cloud, explore the Monterey Bay Aquarium (nearby), see a movie at Del Mar Theatre, try indoor rock climbing at Pacific Edge, visit breweries like Seabright or Santa Cruz Mountain Brewing, or explore antique shops and galleries downtown."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are there any good museums in Santa Cruz for rainy days?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! Top museums for rainy days include the Santa Cruz Museum of Art & History (MAH) with rotating exhibitions and local art, the Surfing Museum at Lighthouse Point (small but iconic), Seymour Marine Discovery Center (aquariums and marine science), and the Santa Cruz Museum of Natural History. The nearby Monterey Bay Aquarium (30 minutes away) is also excellent."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the coziest cafes in Santa Cruz for a rainy day?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Coziest rainy-day cafes include Verve Coffee Roasters (multiple locations, local favorite), Cat & Cloud Coffee (specialty drinks, friendly vibe), Lulu Carpenter's (downtown, perfect for reading), The Picnic Basket (healthy food, indoor seating), and Kelly's French Bakery (pastries and coffee). All have indoor seating, WiFi, and relaxed atmospheres."
+      }
+    }
+  ]
+};
+
 // Loading component
 function LoadingSkeleton() {
   return (
@@ -136,7 +167,13 @@ async function ActivitiesSection() {
 
 export default function RainyPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">

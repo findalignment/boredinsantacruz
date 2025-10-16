@@ -7,9 +7,54 @@ export const metadata: Metadata = {
   keywords: ['Sunday Santa Cruz', 'weekend activities', 'brunch Santa Cruz', 'Sunday plans', 'weekend guide'],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What should I do on a Sunday in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A perfect Sunday in Santa Cruz includes brunch at Zachary's or Picnic Basket (10am-12pm), visiting the Aptos Farmers Market or relaxing at the beach (12pm-5pm), a walk along West Cliff Drive (3pm-5pm), and sunset dinner at Crow's Nest or Dream Inn (5:30pm-7:30pm)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is the best brunch in Santa Cruz on Sunday?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Top Sunday brunch spots include Zachary's Restaurant on Pacific Avenue (classic American, expect 20-30 min wait), The Picnic Basket in Seabright (healthy options, less crowded), Walnut Avenue Cafe on the Westside (cozy, creative dishes), and Betty Burgers on Beach Street (casual, kid-friendly)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is parking free on Sundays in downtown Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! Downtown Santa Cruz parking is free on Sundays, both street parking and city lots. This makes Sunday perfect for exploring Pacific Avenue, brunch, and downtown shops without parking fees."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What time is sunset in Santa Cruz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sunset in Santa Cruz varies by season: 5:30pm in winter (December-February) to 8:30pm in summer (June-August). Arrive 30 minutes before sunset for the best light. Check the current sunset time before making dinner reservations."
+      }
+    }
+  ]
+};
+
 export default function SundayGuidePage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         {/* Back Link */}
         <Link

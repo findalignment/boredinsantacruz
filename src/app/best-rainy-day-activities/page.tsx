@@ -12,12 +12,49 @@ export const metadata: Metadata = {
   },
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the top 5 indoor activities in Santa Cruz for rainy days?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Top 5 indoor rainy-day activities: 1) Santa Cruz Museum of Art & History (MAH) - rotating art exhibitions, 2) Monterey Bay Aquarium - 30 minutes away, world-class marine life, 3) Bookshop Santa Cruz - independent bookstore with events, 4) Santa Cruz Mountain Brewing or Seabright Brewery - local craft beer, 5) Del Mar Theatre - historic cinema with indie and mainstream films."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Santa Cruz Beach Boardwalk open on rainy days?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Santa Cruz Beach Boardwalk has limited operations on rainy days. The arcade is open year-round and provides indoor entertainment. Outdoor rides may be closed depending on weather conditions. Call ahead (831-423-5590) or check their website for current hours and ride status during inclement weather."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are there indoor playgrounds or activities for kids in Santa Cruz on rainy days?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! Family-friendly rainy-day options include the Boardwalk arcade (indoor games), Seymour Marine Discovery Center (touch tanks, exhibits), Pacific Edge Climbing Gym (kids climbing area), bowling at The Bowlero, and the Children's Museum of Discovery in nearby Capitola. Many have specific toddler hours or kid-friendly programs."
+      }
+    }
+  ]
+};
+
 export default async function BestRainyDayActivitiesPage() {
   const result = await getActivities();
   const activities = result.success ? result.data.filter(a => a.indoorOutdoor === 'Indoor' || a.rainOk) : [];
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Hero */}
         <div className="text-center mb-12">
