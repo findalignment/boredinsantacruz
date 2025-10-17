@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 interface Restaurant {
@@ -10,6 +11,7 @@ interface Restaurant {
   cuisine?: string[];
   neighborhood?: string;
   address?: string;
+  image?: Array<{ url: string }>;
 }
 
 interface RestaurantWeekClientProps {
@@ -228,7 +230,7 @@ export function RestaurantWeekClient({ initialRestaurants }: RestaurantWeekClien
               <span className="text-3xl">{emoji}</span>
               {LOCATION_LABELS[location]} ({restaurants.length} restaurant{restaurants.length !== 1 ? 's' : ''})
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
               {restaurants.map(({ name, restaurant }) => (
                 <RestaurantCard
                   key={name}
@@ -271,49 +273,101 @@ function RestaurantCard({ name, restaurant, emoji }: { name: string; restaurant?
     return (
       <Link
         href={`/restaurant/${restaurant.id}`}
-        className="block bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-orange-200 overflow-hidden hover:scale-[1.02] group"
+        className="block bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 overflow-hidden hover:scale-[1.02] group"
       >
-        <div className="h-32 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
-          <span className="text-5xl">🍽️</span>
+        {/* Restaurant Image */}
+        <div className="relative h-48 bg-gradient-to-br from-orange-100 to-red-100 overflow-hidden">
+          {restaurant.image && restaurant.image[0]?.url ? (
+            <Image
+              src={restaurant.image[0].url}
+              alt={`${name} restaurant`}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="text-center">
+                <span className="text-6xl mb-2">🍽️</span>
+                <div className="text-sm text-gray-600 font-medium">Restaurant Photo</div>
+              </div>
+            </div>
+          )}
+          {/* Restaurant Week Badge */}
+          <div className="absolute top-3 right-3 bg-orange-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">
+            Restaurant Week
+          </div>
         </div>
         
-        <div className="p-6">
-          <h4 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">{name}</h4>
-          {restaurant.cuisine && (
+        <div className="p-6 flex flex-col h-full">
+          {/* Restaurant Name */}
+          <h4 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
+            {name}
+          </h4>
+          
+          {/* Cuisine Type */}
+          {restaurant.cuisine && restaurant.cuisine.length > 0 && (
             <p className="text-sm text-orange-600 mb-3 font-medium">
               {restaurant.cuisine.join(', ')}
             </p>
           )}
+          
+          {/* Location */}
           {restaurant.address && (
-            <p className="text-sm text-gray-600 mb-4">
-              📍 {restaurant.neighborhood || restaurant.address.split(',')[0]}
+            <p className="text-sm text-gray-600 mb-3 flex items-center">
+              <span className="mr-1">📍</span>
+              {restaurant.neighborhood || restaurant.address.split(',')[0]}
             </p>
           )}
-          <span className="block w-full py-2 bg-orange-600 text-white text-center font-semibold rounded-lg group-hover:bg-orange-700 transition-colors pointer-events-none">
-            View Details →
-          </span>
+          
+          {/* Spacer to push button to bottom */}
+          <div className="flex-grow"></div>
+          
+          {/* View Details Button - Always at bottom */}
+          <div className="mt-4">
+            <span className="block w-full py-3 bg-orange-600 text-white text-center font-semibold rounded-lg group-hover:bg-orange-700 transition-colors pointer-events-none">
+              View Details →
+            </span>
+          </div>
         </div>
       </Link>
     );
   }
 
+  // Fallback card for restaurants not in our database
   return (
-    <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-orange-200 overflow-hidden">
-      <div className="h-32 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
-        <span className="text-5xl">🍽️</span>
+    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+      <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+        <div className="w-full h-full flex items-center justify-center">
+          <div className="text-center">
+            <span className="text-6xl mb-2">🍽️</span>
+            <div className="text-sm text-gray-600 font-medium">Photo Coming Soon</div>
+          </div>
+        </div>
+        {/* Restaurant Week Badge */}
+        <div className="absolute top-3 right-3 bg-orange-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">
+          Restaurant Week
+        </div>
       </div>
       
-      <div className="p-6">
+      <div className="p-6 flex flex-col h-full">
         <h4 className="text-xl font-bold text-gray-900 mb-2">{name}</h4>
         <p className="text-sm text-gray-600 mb-4">Coming soon to our directory</p>
-        <a
-          href="https://santacruzrestaurantweek.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full py-2 bg-gray-600 text-white text-center font-semibold rounded-lg hover:bg-gray-700 transition-colors cursor-pointer"
-        >
-          Learn More →
-        </a>
+        
+        {/* Spacer to push button to bottom */}
+        <div className="flex-grow"></div>
+        
+        {/* Learn More Button - Always at bottom */}
+        <div className="mt-4">
+          <a
+            href="https://santacruzrestaurantweek.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full py-3 bg-gray-600 text-white text-center font-semibold rounded-lg hover:bg-gray-700 transition-colors cursor-pointer"
+          >
+            Learn More →
+          </a>
+        </div>
       </div>
     </div>
   );
