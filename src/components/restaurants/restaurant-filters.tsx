@@ -21,14 +21,14 @@ const CUISINE_CATEGORIES = [
   { name: 'American', emoji: '🍔', slug: 'American' },
   { name: 'Seafood', emoji: '🦞', slug: 'Seafood' },
   { name: 'Pizza', emoji: '🍕', slug: 'Pizza' },
-  { name: 'Cafe', emoji: '☕', slug: 'Cafe' },
+  { name: 'Coffee', emoji: '☕', slug: 'Coffee' },
 ];
 
 // More cuisine options for modal
 const ALL_CUISINE_OPTIONS = [
   'Mexican', 'Italian', 'American', 'Japanese', 'Chinese', 'Thai', 
   'Vietnamese', 'Indian', 'Mediterranean', 'French', 'Korean', 
-  'Cafe', 'Bakery', 'Seafood', 'BBQ', 'Pizza', 'Burgers', 'Sushi'
+  'Coffee', 'Bakery', 'Seafood', 'BBQ', 'Pizza', 'Burgers', 'Sushi'
 ];
 
 const NEIGHBORHOOD_OPTIONS = [

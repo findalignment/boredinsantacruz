@@ -10,7 +10,7 @@ function transformActivity(record: any): RainyActivity {
   
   return {
     id: record.id,
-    title: fields.Title || '',
+    title: fields.Title || fields.Name || fields.title || '',
     venueName: fields.VenueName || fields.Venue?.[0] || 'Unknown Venue',
     tags: fields.Tags || [],
     cost: fields.Cost || 0,
@@ -62,7 +62,7 @@ export const getActivities = unstable_cache(
       const records = await activitiesTable
         .select({
           view: 'Grid view',
-          sort: [{ field: 'Title', direction: 'asc' }],
+          sort: [{ field: 'Name', direction: 'asc' }],
           maxRecords: 100, // Limit for performance
         })
         .all();
