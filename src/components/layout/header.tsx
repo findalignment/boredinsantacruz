@@ -79,12 +79,12 @@ export function Header() {
                 Tonight
               </Link>
               
-              <Link
+              {/* <Link
                 href="/deals"
                 className="px-3 py-2 text-gray-700 hover:text-cyan-600 font-medium transition-all text-sm whitespace-nowrap"
               >
                 Deals
-              </Link>
+              </Link> */}
             </div>
             
             {/* User Button */}

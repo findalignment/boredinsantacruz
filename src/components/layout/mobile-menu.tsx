@@ -14,7 +14,7 @@ export function MobileMenu() {
     { label: 'Activities', href: '/activities', emoji: '🎯' },
     { label: 'Restaurants', href: '/restaurants', emoji: '🍽️' },
     { label: 'Events', href: '/events', emoji: '🎉' },
-    { label: 'Deals', href: '/deals', emoji: '🍻' },
+    // { label: 'Deals', href: '/deals', emoji: '🍻' }, // Hidden until content is updated
     { label: 'Wellness', href: '/wellness', emoji: '🧘' },
     { label: 'Trip Planner', href: '/trips', emoji: '🗺️' },
   ];
