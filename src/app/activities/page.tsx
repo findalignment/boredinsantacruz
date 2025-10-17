@@ -59,22 +59,16 @@ export default async function ActivitiesPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                href="/rainy"
+                href="/activities"
                 className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
               >
-                🌧️ Rainy Day Activities
-              </Link>
-              <Link
-                href="/sunny"
-                className="px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg hover:bg-yellow-600 transition-colors"
-              >
-                ☀️ Sunny Day Activities
+                🔄 Try Again
               </Link>
               <Link
                 href="/restaurants"
                 className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
               >
-                🍽️ Restaurants
+                🍽️ Browse Restaurants
               </Link>
             </div>
           </div>
@@ -98,9 +92,11 @@ export default async function ActivitiesPage() {
           </p>
         </div>
 
-        {/* Tide Information */}
+        {/* Tide Information - Load in background */}
         <div className="max-w-3xl mx-auto mb-12">
-          <Suspense fallback={<div className="h-48 bg-gray-200 animate-pulse rounded-lg"></div>}>
+          <Suspense fallback={<div className="h-32 bg-gray-100 rounded-lg flex items-center justify-center">
+            <div className="text-gray-500">🌊 Loading tide info...</div>
+          </div>}>
             <TideInfo />
           </Suspense>
         </div>

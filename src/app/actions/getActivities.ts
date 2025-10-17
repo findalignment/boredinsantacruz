@@ -63,6 +63,7 @@ export const getActivities = unstable_cache(
         .select({
           view: 'Grid view',
           sort: [{ field: 'Title', direction: 'asc' }],
+          maxRecords: 100, // Limit for performance
         })
         .all();
 
@@ -81,9 +82,9 @@ export const getActivities = unstable_cache(
       };
     }
   },
-  ['rainy-activities'],
+  ['activities-cache'],
   {
-    revalidate: 3600, // Cache for 1 hour
+    revalidate: 1800, // Cache for 30 minutes (shorter for faster updates)
     tags: ['activities'],
   }
 );
