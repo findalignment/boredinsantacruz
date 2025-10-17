@@ -45,9 +45,13 @@ public/
 
 ```
 public/images/hero/
-  ├── home.jpg                    # Santa Cruz Wharf or Beach Boardwalk
+  ├── home.jpg                    # Santa Cruz Wharf or Beach Boardwalk ✅
   ├── activities.jpg              # Multiple activities collage or Beach Boardwalk
   ├── restaurants.jpg             # Food/dining scene or outdoor dining
+  ├── capitola.jpg                # Capitola village/beach ✅
+  ├── date-spots.jpg              # Romantic dining/views ✅
+  ├── day-trips.jpg               # Scenic drives/attractions ✅
+  ├── free-things.jpg             # Free activities/beaches ✅
   ├── wellness.jpg               # Yoga on beach or peaceful nature scene
   ├── deals.jpg                  # Happy hour vibes or sunset drinks
   ├── map.jpg                    # Aerial view of Santa Cruz or coastline
