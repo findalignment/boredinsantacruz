@@ -2,7 +2,7 @@ export function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About */}
           <div>
             <h3 className="text-white text-lg font-semibold mb-4">
@@ -24,18 +24,65 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/rainy" className="hover:text-white transition-colors">
-                  Rainy Day Activities
+                <a href="/activities" className="hover:text-white transition-colors">
+                  All Activities
                 </a>
               </li>
               <li>
-                <a href="/sunny" className="hover:text-white transition-colors">
-                  Sunny Day Activities
+                <a href="/restaurants" className="hover:text-white transition-colors">
+                  Restaurants
+                </a>
+              </li>
+              <li>
+                <a href="/events" className="hover:text-white transition-colors">
+                  Events
+                </a>
+              </li>
+              <li>
+                <a href="/map" className="hover:text-white transition-colors">
+                  Interactive Map
+                </a>
+              </li>
+              <li>
+                <a href="/surfing-santa-cruz-beginners-guide" className="hover:text-white transition-colors">
+                  Surf Guide
                 </a>
               </li>
               <li>
                 <a href="/advertise" className="hover:text-white transition-colors font-semibold text-blue-400">
                   Advertise With Us
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Weather & Tides */}
+          <div>
+            <h3 className="text-white text-lg font-semibold mb-4">Weather & Tides</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="/weather/rainy" className="hover:text-white transition-colors">
+                  🌧️ Rainy Day Guide
+                </a>
+              </li>
+              <li>
+                <a href="/weather/sunny" className="hover:text-white transition-colors">
+                  ☀️ Sunny Day Guide
+                </a>
+              </li>
+              <li>
+                <a href="/weather/foggy" className="hover:text-white transition-colors">
+                  🌫️ Foggy Day Guide
+                </a>
+              </li>
+              <li>
+                <a href="/best-time" className="hover:text-white transition-colors">
+                  📅 Best Time to Visit
+                </a>
+              </li>
+              <li>
+                <a href="/tonight" className="hover:text-white transition-colors">
+                  🌙 Tonight in Santa Cruz
                 </a>
               </li>
             </ul>

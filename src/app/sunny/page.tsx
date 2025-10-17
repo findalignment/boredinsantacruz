@@ -2,8 +2,8 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getCurrentWeather, getWeatherConditions } from '@/lib/weather';
-import { getSunnyActivities } from '@/app/actions/getMasterActivities';
-import { SunnyActivitiesClient } from '@/components/activities/sunny-activities-client';
+import { getActivities } from '@/app/actions/getActivities';
+import { FilteredActivities } from '@/components/filtered-activities';
 
 export const metadata: Metadata = {
   title: 'Sunny Day Activities - Santa Cruz',
@@ -86,7 +86,7 @@ async function WeatherBanner() {
 }
 
 async function ActivitiesSection() {
-  const result = await getSunnyActivities();
+  const result = await getActivities();
   
   if (!result.success || result.data.length === 0) {
     return (
@@ -104,9 +104,30 @@ async function ActivitiesSection() {
     );
   }
 
-  const activities = result.data;
+  // Filter for outdoor/sunny activities
+  const sunnyActivities = result.data.filter(activity => {
+    const tags = activity.tags || [];
+    const indoorOutdoor = activity.indoorOutdoor?.toLowerCase();
+    
+    // Include outdoor activities, beaches, hiking, parks, etc.
+    return (
+      indoorOutdoor?.includes('outdoor') ||
+      tags.some(tag => 
+        tag.toLowerCase().includes('beach') ||
+        tag.toLowerCase().includes('hiking') ||
+        tag.toLowerCase().includes('outdoor') ||
+        tag.toLowerCase().includes('park') ||
+        tag.toLowerCase().includes('trail') ||
+        tag.toLowerCase().includes('surf') ||
+        tag.toLowerCase().includes('bike') ||
+        tag.toLowerCase().includes('water') ||
+        tag.toLowerCase().includes('coastal') ||
+        tag.toLowerCase().includes('nature')
+      )
+    );
+  });
 
-  return <SunnyActivitiesClient activities={activities} />;
+  return <FilteredActivities activities={sunnyActivities} />;
 }
 
 export default function SunnyPage() {
