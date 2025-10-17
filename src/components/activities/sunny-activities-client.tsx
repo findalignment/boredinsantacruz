@@ -2,10 +2,10 @@
 
 import { useState, useMemo } from 'react';
 import { ActivityCard } from '@/components/activity-card';
-import type { Activity } from '@/types';
+import type { Activity, RainyActivity } from '@/types';
 
 interface SunnyActivitiesClientProps {
-  activities: Activity[];
+  activities: (Activity | RainyActivity)[];
 }
 
 export function SunnyActivitiesClient({ activities }: SunnyActivitiesClientProps) {
@@ -15,10 +15,10 @@ export function SunnyActivitiesClient({ activities }: SunnyActivitiesClientProps
   const categories = useMemo(() => {
     const cats = [
       { name: 'All', slug: 'all', emoji: '☀️', count: activities.length },
-      { name: 'Beaches', slug: 'Beach', emoji: '🏖️', count: activities.filter(a => a.category === 'Beach').length },
-      { name: 'Hiking', slug: 'Hiking', emoji: '🥾', count: activities.filter(a => a.category === 'Hiking').length },
-      { name: 'Parks', slug: 'Park', emoji: '🌳', count: activities.filter(a => a.category === 'Park').length },
-      { name: 'Water Activities', slug: 'Water Activity', emoji: '🌊', count: activities.filter(a => a.category === 'Water Activity').length },
+      { name: 'Beaches', slug: 'Beach', emoji: '🏖️', count: activities.filter(a => ('category' in a ? a.category : '') === 'Beach').length },
+      { name: 'Hiking', slug: 'Hiking', emoji: '🥾', count: activities.filter(a => ('category' in a ? a.category : '') === 'Hiking').length },
+      { name: 'Parks', slug: 'Park', emoji: '🌳', count: activities.filter(a => ('category' in a ? a.category : '') === 'Park').length },
+      { name: 'Water Activities', slug: 'Water Activity', emoji: '🌊', count: activities.filter(a => ('category' in a ? a.category : '') === 'Water Activity').length },
     ];
     return cats.filter(cat => cat.count > 0);
   }, [activities]);
@@ -28,7 +28,7 @@ export function SunnyActivitiesClient({ activities }: SunnyActivitiesClientProps
     if (selectedCategory === 'all') {
       return activities;
     }
-    return activities.filter(a => a.category === selectedCategory);
+    return activities.filter(activity => ('category' in activity ? activity.category : '') === selectedCategory);
   }, [activities, selectedCategory]);
 
   return (
@@ -65,19 +65,19 @@ export function SunnyActivitiesClient({ activities }: SunnyActivitiesClientProps
             key={activity.id}
             activity={{
               id: activity.id,
-              title: activity.name,
+              title: 'name' in activity ? activity.name : activity.title,
               venue: {} as any,
-              venueName: activity.neighborhood || 'Santa Cruz',
+              venueName: ('neighborhood' in activity ? activity.neighborhood : ('venueName' in activity ? activity.venueName : undefined)) || 'Santa Cruz',
               tags: activity.tags,
               cost: activity.cost,
               duration: activity.duration,
-              notes: activity.description,
+              notes: 'description' in activity ? activity.description : activity.notes,
               website: activity.website || null,
               instagram: activity.instagram || null,
-              imageUrl: activity.photoUrl || activity.imageUrl || null,
+              imageUrl: ('photoUrl' in activity ? activity.photoUrl : activity.imageUrl) || null,
               address: activity.address,
               hours: activity.hours,
-              parking: activity.parkingInfo,
+              parking: ('parkingInfo' in activity ? activity.parkingInfo : ('parking' in activity ? activity.parking : undefined)),
               tips: activity.tips,
               phone: activity.phone,
             }}

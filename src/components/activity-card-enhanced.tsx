@@ -77,7 +77,7 @@ export function ActivityCardEnhanced({
             {activity.venueName || activity.venue?.name || 'Local Business'}
           </p>
           <p className="text-gray-600 text-sm flex items-center gap-1">
-            📍 {activity.neighborhood || 'Santa Cruz'}
+            📍 {('neighborhood' in activity ? activity.neighborhood : ('venueName' in activity ? activity.venueName : 'Santa Cruz')) as string}
           </p>
         </div>
 

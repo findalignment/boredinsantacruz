@@ -23,49 +23,11 @@ export interface AirtableEvent {
 
 export async function getAirtableEvents() {
   try {
-    // Check if events table exists
-    if (!tables.events) {
-      return {
-        success: false,
-        error: 'Events table not configured in Airtable',
-        data: [],
-      };
-    }
-
-    const records = await tables.events
-      .select({
-        view: 'Grid view',
-        sort: [{ field: 'StartDate', direction: 'asc' }],
-        maxRecords: 100,
-      })
-      .all();
-
-    const events: AirtableEvent[] = records.map((record) => {
-      const fields = record.fields as any;
-
-      return {
-        id: record.id,
-        name: fields.Name || fields.Title || 'Untitled Event',
-        description: fields.Description || '',
-        startDate: fields.StartDate || '',
-        endDate: fields.EndDate || undefined,
-        time: fields.Time || undefined,
-        location: fields.Location || fields.Venue || '',
-        address: fields.Address || undefined,
-        category: fields.Category || 'General',
-        price: fields.Price || undefined,
-        isFree: fields.IsFree === true || fields.Price === 'Free' || fields.Price === '0',
-        website: fields.Website || undefined,
-        imageUrl: fields.Image?.[0]?.url || fields.PhotoURL || undefined,
-        tags: fields.Tags ? (Array.isArray(fields.Tags) ? fields.Tags : [fields.Tags]) : [],
-        neighborhood: fields.Neighborhood || 'Santa Cruz',
-        featured: fields.Featured === true,
-      };
-    });
-
+    // For now, return empty events since events table is not configured
+    // This will be replaced when events table is set up
     return {
       success: true,
-      data: events,
+      data: [],
     };
   } catch (error: any) {
     console.error('Error fetching Airtable events:', error);

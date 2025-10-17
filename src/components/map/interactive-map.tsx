@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import type { Activity } from '@/types';
+import type { Activity, RainyActivity } from '@/types';
 import { findCoordinatesForActivity, SANTA_CRUZ_CENTER } from '@/lib/map/known-locations';
 import { MapFiltersComponent, MapFilters } from './map-filters';
 
@@ -11,7 +11,7 @@ import { MapFiltersComponent, MapFilters } from './map-filters';
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || 'pk.eyJ1IjoiYm9yZWRpbiIsImEiOiJjbWdyMXM3dTYwYm8zMmxwbnpsMGwyejMyIn0.26BRwWSE2SX17dSj_cL7QQ';
 
 interface InteractiveMapProps {
-  activities: Activity[];
+  activities: (Activity | RainyActivity)[];
   center?: [number, number]; // [lng, lat]
   zoom?: number;
 }
@@ -27,7 +27,7 @@ const ACTIVITY_COLORS: Record<string, string> = {
 };
 
 // Get color based on activity tags
-function getActivityColor(activity: Activity): string {
+function getActivityColor(activity: Activity | RainyActivity): string {
   const tags = activity.tags || [];
   if (tags.some(t => t.toLowerCase().includes('beach'))) return ACTIVITY_COLORS.beach;
   if (tags.some(t => t.toLowerCase().includes('hik'))) return ACTIVITY_COLORS.hiking;
@@ -61,11 +61,16 @@ export function InteractiveMap({
       // Search query
       if (filters.searchQuery) {
         const query = filters.searchQuery.toLowerCase();
+        const activityName = 'name' in activity ? activity.name : activity.title;
+        const activityDescription = 'description' in activity ? activity.description : activity.notes;
+        
+        const activityNeighborhood = ('neighborhood' in activity ? activity.neighborhood : ('venueName' in activity ? activity.venueName : undefined));
+        
         const matchesSearch = 
-          activity.name.toLowerCase().includes(query) ||
-          activity.description?.toLowerCase().includes(query) ||
+          activityName?.toLowerCase().includes(query) ||
+          activityDescription?.toLowerCase().includes(query) ||
           activity.address?.toLowerCase().includes(query) ||
-          activity.neighborhood?.toLowerCase().includes(query);
+          activityNeighborhood?.toLowerCase().includes(query);
         if (!matchesSearch) return false;
       }
 
@@ -158,12 +163,13 @@ export function InteractiveMap({
     // Add markers for each filtered activity
     filteredActivities.forEach((activity) => {
       const coords = findCoordinatesForActivity({
-        title: activity.name,
-        venueName: activity.neighborhood,
+        title: 'name' in activity ? activity.name : activity.title,
+        venueName: ('neighborhood' in activity ? activity.neighborhood : ('venueName' in activity ? activity.venueName : undefined)) || 'Santa Cruz',
         address: activity.address,
       });
       if (!coords) {
-        console.log('No coordinates found for:', activity.name);
+        const activityName = 'name' in activity ? activity.name : activity.title;
+        console.log('No coordinates found for:', activityName);
         return;
       }
 
@@ -188,11 +194,11 @@ export function InteractiveMap({
       }).setHTML(`
         <div style="min-width: 200px;">
           <h3 style="font-weight: bold; font-size: 16px; margin-bottom: 8px;">
-            ${activity.name}
+            ${'name' in activity ? activity.name : activity.title}
           </h3>
-          ${activity.neighborhood ? `
+          ${('neighborhood' in activity ? activity.neighborhood : ('venueName' in activity ? activity.venueName : undefined)) ? `
             <p style="color: #6B7280; font-size: 14px; margin-bottom: 8px;">
-              ${activity.neighborhood}
+              ${('neighborhood' in activity ? activity.neighborhood : ('venueName' in activity ? activity.venueName : undefined))}
             </p>
           ` : ''}
           ${activity.tags && activity.tags.length > 0 ? `

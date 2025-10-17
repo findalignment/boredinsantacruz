@@ -133,3 +133,45 @@ export const getRainyActivities = unstable_cache(
     revalidate: 1800, // 30 minutes
   }
 );
+
+// Get sunny day activities specifically
+export const getSunnyActivities = unstable_cache(
+  async () => {
+    try {
+      const activitiesTable = tables.sunnyActivities;
+      if (!activitiesTable) {
+        return {
+          success: false,
+          data: [],
+          error: 'No sunny activities table configured',
+        };
+      }
+      
+      const records = await activitiesTable
+        .select({
+          view: 'Grid view',
+          sort: [{ field: 'Name', direction: 'asc' }],
+          maxRecords: 100,
+        })
+        .all();
+
+      const activities: RainyActivity[] = records.map(transformActivity);
+      
+      return {
+        success: true,
+        data: activities,
+      };
+    } catch (error) {
+      console.error('Error fetching sunny activities:', error);
+      return {
+        success: false,
+        data: [],
+        error: error instanceof Error ? error.message : 'Failed to load sunny activities',
+      };
+    }
+  },
+  ['sunny-activities-cache'],
+  {
+    revalidate: 1800, // 30 minutes
+  }
+);

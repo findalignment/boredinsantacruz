@@ -408,7 +408,8 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
                   <FavoriteButton
                     itemType="Restaurant"
                     itemId={restaurant.id}
-                    size="full"
+                    size="lg"
+                    showLabel={true}
                   />
                 </div>
               </div>
