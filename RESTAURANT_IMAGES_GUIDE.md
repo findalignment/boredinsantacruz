@@ -10,8 +10,8 @@
 
 **📊 Current Data:**
 - **276 restaurants** in database
-- **1 restaurant** has image (The Blue Lagoon)
-- **275 restaurants** show placeholder images
+- **274 restaurants** have PhotoURL images (99%!)
+- **2 restaurants** show placeholder images
 
 ## 🖼️ Adding Restaurant Images
 
@@ -63,9 +63,9 @@ If you want to automatically populate restaurant images:
 ## 🔧 Technical Details
 
 ### Image Field in Airtable:
-- **Field Name**: `Image`
-- **Type**: Attachment field
-- **Format**: Array of image objects
+- **Field Name**: `PhotoURL` (primary), `Image` (fallback)
+- **Type**: Single line text (PhotoURL) or Attachment field (Image)
+- **Format**: Direct URL string or Array of image objects
 - **Access**: `restaurant.image[0].url`
 
 ### Current Implementation:
