@@ -2,6 +2,7 @@
 
 import { tables } from '@/lib/airtable';
 import { eventbriteService, type Event } from '@/lib/events/eventbrite';
+import { getMockEvents } from '@/lib/events/mock-events';
 import { startOfDay, endOfDay, parseISO, isWithinInterval } from 'date-fns';
 
 export interface EventFilters {
@@ -15,11 +16,32 @@ export interface EventFilters {
 
 export async function getEvents(filters?: EventFilters): Promise<{ success: boolean; data?: Event[]; error?: string }> {
   try {
-    // Fetch from both Eventbrite and Airtable (if configured)
-    const eventbriteEvents = await eventbriteService.fetchSantaCruzEvents(
-      filters?.startDate,
-      filters?.endDate
-    );
+    // Try Eventbrite first, fall back to mock events if it fails
+    let eventbriteEvents: Event[] = [];
+    try {
+      eventbriteEvents = await eventbriteService.fetchSantaCruzEvents(
+        filters?.startDate,
+        filters?.endDate
+      );
+    } catch (error) {
+      console.warn('Eventbrite API failed, using mock events:', error);
+      // Convert mock events to Event format
+      eventbriteEvents = getMockEvents().map(mockEvent => ({
+        id: mockEvent.id,
+        name: mockEvent.name,
+        description: mockEvent.description,
+        startDate: mockEvent.startDate,
+        endDate: mockEvent.endDate,
+        category: mockEvent.category,
+        venue: mockEvent.venue,
+        image: mockEvent.image,
+        url: mockEvent.url,
+        price: mockEvent.price,
+        tags: [mockEvent.category.toLowerCase()],
+        isOnline: false,
+        source: 'eventbrite' as const,
+      }));
+    }
 
     // Fetch curated events from Airtable (if table exists)
     let airtableEvents: Event[] = [];
