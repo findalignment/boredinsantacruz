@@ -33,5 +33,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
+  // Add trustHost for production deployment
+  trustHost: true,
 });
 
