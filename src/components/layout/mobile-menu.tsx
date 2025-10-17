@@ -53,9 +53,10 @@ export function MobileMenu() {
         className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
+        style={{ backgroundColor: 'white' }}
       >
         {/* Menu Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-white">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-white" style={{ backgroundColor: 'white' }}>
           <h2 className="text-xl font-bold text-gray-900">
             Menu
           </h2>
@@ -71,7 +72,7 @@ export function MobileMenu() {
         </div>
 
         {/* Menu Items */}
-        <nav className="flex-1 overflow-y-auto py-4">
+        <nav className="flex-1 overflow-y-auto py-4 bg-white" style={{ backgroundColor: 'white' }}>
           <div className="space-y-1 px-3">
             {menuItems.map((item) => (
               <Link
