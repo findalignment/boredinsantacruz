@@ -57,6 +57,7 @@ export function FilteredRestaurants({ initialRestaurants }: FilteredRestaurantsP
 
       // Open Now filter
       if (openNowEnabled) {
+        if (!restaurant.hours) return false; // Skip restaurants with no hours data
         if (!isRestaurantOpen(restaurant.hours)) return false;
       }
 
