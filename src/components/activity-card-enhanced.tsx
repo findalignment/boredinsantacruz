@@ -40,7 +40,7 @@ export function ActivityCardEnhanced({
       className="block bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
     >
       {/* Image */}
-      {activity.imageUrl && (
+      {activity.imageUrl ? (
         <div className="relative h-48 bg-gray-200">
           <Image
             src={activity.imageUrl}
@@ -48,6 +48,14 @@ export function ActivityCardEnhanced({
             fill
             className="object-cover"
           />
+        </div>
+      ) : (
+        <div className="relative h-48 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-6xl mb-2">🏞️</div>
+            <div className="text-sm text-gray-600 font-medium">Photo Coming Soon</div>
+          </div>
+        </div>
           
           {/* Weather Score Badge */}
           {showScore && activity.weatherScore !== undefined && (
