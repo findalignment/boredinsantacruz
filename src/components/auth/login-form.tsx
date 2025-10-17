@@ -27,7 +27,7 @@ export function LoginForm() {
 
     setIsLoading(true);
     try {
-      await signIn('resend', { email, callbackUrl });
+      await signIn(process.env.RESEND_API_KEY ? 'resend' : 'email', { email, callbackUrl });
       setMagicLinkSent(true);
     } catch (error) {
       console.error('Magic link error:', error);
