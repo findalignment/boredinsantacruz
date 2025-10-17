@@ -55,8 +55,6 @@ export function ActivityCardEnhanced({
             <div className="text-6xl mb-2">🏞️</div>
             <div className="text-sm text-gray-600 font-medium">Photo Coming Soon</div>
           </div>
-        </div>
-          
           {/* Weather Score Badge */}
           {showScore && activity.weatherScore !== undefined && (
             <div className={`absolute top-3 right-3 px-3 py-1 rounded-full text-sm font-semibold border-2 ${getScoreColor(activity.weatherScore)}`}>
