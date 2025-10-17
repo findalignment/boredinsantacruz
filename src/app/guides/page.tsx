@@ -150,8 +150,94 @@ const activityGuides = [
   },
 ];
 
+const foodGuides = [
+  {
+    id: 'pizza',
+    title: 'Best Pizza',
+    description: 'Wood-fired, New York style, and gourmet pizza spots',
+    href: '/best-pizza-santa-cruz',
+    emoji: '🍕',
+    bestFor: 'Pizza Lovers, Casual Dining',
+  },
+  {
+    id: 'tacos',
+    title: 'Best Tacos',
+    description: 'Authentic Mexican taquerias and street food',
+    href: '/best-tacos-santa-cruz',
+    emoji: '🌮',
+    bestFor: 'Mexican Food, Street Food',
+  },
+  {
+    id: 'sushi',
+    title: 'Best Sushi',
+    description: 'Fresh sashimi, creative rolls, and traditional Japanese',
+    href: '/best-sushi-santa-cruz',
+    emoji: '🍣',
+    bestFor: 'Sushi, Japanese Cuisine',
+  },
+  {
+    id: 'restaurants',
+    title: 'Best Restaurants',
+    description: 'Top-rated dining spots across all cuisines',
+    href: '/best-restaurants',
+    emoji: '🍽️',
+    bestFor: 'Fine Dining, All Cuisines',
+  },
+  {
+    id: 'coffee',
+    title: 'Best Coffee Shops',
+    description: 'Local roasters, specialty drinks, and cozy cafes',
+    href: '/best-coffee-shops',
+    emoji: '☕',
+    bestFor: 'Coffee, Cafes, Work Spaces',
+  },
+  {
+    id: 'brunch',
+    title: 'Best Brunch Spots',
+    description: 'Weekend favorites and breakfast all day',
+    href: '/best-brunch-spots',
+    emoji: '🥐',
+    bestFor: 'Brunch, Weekend Dining',
+  },
+];
+
+const specializedGuides = [
+  {
+    id: 'surfing-beginners',
+    title: 'Surfing: Beginner\'s Guide',
+    description: 'Complete guide to learning to surf in Santa Cruz',
+    href: '/surfing-santa-cruz-beginners-guide',
+    emoji: '🏄‍♂️',
+    bestFor: 'Beginners, Surf Lessons, Equipment',
+  },
+  {
+    id: 'date-spots',
+    title: 'Best Date Spots',
+    description: 'Romantic restaurants, scenic views, and intimate venues',
+    href: '/best-date-spots',
+    emoji: '💕',
+    bestFor: 'Couples, Romance, Special Occasions',
+  },
+  {
+    id: 'wellness',
+    title: 'Best Wellness Studios',
+    description: 'Yoga, fitness, massage, and wellness centers',
+    href: '/best-wellness-studios',
+    emoji: '🧘‍♀️',
+    bestFor: 'Fitness, Wellness, Self-Care',
+  },
+  {
+    id: 'happy-hours',
+    title: 'Best Happy Hours',
+    description: 'Drink specials, appetizers, and evening deals',
+    href: '/best-happy-hours',
+    emoji: '🍻',
+    bestFor: 'Drinks, Deals, Evening Social',
+  },
+];
+
 export default function GuidesPage() {
-  const [selectedFilter, setSelectedFilter] = useState<'all' | 'time' | 'neighborhood' | 'activity'>('all');
+  const [selectedFilter, setSelectedFilter] = useState<'all' | 'time' | 'neighborhood' | 'activity' | 'food' | 'specialized'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Combine all guides into one array
@@ -159,6 +245,8 @@ export default function GuidesPage() {
     ...timeBasedGuides.map(g => ({ ...g, type: 'time' as const })),
     ...neighborhoodGuides.map(g => ({ ...g, type: 'neighborhood' as const })),
     ...activityGuides.map(g => ({ ...g, type: 'activity' as const })),
+    ...foodGuides.map(g => ({ ...g, type: 'food' as const })),
+    ...specializedGuides.map(g => ({ ...g, type: 'specialized' as const })),
   ], []);
 
   // Filter guides with simple logic
@@ -208,7 +296,7 @@ export default function GuidesPage() {
           </div>
           
           {/* Quick Filter Buttons */}
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setSelectedFilter('all')}
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -241,6 +329,22 @@ export default function GuidesPage() {
             >
               🎯 Activities
             </button>
+            <button
+              onClick={() => setSelectedFilter('food')}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                selectedFilter === 'food' ? 'bg-blue-600 text-white' : 'bg-gray-100 hover:bg-gray-200'
+              }`}
+            >
+              🍽️ Food
+            </button>
+            <button
+              onClick={() => setSelectedFilter('specialized')}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                selectedFilter === 'specialized' ? 'bg-blue-600 text-white' : 'bg-gray-100 hover:bg-gray-200'
+              }`}
+            >
+              🎯 Specialized
+            </button>
           </div>
         </div>
         
@@ -248,7 +352,7 @@ export default function GuidesPage() {
         <div className="text-sm text-gray-500 mb-4">
           {filteredGuides.length} guide{filteredGuides.length !== 1 ? 's' : ''} found
           <span className="ml-2 text-xs">
-            <LastUpdated date="2025-01-16" />
+            <LastUpdated date="2025-01-17" />
           </span>
         </div>
       </section>
@@ -312,6 +416,8 @@ export default function GuidesPage() {
                       {guide.type === 'time' && '⏱️ Time-Based'}
                       {guide.type === 'neighborhood' && '📍 Neighborhood'}
                       {guide.type === 'activity' && '🎯 Activity Guide'}
+                      {guide.type === 'food' && '🍽️ Food Guide'}
+                      {guide.type === 'specialized' && '🎯 Specialized Guide'}
                     </div>
                   </div>
                   
