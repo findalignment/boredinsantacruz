@@ -8,7 +8,7 @@ import { findCoordinatesForActivity, SANTA_CRUZ_CENTER } from '@/lib/map/known-l
 import { MapFiltersComponent, MapFilters } from './map-filters';
 
 // Mapbox access token - should be in environment variables
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || '';
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || 'pk.eyJ1IjoiYm9yZWRpbiIsImEiOiJjbWdyMXM3dTYwYm8zMmxwbnpsMGwyejMyIn0.26BRwWSE2SX17dSj_cL7QQ';
 
 interface InteractiveMapProps {
   activities: Activity[];

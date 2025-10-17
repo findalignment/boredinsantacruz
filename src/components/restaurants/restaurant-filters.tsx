@@ -155,7 +155,6 @@ export function RestaurantFiltersComponent({
             <span className="font-semibold text-gray-900">
               🕐 Open Now
             </span>
-            <span className="text-xs text-gray-500">(with hours data)</span>
           </label>
         )}
 

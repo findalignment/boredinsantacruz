@@ -5,6 +5,9 @@ const nextConfig = {
       'images.unsplash.com',
       'cdn.eventbrite.com',
       'img.evbuc.com',
+      'dl.airtable.com',
+      'v5.airtableusercontent.com',
+      'static.airtableusercontent.com',
     ],
   },
   
@@ -20,7 +23,7 @@ const nextConfig = {
               default-src 'self';
               script-src 'self' 'unsafe-eval' 'unsafe-inline' https://maps.googleapis.com https://www.googletagmanager.com https://api.mapbox.com;
               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.mapbox.com;
-              img-src 'self' data: https: blob:;
+              img-src 'self' data: https: blob: https://dl.airtable.com https://v5.airtableusercontent.com https://static.airtableusercontent.com;
               font-src 'self' https://fonts.gstatic.com;
               connect-src 'self' https://api.mapbox.com https://events.mapbox.com https://www.eventbriteapi.com https://api.openweathermap.org https://tides.mobilegeographics.com;
               frame-src 'self' https://www.google.com;

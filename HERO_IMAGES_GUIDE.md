@@ -2,6 +2,42 @@
 
 Complete guide to adding hero images across all pages.
 
+## ✅ **CURRENT HERO IMAGES** (24 Total)
+
+### Main Pages
+- `home.jpg` ✅ - Homepage hero
+- `activities.jpg` ✅ - Activities page
+- `capitola.jpg` ✅ - Capitola neighborhood
+- `tonight.jpg` ✅ - Tonight page
+- `trips.jpeg` ✅ - Trip planner
+- `restaurant-week.jpg` ✅ - Restaurant Week
+
+### Neighborhoods
+- `neighborhoods/capitola.jpg` ✅ - Capitola
+- `neighborhoods/downtown.jpg` ✅ - Downtown
+- `neighborhoods/harbor.jpg` ✅ - Harbor
+- `neighborhoods/westside.jpg` ✅ - Westside
+
+### Weather Pages
+- `weather/sunny.jpg` ✅ - Sunny activities
+- `weather/partly-cloudy.jpg` ✅ - Partly cloudy
+
+### SEO Pages
+- `seo/beaches.jpg` ✅ - Best beaches
+- `seo/budget.jpg` ✅ - Budget activities
+- `seo/date-spots.jpg` ✅ - Date spots
+- `seo/day-trips.jpg` ✅ - Day trips
+- `seo/free-things.jpg` ✅ - Free activities
+- `seo/photography.jpg` ✅ - Photography
+- `seo/scenic-views.jpg` ✅ - Scenic views
+- `seo/surfing.jpg` ✅ - Surfing
+- `seo/water-activities.jpg` ✅ - Water activities
+- `seo/weekend.jpg` ✅ - Weekend activities
+
+### Guide Pages
+- `guides/full-day.jpg` ✅ - Full day guide
+- `guides/6-hours.jpg` ✅ - 6-hour guide
+
 ---
 
 ## 📁 Folder Structure
@@ -70,19 +106,18 @@ public/images/hero/
 
 ```
 public/images/hero/neighborhoods/
-  ├── downtown.jpg               # Pacific Avenue or downtown scene
-  ├── westside.jpg               # West Cliff Drive or Natural Bridges
-  ├── capitola.jpg               # Capitola Village or Venetian Court
-  └── harbor.jpg                 # Santa Cruz Harbor or sea lions
+  ├── downtown.jpg               # Pacific Avenue or downtown scene ✅
+  ├── westside.jpg               # West Cliff Drive or Natural Bridges ✅
+  ├── capitola.jpg               # Capitola Village or Venetian aCourt ✅
+  └── harbor.jpg                 # Santa Cruz Harbor or sea lions ✅
 ```
 
 ### Guide Pages (5 images)
 
 ```
 public/images/hero/guides/
-  ├── 3-hours.jpg                # Quick visit vibe
-  ├── 6-hours.jpg                # Half day adventure
-  ├── full-day.jpg               # Epic full day
+  ├── 6-hours.jpg                # Half day adventure ✅
+  └── full-day.jpg               # Epic full day ✅
   ├── date-night.jpg             # Romantic sunset or dining
   └── family-day.jpg             # Families on beach or Boardwalk
 ```
@@ -91,10 +126,10 @@ public/images/hero/guides/
 
 ```
 public/images/hero/weather/
-  ├── sunny.jpg                  # Bright sunny beach
+  ├── sunny.jpg                  # Bright sunny beach ✅
   ├── rainy.jpg                  # Rain/cozy indoor
   ├── foggy.jpg                  # Fog over Santa Cruz
-  ├── partly-cloudy.jpg          # Mixed weather
+  ├── partly-cloudy.jpg          # Mixed weather ✅
   ├── overcast.jpg               # Gray skies
   ├── windy.jpg                  # Wind on coast
   └── clear.jpg                  # Clear blue skies
