@@ -158,18 +158,9 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
               )}
             </div>
 
-          {/* Content */}
-          <div className="p-8">
-            {/* Description */}
-            <div className="mb-8">
-              <p className="text-lg text-gray-700 leading-relaxed">
-                {restaurant.description}
-              </p>
-            </div>
-
             {/* WriteUp Section - Editorial Long-Form Content */}
             {restaurant.writeUp && (
-              <div className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border-2 border-blue-200">
+              <div className="bg-white rounded-xl p-6 shadow-lg">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                   ✍️ Our Take
                 </h2>
@@ -183,11 +174,11 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
 
             {/* Best Dish */}
             {restaurant.bestDish && (
-              <div className="mb-6 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 border-2 border-orange-200">
-                <h3 className="text-lg font-bold text-orange-700 mb-2 flex items-center gap-2">
+              <div className="bg-white rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-orange-700 mb-3 flex items-center gap-2">
                   🍽️ Must Try Dish
                 </h3>
-                <p className="text-gray-900 font-medium text-xl">
+                <p className="text-gray-900 font-medium text-lg">
                   {restaurant.bestDish}
                 </p>
               </div>
@@ -195,8 +186,8 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
 
             {/* Insider Tips */}
             {restaurant.tips && (
-              <div className="mb-6 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl p-6 border-2 border-yellow-300">
-                <h3 className="text-lg font-bold text-yellow-800 mb-2 flex items-center gap-2">
+              <div className="bg-white rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-yellow-800 mb-3 flex items-center gap-2">
                   💡 Insider Tips
                 </h3>
                 <p className="text-gray-800">
@@ -206,7 +197,8 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
             )}
 
             {/* Info Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Contact & Location */}
               <div className="space-y-4">
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
@@ -294,10 +286,11 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
                   </div>
                 )}
               </div>
+              </div>
             </div>
 
             {/* Features */}
-            <div className="mb-8">
+            <div className="bg-white rounded-xl p-6 shadow-lg mb-6">
               <h3 className="text-xl font-bold text-gray-900 mb-4">
                 Features & Amenities
               </h3>
@@ -346,13 +339,79 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
             </div>
 
             {/* Reviews Section */}
-            <div className="border-t border-gray-200 pt-8">
+            <div className="bg-white rounded-xl p-6 shadow-lg">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
                 Reviews & Ratings
               </h3>
               <Suspense fallback={<div className="animate-pulse h-32 bg-gray-100 rounded-xl"></div>}>
                 <ReviewsSection restaurantId={restaurant.id} />
               </Suspense>
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-xl p-6 shadow-lg sticky top-8">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Quick Info
+              </h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm font-semibold text-gray-700 mb-1">Price Level</p>
+                  <p className="text-lg font-bold text-green-600">{priceLabel}</p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-semibold text-gray-700 mb-1">Neighborhood</p>
+                  <p className="text-gray-900">{restaurant.neighborhood}</p>
+                </div>
+
+                {restaurant.hours && (
+                  <div>
+                    <p className="text-sm font-semibold text-gray-700 mb-1">Status</p>
+                    <p className={`font-medium ${
+                      status.isOpen ? 'text-green-600' : 'text-gray-600'
+                    }`}>
+                      {status.message}
+                    </p>
+                  </div>
+                )}
+
+                {restaurant.phone && (
+                  <div>
+                    <p className="text-sm font-semibold text-gray-700 mb-1">Phone</p>
+                    <a
+                      href={`tel:${restaurant.phone}`}
+                      className="text-blue-600 hover:text-blue-800 font-medium"
+                    >
+                      {restaurant.phone}
+                    </a>
+                  </div>
+                )}
+
+                {restaurant.website && (
+                  <div>
+                    <p className="text-sm font-semibold text-gray-700 mb-1">Website</p>
+                    <a
+                      href={restaurant.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 font-medium"
+                    >
+                      Visit Website →
+                    </a>
+                  </div>
+                )}
+
+                <div className="pt-4 border-t border-gray-200">
+                  <FavoriteButton
+                    itemType="Restaurant"
+                    itemId={restaurant.id}
+                    size="full"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
