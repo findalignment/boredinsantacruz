@@ -73,7 +73,7 @@ export function MobileMenu() {
 
         {/* Menu Items */}
         <nav className="flex-1 overflow-y-auto py-4 bg-white" style={{ backgroundColor: 'white' }}>
-          <div className="space-y-1 px-3">
+          <div className="space-y-1 px-3 bg-white" style={{ backgroundColor: 'white' }}>
             {menuItems.map((item) => (
               <Link
                 key={item.href}
