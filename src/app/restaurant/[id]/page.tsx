@@ -72,65 +72,91 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
   const status = getRestaurantStatus(restaurant.hours);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-orange-50/30 to-red-50/30">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       <div className="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Back Link */}
         <Link
           href="/restaurants"
-          className="text-orange-600 hover:text-orange-700 font-medium mb-6 inline-flex items-center gap-2 transition-colors"
+          className="text-blue-600 hover:text-blue-700 font-medium mb-6 inline-flex items-center gap-2 transition-colors"
         >
           ← Back to Restaurants
         </Link>
 
-        {/* Main Card */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-gray-200/50 mb-8">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-orange-500 to-red-500 px-8 py-6 text-white">
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <h1 className="text-3xl md:text-4xl font-bold">
-                    {restaurant.name}
-                  </h1>
-                  <FavoriteButton itemId={restaurant.id} itemType="Restaurant" />
-                </div>
-                <p className="text-orange-100 text-lg mb-2">
-                  {restaurant.cuisine.join(', ')}
-                </p>
-                <div className="flex flex-wrap items-center gap-4 text-sm">
-                  <span className="px-3 py-1 bg-white/20 rounded-full font-semibold">
-                    {priceLabel}
-                  </span>
-                  <span>📍 {restaurant.neighborhood}</span>
-                  {restaurant.hours && (
-                    <span className={status.isOpen ? 'font-semibold' : ''}>
-                      {status.message}
-                    </span>
-                  )}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Hero Image */}
+            {restaurant.image && restaurant.image[0]?.url ? (
+              <div className="relative h-96 bg-gray-200 rounded-2xl overflow-hidden shadow-lg">
+                <Image
+                  src={restaurant.image[0].url}
+                  alt={restaurant.name}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            ) : (
+              <div className="relative h-96 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center rounded-2xl">
+                <div className="text-center">
+                  <div className="text-8xl mb-4">🍽️</div>
+                  <div className="text-xl text-gray-600 font-medium">Photo Coming Soon</div>
                 </div>
               </div>
-            </div>
-          </div>
+            )}
 
-          {/* Hero Image */}
-          {restaurant.image && restaurant.image[0]?.url ? (
-            <div className="relative h-64 md:h-80 bg-gray-200">
-              <Image
-                src={restaurant.image[0].url}
-                alt={restaurant.name}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          ) : (
-            <div className="relative h-64 md:h-80 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-8xl mb-4">🍽️</div>
-                <div className="text-xl text-gray-600 font-medium">Photo Coming Soon</div>
+            {/* Title & Basic Info */}
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <div className="flex items-start justify-between gap-4 mb-4">
+                <h1 className="text-4xl font-bold text-gray-900 flex-1">
+                  {restaurant.name}
+                </h1>
+                <FavoriteButton
+                  itemType="Restaurant"
+                  itemId={restaurant.id}
+                  size="lg"
+                />
               </div>
+
+              <div className="flex flex-wrap items-center gap-4 mb-4">
+                <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
+                  {priceLabel}
+                </span>
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
+                  📍 {restaurant.neighborhood}
+                </span>
+                {restaurant.hours && (
+                  <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                    status.isOpen ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                  }`}>
+                    {status.message}
+                  </span>
+                )}
+              </div>
+
+              {/* Cuisine Tags */}
+              {restaurant.cuisine && restaurant.cuisine.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {restaurant.cuisine.map((cuisine, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 bg-orange-100 text-orange-700 text-sm rounded-full"
+                    >
+                      {cuisine}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {/* Description */}
+              {restaurant.description && (
+                <div className="prose prose-blue max-w-none">
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                    {restaurant.description}
+                  </p>
+                </div>
+              )}
             </div>
-          )}
 
           {/* Content */}
           <div className="p-8">

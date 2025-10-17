@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
-import { getTodayEvents, getUpcomingEvents, getEventCategories } from '@/app/actions/getEvents';
+import { getTodayAirtableEvents, getUpcomingAirtableEvents } from '@/app/actions/getAirtableEvents';
 import { EventCard } from '@/components/events/event-card';
 import { EventFilters } from '@/components/events/event-filters';
 import { format } from 'date-fns';
@@ -12,17 +12,16 @@ export const metadata: Metadata = {
 };
 
 export default async function EventsPage() {
-  const [todayResult, upcomingResult, categoriesResult] = await Promise.all([
-    getTodayEvents(),
-    getUpcomingEvents(30), // Next 30 days
-    getEventCategories(),
+  const [todayResult, upcomingResult] = await Promise.all([
+    getTodayAirtableEvents(),
+    getUpcomingAirtableEvents(30), // Next 30 days
   ]);
 
   const todayEvents = todayResult.success ? todayResult.data || [] : [];
   const upcomingEvents = upcomingResult.success ? upcomingResult.data || [] : [];
-  const categories = categoriesResult.success ? categoriesResult.data || [] : [];
-
-  const noApiKey = !process.env.EVENTBRITE_API_KEY;
+  
+  // Get unique categories from events
+  const categories = Array.from(new Set(upcomingEvents.map(event => event.category)));
 
   return (
     <div className="min-h-screen bg-white py-8 px-4">
@@ -56,23 +55,15 @@ export default async function EventsPage() {
           </div>
         </div>
 
-        {/* No API Key Warning */}
-        {noApiKey && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-            <h3 className="text-lg font-semibold text-blue-900 mb-2">
-              🚀 Eventbrite Integration Available
-            </h3>
-            <p className="text-blue-800 mb-4">
-              To show live events from Eventbrite, add your API key to the `.env.local` file:
-            </p>
-            <code className="block bg-blue-100 px-4 py-2 rounded text-sm text-blue-900 mb-4">
-              EVENTBRITE_API_KEY=your_token_here
-            </code>
-            <p className="text-sm text-blue-700">
-              See <code>EVENT_CALENDAR_GUIDE.md</code> for setup instructions.
-            </p>
-          </div>
-        )}
+        {/* Events Source Info */}
+        <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
+          <h3 className="text-lg font-semibold text-green-900 mb-2">
+            📅 Community Events
+          </h3>
+          <p className="text-green-800 mb-4">
+            Events are now managed through Airtable. Submit your event to be featured!
+          </p>
+        </div>
 
         {/* Today's Events */}
         {todayEvents.length > 0 && (
@@ -88,12 +79,23 @@ export default async function EventsPage() {
           </section>
         )}
 
-        {/* Filters */}
-        <div className="mb-8">
-          <Suspense fallback={<div className="bg-gray-50 rounded-lg p-6 border border-gray-200 h-48 animate-pulse"></div>}>
-            <EventFilters categories={categories} />
-          </Suspense>
-        </div>
+        {/* Category Filters */}
+        {categories.length > 0 && (
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Filter by Category</h3>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <Link
+                  key={category}
+                  href={`/events?category=${encodeURIComponent(category)}`}
+                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                >
+                  {category}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Upcoming Events */}
         <section>
@@ -104,18 +106,14 @@ export default async function EventsPage() {
           {upcomingEvents.length === 0 ? (
             <div className="text-center py-12 bg-gray-50 rounded-lg">
               <p className="text-gray-600 text-lg mb-4">
-                {noApiKey 
-                  ? 'No events to display. Set up Eventbrite API to see live events!'
-                  : 'No upcoming events found. Check back soon!'}
+                No upcoming events found. Check back soon!
               </p>
-              {noApiKey && (
-                <Link
-                  href="/tonight"
-                  className="inline-block bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors"
-                >
-                  View Curated Events
-                </Link>
-              )}
+              <Link
+                href="/events/submit"
+                className="inline-block bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                Submit an Event
+              </Link>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -14,6 +14,7 @@ import { ReviewsList } from '@/components/reviews/reviews-list';
 import { FavoriteButton } from '@/components/favorites/favorite-button';
 import { ActivityStructuredData } from '@/components/seo/structured-data';
 import { ClickableAddress } from '@/components/clickable-address';
+import { ActivityMap } from '@/components/activity-map';
 import type { Metadata } from 'next';
 
 interface PageProps {
@@ -340,6 +341,21 @@ export default async function ActivityDetailPage({ params }: PageProps) {
                 )}
               </div>
             </div>
+
+            {/* Map */}
+            {activity.latitude && activity.longitude && (
+              <div className="bg-white rounded-xl p-6 shadow-lg">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                  📍 Location Map
+                </h2>
+                <ActivityMap
+                  latitude={parseFloat(activity.latitude)}
+                  longitude={parseFloat(activity.longitude)}
+                  name={activity.title}
+                  address={address}
+                />
+              </div>
+            )}
 
             {/* Reviews Section */}
             <Suspense fallback={

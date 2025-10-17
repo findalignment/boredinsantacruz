@@ -71,28 +71,14 @@ export function ActivityCardEnhanced({
           {activity.title}
         </h3>
 
-        {/* Venue & Address */}
+        {/* Location */}
         <div className="mb-3">
           <p className="text-gray-900 font-medium text-sm mb-1">
-            {activity.venueName || activity.venue?.name}
+            {activity.venueName || activity.venue?.name || 'Local Business'}
           </p>
-          {googleMapsUrl ? (
-            <a
-              href={googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="text-blue-600 hover:text-blue-700 text-sm flex items-center gap-1 hover:underline"
-            >
-              📍 {address}
-            </a>
-          ) : (
-            address && (
-              <p className="text-gray-600 text-sm flex items-center gap-1">
-                📍 {address}
-              </p>
-            )
-          )}
+          <p className="text-gray-600 text-sm flex items-center gap-1">
+            📍 {activity.neighborhood || 'Santa Cruz'}
+          </p>
         </div>
 
         {/* Match Reason */}
