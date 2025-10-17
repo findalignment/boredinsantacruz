@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getRestaurantById } from '@/app/actions/getRestaurants';
@@ -110,6 +111,26 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
               </div>
             </div>
           </div>
+
+          {/* Hero Image */}
+          {restaurant.image && restaurant.image[0]?.url ? (
+            <div className="relative h-64 md:h-80 bg-gray-200">
+              <Image
+                src={restaurant.image[0].url}
+                alt={restaurant.name}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          ) : (
+            <div className="relative h-64 md:h-80 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
+              <div className="text-center">
+                <div className="text-8xl mb-4">🍽️</div>
+                <div className="text-xl text-gray-600 font-medium">Photo Coming Soon</div>
+              </div>
+            </div>
+          )}
 
           {/* Content */}
           <div className="p-8">

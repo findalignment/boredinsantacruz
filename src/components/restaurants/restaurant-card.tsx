@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Restaurant } from '@/types';
 import { getRestaurantStatus } from '@/lib/restaurants/hours';
 
@@ -14,14 +15,22 @@ export function RestaurantCard({ restaurant, showOpenStatus = true }: Restaurant
   return (
     <Link href={`/restaurant/${restaurant.id}`} className="block group">
       <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-200/50 hover:border-orange-300 hover:-translate-y-1 h-full">
-        {/* Image (if available) */}
-        {restaurant.image && restaurant.image[0] && (
-          <div className="h-48 overflow-hidden">
-            <img
+        {/* Image */}
+        {restaurant.image && restaurant.image[0]?.url ? (
+          <div className="relative h-48 bg-gray-200 overflow-hidden">
+            <Image
               src={restaurant.image[0].url}
               alt={restaurant.name}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              fill
+              className="object-cover group-hover:scale-110 transition-transform duration-300"
             />
+          </div>
+        ) : (
+          <div className="relative h-48 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-6xl mb-2">🍽️</div>
+              <div className="text-sm text-gray-600 font-medium">Photo Coming Soon</div>
+            </div>
           </div>
         )}
 

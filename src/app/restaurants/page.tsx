@@ -147,6 +147,24 @@ export default async function RestaurantsPage() {
                         <span className="font-bold text-sm">⭐ STAFF PICK</span>
                       </div>
 
+                      {/* Image */}
+                      {restaurant.image && restaurant.image[0]?.url ? (
+                        <div className="relative h-48 bg-gray-200 overflow-hidden">
+                          <img
+                            src={restaurant.image[0].url}
+                            alt={restaurant.name}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          />
+                        </div>
+                      ) : (
+                        <div className="relative h-48 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="text-6xl mb-2">🍽️</div>
+                            <div className="text-sm text-gray-600 font-medium">Photo Coming Soon</div>
+                          </div>
+                        </div>
+                      )}
+
                       <div className="p-6">
                         <div className="flex items-start justify-between mb-3">
                           <div className="flex-1">
