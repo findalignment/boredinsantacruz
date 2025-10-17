@@ -19,7 +19,7 @@ function transformActivity(record: any): RainyActivity {
     writeUp: fields.WriteUp || undefined,
     website: fields.Website || null,
     instagram: fields.Instagram || null,
-    imageUrl: fields.Image?.[0]?.url || null,
+    imageUrl: fields.Image?.[0]?.url || fields.PhotoURL || fields['Photo URL'] || null,
     venue: {} as Venue, // We'll populate this if needed
     
     // Practical info
