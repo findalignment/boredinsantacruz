@@ -2,11 +2,6 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { getActivities } from '@/app/actions/getActivities';
-import { getTodaysTides } from '@/app/actions/getTides';
-import { WeatherDisplay } from '@/components/weather/weather-display';
-import { WeatherInsights } from '@/components/weather/weather-insights';
-import { TideDisplay } from '@/components/tides/tide-display';
-import { TidePoolAlert } from '@/components/tides/tide-pool-alert';
 import { ActivityCardEnhanced } from '@/components/activity-card-enhanced';
 import { FilteredActivities } from '@/components/filtered-activities';
 import { Metadata } from 'next';
@@ -16,31 +11,6 @@ export const metadata: Metadata = {
   description: 'Discover the best activities in Santa Cruz based on today\'s weather. Smart recommendations that adapt to current conditions.',
 };
 
-async function TideInfo() {
-  try {
-    const tideResult = await getTodaysTides();
-    
-    if (!tideResult.success || !tideResult.data) {
-      return null;
-    }
-
-    const { tideData, conditions, isGoodForTidePools } = tideResult.data;
-
-    return (
-      <div className="space-y-6">
-        <TideDisplay tideData={tideData} />
-        <TidePoolAlert 
-          tideData={tideData}
-          conditions={conditions}
-          isGoodForTidePools={isGoodForTidePools}
-        />
-      </div>
-    );
-  } catch (error) {
-    console.error('Error loading tides:', error);
-    return null;
-  }
-}
 
 export default async function ActivitiesPage() {
   const result = await getActivities();
@@ -92,14 +62,6 @@ export default async function ActivitiesPage() {
           </p>
         </div>
 
-        {/* Tide Information - Load in background */}
-        <div className="max-w-3xl mx-auto mb-12">
-          <Suspense fallback={<div className="h-32 bg-gray-100 rounded-lg flex items-center justify-center">
-            <div className="text-gray-500">🌊 Loading tide info...</div>
-          </div>}>
-            <TideInfo />
-          </Suspense>
-        </div>
 
         {/* Activities with Filtering */}
         <FilteredActivities activities={activities} />
