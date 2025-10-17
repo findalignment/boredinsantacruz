@@ -11,7 +11,20 @@ function transformActivity(record: any): RainyActivity {
   return {
     id: record.id,
     title: fields.Title || fields.Name || fields.title || '',
-    venueName: fields.VenueName || fields.Venue?.[0] || 'Local Business',
+    venueName: fields.VenueName || fields.Venue?.[0] || (() => {
+      // Extract city from address if available
+      const address = fields.Address;
+      if (address) {
+        // Try to extract city from address (usually last part before state/zip)
+        const parts = address.split(',');
+        if (parts.length >= 2) {
+          // Return the city part (second to last, or last if no state)
+          return parts[parts.length - 2]?.trim() || parts[parts.length - 1]?.trim() || 'Santa Cruz';
+        }
+        return address.split(',')[0]?.trim() || 'Santa Cruz';
+      }
+      return 'Santa Cruz'; // Default to Santa Cruz if no address
+    })(),
     tags: fields.Tags || [],
     cost: fields.Cost || 0,
     duration: fields.Duration || '1hr',
