@@ -50,7 +50,7 @@ export async function getRestaurants() {
         glutenFree: fields.GlutenFree === true,
         
         // Images
-        image: fields.Image,
+        image: fields.PhotoURL ? [{ url: fields.PhotoURL }] : fields.Image,
       };
     });
 
@@ -104,7 +104,7 @@ export async function getRestaurantById(id: string) {
       veganOptions: fields.VeganOptions === true,
       glutenFree: fields.GlutenFree === true,
       
-      image: fields.Image,
+      image: fields.PhotoURL ? [{ url: fields.PhotoURL }] : fields.Image,
     };
 
     return {
