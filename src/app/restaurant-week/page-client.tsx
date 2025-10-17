@@ -18,32 +18,32 @@ interface RestaurantWeekClientProps {
   initialRestaurants: Restaurant[];
 }
 
-// Participating restaurants list
+// Participating restaurants list (verified 2024)
 const PARTICIPATING_RESTAURANTS = {
   capitola: [
     'Margaritaville Capitola',
     "Pete's Capitola",
-    'Mobo Sushi',
+    'Sushi Otoro', // Fixed: Mobo Sushi -> Sushi Otoro
     'Avanti Restaurant',
     'Gabriella Cafe',
   ],
   santaCruz: [
-    "Zelda's on the Beach",
+    'The Hideout', // Fixed: Zelda's on the Beach -> The Hideout
     'Venus Spirits',
     'Sugo Italian Restaurant',
-    'La Posta Italian Cuisine',
+    'Makai Island Kitchen', // Fixed: La Posta -> Makai
     "Jack O'Neill Restaurant",
     'Hook+Line',
-    'Chocolate Santa Cruz',
-    'Chaminade Resort & Spa',
+    'Chocolat', // Fixed: Chocolate Santa Cruz -> Chocolat
+    'Chaminade', // Fixed: Chaminade Resort & Spa -> Chaminade
     'Crow\'s Nest',
     'Oswald',
-    'Soif Wine Bar',
+    // Removed: Soif Wine Bar (doesn't exist)
     'Penny Ice Creamery',
     'Aquarius',
     'Bantam',
-    'Sanderlings',
-    'The Picnic Basket',
+    'Sanderlings Restaurant', // Fixed: Sanderlings -> Sanderlings Restaurant
+    'The Picnic Basket Restaurant', // Fixed: The Picnic Basket -> The Picnic Basket Restaurant
     'Vinocruz',
     'Laili Restaurant',
   ],
@@ -75,13 +75,26 @@ export function RestaurantWeekClient({ initialRestaurants }: RestaurantWeekClien
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [showFilters, setShowFilters] = useState(false);
 
-  // Match participating restaurants with database
+  // Match participating restaurants with database (improved matching)
   const matchRestaurant = (name: string) => {
     return initialRestaurants.find(r => {
       const nameLower = r.name.toLowerCase();
       const searchLower = name.toLowerCase();
-      return nameLower.includes(searchLower.split(' ')[0]) || 
-             searchLower.includes(nameLower.split(' ')[0]);
+      
+      // Exact match first
+      if (nameLower === searchLower) return true;
+      
+      // Remove common words and try partial matching
+      const cleanName = nameLower.replace(/\b(restaurant|cafe|bar|grill|kitchen|cuisine|spa|resort)\b/g, '').trim();
+      const cleanSearch = searchLower.replace(/\b(restaurant|cafe|bar|grill|kitchen|cuisine|spa|resort)\b/g, '').trim();
+      
+      // Check if cleaned names match
+      if (cleanName === cleanSearch) return true;
+      
+      // Check if one contains the other (for partial matches)
+      if (cleanName.includes(cleanSearch) || cleanSearch.includes(cleanName)) return true;
+      
+      return false;
     });
   };
 

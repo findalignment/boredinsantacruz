@@ -213,7 +213,7 @@ export default function TonightGuidePage() {
                 <strong>Italian:</strong> La Posta, Gabriella Cafe, Ristorante Avanti<br/>
                 <strong>Seafood:</strong> Crow's Nest, Aldo's (harbor views)<br/>
                 <strong>Upscale:</strong> Oswald, Aquarius at Dream Inn<br/>
-                <strong>Farm-to-Table:</strong> Soif, Assembly
+                <strong>Farm-to-Table:</strong> Soif
               </p>
             </div>
 

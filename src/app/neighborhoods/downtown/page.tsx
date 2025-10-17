@@ -156,7 +156,6 @@ export default function DowntownPage() {
                 <ul className="space-y-2 text-gray-700">
                   <li><strong>Laili Restaurant</strong> — Afghan, beautiful patio, romantic ($$)</li>
                   <li><strong>Oswald</strong> — Seasonal California, wine bar ($$$)</li>
-                  <li><strong>Assembly</strong> — Creative comfort food, craft cocktails ($$$)</li>
                 </ul>
               </div>
 

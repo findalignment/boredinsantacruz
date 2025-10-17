@@ -178,7 +178,6 @@ export default function DateNightPage() {
                 <div className="font-bold text-gray-900 mb-2">7:30 PM - Dinner (1 hour)</div>
                 <div className="space-y-2">
                   <div className="bg-purple-50 rounded p-3">
-                    <strong>Assembly</strong><br/>
                     <span className="text-sm text-gray-600">Downtown, California cuisine, craft cocktails</span>
                   </div>
                   <div className="bg-purple-50 rounded p-3">
@@ -236,7 +235,7 @@ export default function DateNightPage() {
             <li className="flex items-start gap-3">
               <span className="text-2xl">📅</span>
               <div>
-                <strong>Make Reservations:</strong> Especially Shadowbrook, Oswald, Assembly. Book 3-7 days ahead for weekends.
+                <strong>Make Reservations:</strong> Especially Shadowbrook, Oswald. Book 3-7 days ahead for weekends.
               </div>
             </li>
             <li className="flex items-start gap-3">

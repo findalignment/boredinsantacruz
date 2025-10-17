@@ -169,7 +169,6 @@ export default function FullDayPage() {
                 <div className="space-y-2 text-sm">
                   <div className="bg-gray-50 rounded p-2"><strong>Laili:</strong> Afghan, beautiful patio ($$)</div>
                   <div className="bg-gray-50 rounded p-2"><strong>Akira:</strong> Fresh sushi ($$)</div>
-                  <div className="bg-gray-50 rounded p-2"><strong>Assembly:</strong> California comfort food ($$$)</div>
                   <div className="bg-gray-50 rounded p-2"><strong>Picnic Basket:</strong> Quick sandwiches ($)</div>
                 </div>
               </div>

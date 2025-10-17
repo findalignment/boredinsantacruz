@@ -37,7 +37,6 @@ export default function BestRestaurantsPage() {
               { name: "The Crow's Nest", cuisine: "Seafood", price: "$$$", why: "Harbor views, fresh catch, sunset dining" },
               { name: "Shadowbrook", cuisine: "American", price: "$$$", why: "Romantic, creekside, cable car entrance" },
               { name: "Bantam", cuisine: "New American", price: "$$", why: "Wood-fired, creative, cozy atmosphere" },
-              { name: "Assembly", cuisine: "California", price: "$$", why: "Farm-to-table, craft cocktails, trendy" },
               { name: "Aldo's Harbor Restaurant", cuisine: "Italian", price: "$$-$$$", why: "Waterfront, homemade pasta, family-owned" },
               { name: "Akira", cuisine: "Japanese", price: "$$$", why: "Sushi bar, fresh fish, intimate setting" },
               { name: "Gayle's Bakery", cuisine: "Bakery/Deli", price: "$", why: "Legendary bakery, breakfast, lunch, desserts" },
@@ -105,7 +104,7 @@ export default function BestRestaurantsPage() {
             <div className="bg-yellow-50 rounded-xl p-6 border-2 border-yellow-200">
               <h3 className="text-xl font-bold mb-3">📍 Downtown</h3>
               <p className="text-gray-700 mb-2">Pacific Avenue corridor, most walkable dining district</p>
-              <p className="text-sm text-gray-600">Oswald, Assembly, Soif, Engfer, many more</p>
+              <p className="text-sm text-gray-600">Oswald, Soif, Engfer, many more</p>
             </div>
             <div className="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
               <h3 className="text-xl font-bold mb-3">🚢 Harbor</h3>

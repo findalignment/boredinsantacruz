@@ -75,14 +75,6 @@ const STATIC_ACTIVITIES = [
     type: "entertainment"
   },
   {
-    title: "Assembly",
-    description: "Farm-to-table restaurant perfect for a leisurely rainy day brunch or dinner.",
-    cost: "$$$",
-    time: "2 hours",
-    link: "/restaurant/assembly",
-    type: "food"
-  },
-  {
     title: "Abbott Square Market",
     description: "Indoor food hall with diverse cuisines, coffee, and artisan shops.",
     cost: "$$",
