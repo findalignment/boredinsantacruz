@@ -15,6 +15,7 @@ export async function getWeeklyForecast() {
       Array.from({ length: forecastDays }, async (_, i) => {
         const date = addDays(today, i);
         const dateString = format(date, 'yyyy-MM-dd');
+        console.log('Generated forecast date:', dateString);
         
         try {
           const weather = await getWeatherForDate(dateString);

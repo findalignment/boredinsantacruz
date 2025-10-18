@@ -182,9 +182,16 @@ async function WeatherAwareActivities({ date }: { date: string }) {
 export default async function DateActivitiesPage({ params }: DateActivitiesPageProps) {
   const { date } = await params;
   
-  // Validate date format
-  const dateObj = new Date(date);
+  // Validate date format (expecting YYYY-MM-DD)
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(date)) {
+    console.error('Invalid date format:', date);
+    notFound();
+  }
+  
+  const dateObj = new Date(date + 'T00:00:00'); // Ensure local timezone
   if (isNaN(dateObj.getTime())) {
+    console.error('Invalid date object:', date);
     notFound();
   }
 

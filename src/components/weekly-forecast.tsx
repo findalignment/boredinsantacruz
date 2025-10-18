@@ -53,6 +53,7 @@ export function WeeklyForecast({ forecast }: WeeklyForecastProps) {
                 group p-4 rounded-lg border-2 transition-all hover:shadow-lg hover:scale-105 cursor-pointer
                 ${getWeatherColor(conditions.category)}
               `}
+              onClick={() => console.log('Navigating to:', `/activities/${date}`)}
             >
               <div className="text-center">
                 <div className="font-bold text-sm mb-1">
@@ -94,6 +95,7 @@ export function WeeklyForecast({ forecast }: WeeklyForecastProps) {
                   group flex-shrink-0 w-32 p-4 rounded-lg border-2 transition-all hover:shadow-lg cursor-pointer
                   ${getWeatherColor(conditions.category)}
                 `}
+                onClick={() => console.log('Navigating to:', `/activities/${date}`)}
               >
                 <div className="text-center">
                   <div className="font-bold text-sm mb-1">
