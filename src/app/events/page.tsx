@@ -55,15 +55,6 @@ export default async function EventsPage() {
           </div>
         </div>
 
-        {/* Events Source Info */}
-        <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
-          <h3 className="text-lg font-semibold text-green-900 mb-2">
-            📅 Community Events
-          </h3>
-          <p className="text-green-800 mb-4">
-            Events are now managed through Airtable. Submit your event to be featured!
-          </p>
-        </div>
 
         {/* Today's Events */}
         {todayEvents.length > 0 && (
