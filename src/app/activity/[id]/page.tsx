@@ -144,67 +144,71 @@ export default async function ActivityDetailPage({ params }: PageProps) {
       {/* Structured Data for SEO */}
       <ActivityStructuredData activity={activity} rating={ratingInfo} />
       
-      <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      <div className="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        {/* Back Button */}
-        <Link 
-          href="/activities"
-          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-6"
-        >
-          ← Back to Activities
-        </Link>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Hero Image */}
-            {activity.imageUrl && (
-              <div className="relative h-96 bg-gray-200 rounded-2xl overflow-hidden shadow-lg">
-                <Image
-                  src={activity.imageUrl}
-                  alt={activity.title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            )}
-
-            {/* Title & Basic Info */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
-              <div className="flex items-start justify-between gap-4 mb-4">
-                <h1 className="text-4xl font-bold text-gray-900 flex-1">
-                  {activity.title}
-                </h1>
-                <FavoriteButton
-                  itemType="Activity"
-                  itemId={activity.id}
-                  size="lg"
-                />
-              </div>
-
-              <div className="flex flex-wrap items-center gap-4 mb-4">
+      <main className="min-h-screen bg-white">
+        {/* Hero Section */}
+        <section className="relative h-96 bg-cover bg-center" style={{
+          backgroundImage: activity.imageUrl 
+            ? `url(${activity.imageUrl})` 
+            : 'linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%)'
+        }}>
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+            <div className="text-center text-white px-4 max-w-4xl">
+              <h1 className="text-5xl font-bold mb-4">{activity.title}</h1>
+              <p className="text-xl mb-4">
+                {activity.venueName || activity.venue?.name || 'Santa Cruz Activity'}
+              </p>
+              <div className="flex flex-wrap justify-center items-center gap-4 mb-4">
                 {activity.cost !== undefined && (
-                  <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
-                    💰 {activity.cost === 0 ? 'Free' : 
-                         activity.cost <= 10 ? '$' :
-                         activity.cost <= 30 ? '$$' :
-                         activity.cost <= 60 ? '$$$' : '$$$$'}
+                  <span className="px-4 py-2 bg-green-100/20 backdrop-blur-sm text-green-100 rounded-full text-lg font-semibold border border-green-200/30">
+                    💰 {activity.cost === 0 ? 'Free' : `$${activity.cost}`}
                   </span>
                 )}
                 {activity.duration && (
-                  <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
+                  <span className="px-4 py-2 bg-blue-100/20 backdrop-blur-sm text-blue-100 rounded-full text-lg font-semibold border border-blue-200/30">
                     ⏱️ {activity.duration}
                   </span>
                 )}
                 {activity.indoorOutdoor && (
-                  <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-semibold">
-                    {activity.indoorOutdoor === 'Indoor' && '🏠 Indoor'}
-                    {activity.indoorOutdoor === 'Outdoor' && '🌳 Outdoor'}
-                    {activity.indoorOutdoor === 'Mixed' && '🏠🌳 Mixed'}
-                    {activity.indoorOutdoor === 'Covered' && '⛱️ Covered'}
+                  <span className="px-4 py-2 bg-purple-100/20 backdrop-blur-sm text-purple-100 rounded-full text-lg font-semibold border border-purple-200/30">
+                    {activity.indoorOutdoor === 'Indoor' ? '🏠 Indoor' : 
+                     activity.indoorOutdoor === 'Outdoor' ? '🌳 Outdoor' : 
+                     activity.indoorOutdoor === 'Mixed' ? '🏠🌳 Mixed' : 
+                     activity.indoorOutdoor === 'Covered' ? '⛱️ Covered' : '🌿 Outdoor'}
                   </span>
                 )}
+              </div>
+              {activity.notes && (
+                <p className="text-lg text-gray-200 max-w-2xl mx-auto">
+                  {activity.notes}
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+
+        <div className="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+          {/* Back Button */}
+          <Link 
+            href="/activities"
+            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-6"
+          >
+            ← Back to Activities
+          </Link>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Main Content */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Title & Basic Info */}
+              <div className="bg-white rounded-xl p-6 shadow-lg">
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">About {activity.title}</h2>
+                    <div className="flex items-center gap-4">
+                      <FavoriteButton
+                  itemType="Activity"
+                  itemId={activity.id}
+                  size="lg"
+                />
               </div>
 
               {/* Tags */}
@@ -218,15 +222,6 @@ export default async function ActivityDetailPage({ params }: PageProps) {
                       {tag}
                     </span>
                   ))}
-                </div>
-              )}
-
-              {/* Description */}
-              {activity.notes && (
-                <div className="prose prose-blue max-w-none">
-                  <p className="text-gray-700 text-lg leading-relaxed">
-                    {activity.notes}
-                  </p>
                 </div>
               )}
             </div>
