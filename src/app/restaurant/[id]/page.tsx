@@ -72,7 +72,48 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
   const status = getRestaurantStatus(restaurant.hours);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <main className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <section className="relative h-96 bg-cover bg-center" style={{
+        backgroundImage: restaurant.image && restaurant.image[0]?.url 
+          ? `url(${restaurant.image[0].url})` 
+          : 'linear-gradient(135deg, #fed7aa 0%, #fecaca 100%)'
+      }}>
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+          <div className="text-center text-white px-4 max-w-4xl">
+            <h1 className="text-5xl font-bold mb-4">{restaurant.name}</h1>
+            <p className="text-xl mb-4">
+              {restaurant.cuisine && restaurant.cuisine.length > 0 
+                ? restaurant.cuisine.join(' • ') 
+                : 'Restaurant'
+              }
+            </p>
+            <div className="flex flex-wrap justify-center items-center gap-4 mb-4">
+              <span className="px-4 py-2 bg-green-100/20 backdrop-blur-sm text-green-100 rounded-full text-lg font-semibold border border-green-200/30">
+                {priceLabel}
+              </span>
+              <span className="px-4 py-2 bg-blue-100/20 backdrop-blur-sm text-blue-100 rounded-full text-lg font-semibold border border-blue-200/30">
+                📍 {restaurant.neighborhood}
+              </span>
+              {restaurant.hours && (
+                <span className={`px-4 py-2 backdrop-blur-sm rounded-full text-lg font-semibold border ${
+                  status.isOpen 
+                    ? 'bg-green-100/20 text-green-100 border-green-200/30' 
+                    : 'bg-gray-100/20 text-gray-100 border-gray-200/30'
+                }`}>
+                  {status.message}
+                </span>
+              )}
+            </div>
+            {restaurant.description && (
+              <p className="text-lg text-gray-200 max-w-2xl mx-auto">
+                {restaurant.description}
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
+
       <div className="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Back Link */}
         <Link
@@ -85,53 +126,19 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Hero Image */}
-            {restaurant.image && restaurant.image[0]?.url ? (
-              <div className="relative h-96 bg-gray-200 rounded-2xl overflow-hidden shadow-lg">
-                <Image
-                  src={restaurant.image[0].url}
-                  alt={restaurant.name}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            ) : (
-              <div className="relative h-96 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center rounded-2xl">
-                <div className="text-center">
-                  <div className="text-8xl mb-4">🍽️</div>
-                  <div className="text-xl text-gray-600 font-medium">Photo Coming Soon</div>
-                </div>
-              </div>
-            )}
-
             {/* Title & Basic Info */}
             <div className="bg-white rounded-xl p-6 shadow-lg">
               <div className="flex items-start justify-between gap-4 mb-4">
-                <h1 className="text-4xl font-bold text-gray-900 flex-1">
-                  {restaurant.name}
-                </h1>
-                <FavoriteButton
-                  itemType="Restaurant"
-                  itemId={restaurant.id}
-                  size="lg"
-                />
-              </div>
-
-              <div className="flex flex-wrap items-center gap-4 mb-4">
-                <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
-                  {priceLabel}
-                </span>
-                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
-                  📍 {restaurant.neighborhood}
-                </span>
-                {restaurant.hours && (
-                  <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                    status.isOpen ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                  }`}>
-                    {status.message}
-                  </span>
-                )}
+                <div className="flex-1">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">About {restaurant.name}</h2>
+                  <div className="flex items-center gap-4">
+                    <FavoriteButton
+                      itemType="Restaurant"
+                      itemId={restaurant.id}
+                      size="lg"
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Cuisine Tags */}
@@ -145,15 +152,6 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
                       {cuisine}
                     </span>
                   ))}
-                </div>
-              )}
-
-              {/* Description */}
-              {restaurant.description && (
-                <div className="prose prose-blue max-w-none">
-                  <p className="text-gray-700 text-lg leading-relaxed">
-                    {restaurant.description}
-                  </p>
                 </div>
               )}
             </div>
