@@ -95,7 +95,7 @@ export default function BestIceCreamPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
       {/* Hero Section */}
-      <section className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('/images/best-ice-cream-hero.jpg')" }}>
+      <section className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('/images/hero/seo/beaches.jpg')" }}>
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-5xl font-bold mb-4">Best Ice Cream in Santa Cruz</h1>

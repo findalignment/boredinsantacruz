@@ -90,7 +90,7 @@ export default function BestBreakfastPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-yellow-50">
       {/* Hero Section */}
-      <section className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('/images/best-breakfast-hero.jpg')" }}>
+      <section className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('/images/hero/home.jpg')" }}>
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-5xl font-bold mb-4">Best Breakfast in Santa Cruz</h1>

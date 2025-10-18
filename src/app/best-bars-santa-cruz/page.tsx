@@ -91,7 +91,7 @@ export default function BestBarsPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-purple-50 via-gray-50 to-indigo-50">
       {/* Hero Section */}
-      <section className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('/images/best-bars-hero.jpg')" }}>
+      <section className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('/images/hero/tonight.jpg')" }}>
         <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-5xl font-bold mb-4">Best Bars in Santa Cruz</h1>
