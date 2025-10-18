@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getRestaurants } from '@/app/actions/getRestaurants';
 import { RestaurantCard } from '@/components/restaurants/restaurant-card';
+import { getHeroImageForPage, getHeroImageAltText } from '@/lib/hero-images';
 
 export const metadata: Metadata = {
   title: 'Best Breakfast in Santa Cruz - Top Morning Spots & Brunch',
@@ -86,11 +87,21 @@ async function BreakfastRestaurants() {
   );
 }
 
-export default function BestBreakfastPage() {
+export default async function BestBreakfastPage() {
+  const heroImage = await getHeroImageForPage('best-breakfast-santa-cruz');
+  const altText = await getHeroImageAltText('best-breakfast-santa-cruz');
+  
   return (
     <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-yellow-50">
       {/* Hero Section */}
-      <section className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('/images/hero/home.jpg')" }}>
+      <section 
+        className="relative h-96 bg-cover bg-center" 
+        style={{ 
+          backgroundImage: heroImage 
+            ? `url(${heroImage})` 
+            : 'linear-gradient(135deg, #fed7aa 0%, #fecaca 100%)'
+        }}
+      >
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-5xl font-bold mb-4">Best Breakfast in Santa Cruz</h1>

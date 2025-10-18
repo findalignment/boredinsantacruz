@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getRestaurants } from '@/app/actions/getRestaurants';
 import { RestaurantCard } from '@/components/restaurants/restaurant-card';
+import { getHeroImageForPage, getHeroImageAltText } from '@/lib/hero-images';
 
 export const metadata: Metadata = {
   title: 'Best Wine Bars in Santa Cruz - Top Wine Tasting & Wine Bars',
@@ -90,11 +91,21 @@ async function WineBarRestaurants() {
   );
 }
 
-export default function BestWineBarsPage() {
+export default async function BestWineBarsPage() {
+  const heroImage = await getHeroImageForPage('best-wine-bars-santa-cruz');
+  const altText = await getHeroImageAltText('best-wine-bars-santa-cruz');
+  
   return (
     <main className="min-h-screen bg-gradient-to-br from-red-50 via-white to-purple-50">
       {/* Hero Section */}
-      <section className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('/images/hero/seo/date-spots.jpg')" }}>
+      <section 
+        className="relative h-96 bg-cover bg-center" 
+        style={{ 
+          backgroundImage: heroImage 
+            ? `url(${heroImage})` 
+            : 'linear-gradient(135deg, #fecaca 0%, #e9d5ff 100%)'
+        }}
+      >
         <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-5xl font-bold mb-4">Best Wine Bars in Santa Cruz</h1>

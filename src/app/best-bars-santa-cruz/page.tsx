@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getRestaurants } from '@/app/actions/getRestaurants';
 import { RestaurantCard } from '@/components/restaurants/restaurant-card';
+import { getHeroImageForPage, getHeroImageAltText } from '@/lib/hero-images';
 
 export const metadata: Metadata = {
   title: 'Best Bars in Santa Cruz - Top Nightlife & Cocktail Spots',
@@ -87,11 +88,21 @@ async function BarRestaurants() {
   );
 }
 
-export default function BestBarsPage() {
+export default async function BestBarsPage() {
+  const heroImage = await getHeroImageForPage('best-bars-santa-cruz');
+  const altText = await getHeroImageAltText('best-bars-santa-cruz');
+  
   return (
     <main className="min-h-screen bg-gradient-to-br from-purple-50 via-gray-50 to-indigo-50">
       {/* Hero Section */}
-      <section className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('/images/hero/tonight.jpg')" }}>
+      <section 
+        className="relative h-96 bg-cover bg-center" 
+        style={{ 
+          backgroundImage: heroImage 
+            ? `url(${heroImage})` 
+            : 'linear-gradient(135deg, #a855f7 0%, #6366f1 100%)'
+        }}
+      >
         <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-5xl font-bold mb-4">Best Bars in Santa Cruz</h1>

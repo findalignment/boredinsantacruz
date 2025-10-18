@@ -26,6 +26,9 @@ export const tables = {
   deals: process.env.AIRTABLE_DEALS_TABLE
     ? base(process.env.AIRTABLE_DEALS_TABLE)
     : null,
+  heroImages: process.env.AIRTABLE_HERO_IMAGES_TABLE
+    ? base(process.env.AIRTABLE_HERO_IMAGES_TABLE)
+    : null,
   favorites: base(process.env.AIRTABLE_FAVORITES_TABLE || 'Favorites'),
   reviews: base(process.env.AIRTABLE_REVIEWS_TABLE || 'Reviews'),
   trips: base(process.env.AIRTABLE_TRIPS_TABLE || 'Trips'),
