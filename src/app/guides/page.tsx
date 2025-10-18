@@ -199,6 +199,46 @@ const foodGuides = [
     emoji: '🥐',
     bestFor: 'Brunch, Weekend Dining',
   },
+  {
+    id: 'breakfast',
+    title: 'Best Breakfast',
+    description: 'Morning dining spots and breakfast favorites',
+    href: '/best-breakfast-santa-cruz',
+    emoji: '🍳',
+    bestFor: 'Breakfast, Morning Dining',
+  },
+  {
+    id: 'bars',
+    title: 'Best Bars',
+    description: 'Cocktail bars, dive bars, and nightlife spots',
+    href: '/best-bars-santa-cruz',
+    emoji: '🍸',
+    bestFor: 'Nightlife, Cocktails, Social',
+  },
+  {
+    id: 'wine-bars',
+    title: 'Best Wine Bars',
+    description: 'Wine tasting rooms and sophisticated wine experiences',
+    href: '/best-wine-bars-santa-cruz',
+    emoji: '🍷',
+    bestFor: 'Wine, Tasting, Romance',
+  },
+  {
+    id: 'breweries',
+    title: 'Best Breweries',
+    description: 'Craft beer, local breweries, and beer bars',
+    href: '/best-breweries-santa-cruz',
+    emoji: '🍺',
+    bestFor: 'Craft Beer, Breweries, Social',
+  },
+  {
+    id: 'ice-cream',
+    title: 'Best Ice Cream',
+    description: 'Artisanal ice cream, gelato, and frozen treats',
+    href: '/best-ice-cream-santa-cruz',
+    emoji: '🍨',
+    bestFor: 'Desserts, Sweet Treats, Family',
+  },
 ];
 
 const specializedGuides = [
