@@ -50,15 +50,29 @@ async function WeatherAwareActivities({ date }: { date: string }) {
     const activities = activitiesResult.data || [];
     const forecast = forecastResult.data || [];
     
-    // Find the specific date in forecast
-    const dayForecast = forecast.find(day => day.date === date);
+    // Find the specific date in forecast (with better matching)
+    console.log('Looking for date:', date);
+    console.log('Available forecast dates:', forecast.map(day => day.date));
+    
+    const dayForecast = forecast.find(day => {
+      // Try exact match first
+      if (day.date === date) return true;
+      
+      // Try date object comparison for timezone issues
+      const urlDate = new Date(date + 'T00:00:00');
+      const forecastDate = new Date(day.date + 'T00:00:00');
+      return urlDate.getTime() === forecastDate.getTime();
+    });
     
     if (!dayForecast) {
+      console.error('No forecast found for date:', date);
       return (
         <div className="text-center py-12">
           <div className="text-6xl mb-4">📅</div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Date Not Available</h2>
           <p className="text-gray-600 mb-6">Weather forecast not available for this date.</p>
+          <p className="text-sm text-gray-500 mb-4">Requested: {date}</p>
+          <p className="text-sm text-gray-500 mb-6">Available: {forecast.map(day => day.date).join(', ')}</p>
           <Link 
             href="/activities" 
             className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
@@ -70,6 +84,7 @@ async function WeatherAwareActivities({ date }: { date: string }) {
     }
 
     // Score activities based on weather
+    console.log('Using forecast for date:', dayForecast.date, 'with weather:', dayForecast.weather);
     const scoredActivities = activities.map(activity => 
       scoreActivityWithContext(activity, dayForecast.weather)
     );
